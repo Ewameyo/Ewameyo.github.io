@@ -1,0 +1,25 @@
+name: Sync External Dept Data
+on:
+  schedule:
+    - cron: '0 * * * *' # This triggers the "robot" every hour
+  workflow_dispatch: # This adds a button so you can run it manually
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Command Center
+        uses: actions/checkout@v2
+
+      - name: Pull External Data
+        run: |
+          # This command 'grabs' the file from the other department
+          curl -o External_Dept_Data.csv https://raw.githubusercontent.com/USER/REPO/main/FILE.csv
+          
+      - name: Commit and Push to TV Dashboard
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "DTO: Automated sync from departmental folder" || exit 0
+          git push
