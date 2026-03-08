@@ -1,0 +1,18 @@
+,,,,,,,,,,,,,,
+??  LIVE KAIZEN REGISTER  |  AUTOMATED IMPLEMENTATION TRACKER,,,,,,,,,,,,,,
+"All active, pending, and closed Kaizen events · Auto-calculated progress · Financial impact tracking",,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,ID,KAIZEN TITLE,WASTE TYPE,DMAIC PHASE,CHAMPION,START DATE,TARGET DATE,STATUS,% COMPLETE,HARD SAVINGS ($),SOFT SAVINGS ($),SIGMA BEFORE,SIGMA AFTER,ACTIONS
+,KZ-041,Reduce Die Changeover – Press Cell 3,Motion,Improve,J. Mwangi,2024-01-15,2024-03-30,ACTIVE,78%,"$82,000","$15,000",3.8,4.5,SMED analysis ongoing
+,KZ-042,Eliminate Rework Loop – Quality Gate 2,Defects,Analyze,A. Ochieng,2024-02-01,2024-04-15,ACTIVE,55%,"$140,000","$22,000",3.5,4.8,Root cause confirmed
+,KZ-043,5S Visual Workplace – Warehouse Zone B,Transport,Control,S. Kamau,2024-01-20,2024-02-28,ACTIVE,91%,"$28,000","$8,000",4.0,4.6,Audit scheduled
+,KZ-044,OEE Improvement – Injection Moulding,Waiting,Measure,D. Njoroge,2024-02-10,2024-05-01,PENDING,30%,"$210,000","$45,000",3.2,4.9,Data collection
+,KZ-045,Overproduction Reduction – MFG Line 1,Overproduction,Improve,P. Atieno,2024-01-25,2024-03-20,ACTIVE,62%,"$95,000","$18,000",3.9,4.7,Pull system design
+,KZ-046,Supplier Lead Time Kaizen,Inventory,Define,M. Wanjiku,2024-02-15,2024-05-30,PENDING,15%,"$67,000","$12,000",3.6,4.4,Charter approved
+,KZ-038,Assembly Error-Proofing (Poka-Yoke),Defects,Control,J. Mwangi,2023-11-01,2024-01-31,CLOSED,100%,"$112,000","$28,000",3.4,4.9,Closed – Sustained
+,KZ-039,Setup Reduction Line 4 – SMED,Motion,Control,A. Ochieng,2023-10-15,2024-01-15,CLOSED,100%,"$88,000","$16,000",3.7,4.6,Closed – Verified
+,KZ-047,Scrap Rate Reduction – Stamping Dept,Defects,Define,B. Kimani,2024-02-20,2024-06-01,PENDING,8%,"$55,000","$9,000",3.3,4.5,Scoping in progress
+,KZ-048,Energy Waste Elimination – Compressors,Overprocessing,Measure,T. Omondi,2024-02-22,2024-04-30,ACTIVE,40%,"$38,000","$22,000",4.0,4.4,Audit complete
+,KZ-049,Packaging Line Throughput Optimization,Waiting,Analyze,S. Kamau,2024-01-30,2024-04-20,ACTIVE,60%,"$72,000","$14,000",3.8,4.6,VSM complete
+,KZ-050,Preventive Maintenance Schedule – Tooling,Skills (8th),Improve,D. Njoroge,2024-02-05,2024-05-15,ACTIVE,50%,"$44,000","$31,000",3.5,4.3,PM plan drafted
+,TOTALS / AGGREGATES,,,,,,,,,"$1,031,000","$240,000",,,
