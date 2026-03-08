@@ -14,7 +14,7 @@ jobs:
       - name: Pull External Data
         run: |
           # This command 'grabs' the file from the other department
-          curl -o External_Dept_Data.csv https://raw.githubusercontent.com/USER/REPO/main/FILE.csv
+          curl -o Financial_Update.csv https://raw.githubusercontent.com/Ewameyo/MBB-Command-Center/main/Financial%20Impact.csv
           
       - name: Commit and Push to TV Dashboard
         run: |
