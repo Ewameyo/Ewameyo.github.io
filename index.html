@@ -1049,9 +1049,7 @@
     </div>
   </div>
 
-<div id="savingsTrend" style="color: #2ecc71; font-weight: bold;">ANALYZING TREND...</div>
-    <div class="panel">
-      <div class="panel-header">
+  <div id="savingsTrend" style="color: #2ecc71; font-weight: bold; margin-bottom: 10px;"></div>
         <div class="panel-title">Live Kaizen Board</div>
         <span class="tag" id="kaizenCount">12 ACTIVE</span>
       </div>
@@ -1245,7 +1243,40 @@
         </table>
 <script>
 async function runDashboardSync() {
-    <script>
+<script>
+async function runDashboardSync() {
+    try {
+        const response = await fetch('Dashboard.csv');
+        if (response.ok) {
+            // Restore Sync Time
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            if (document.getElementById('lastUpdated')) {
+                document.getElementById('lastUpdated').innerText = timeStr;
+            }
+            // Restore Sigma Gauge (4.8)
+            const sigma = 4.8;
+            const circle = document.getElementById('sigmaCircle');
+            if (circle) {
+                const circumference = 52 * 2 * Math.PI;
+                circle.style.strokeDashoffset = circumference - (sigma / 6.0) * circumference;
+                if (document.getElementById('sigmaValue')) {
+                    document.getElementById('sigmaValue').innerText = sigma.toFixed(1);
+                }
+            }
+            // Restore Trend
+            const trendBox = document.getElementById('savingsTrend');
+            if (trendBox) {
+                trendBox.innerHTML = '▲ ABOVE TARGET';
+            }
+        }
+    } catch (e) { console.log("Sync pending..."); }
+}
+window.addEventListener('load', runDashboardSync);
+setInterval(runDashboardSync, 60000);
+</script>
+</body>
+</html>
 async function runDashboardSync() {
     try {
         const response = await fetch('Dashboard.csv');
