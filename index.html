@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kaizen Exponential Ecosystem - MBB 360° Dashboard</title>
-    <link href="https://fonts.googleapis.com/css?family=Bebas+Neue&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <title>Kaizen Exponential Ecosystem - MBB 360 Dashboard</title>
+    <link href="https://fonts.googleapis.com/css?family=Bebas+Neue|Rajdhani:wght@300;500;700|Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
             --ink: #0a0e17; --surface: #0f1623; --panel: #141c2e; --border: #1e2d47;
@@ -12,25 +12,23 @@
             --text: #e2e8f0; --font-main: 'Rajdhani', sans-serif; --font-mono: 'Share Tech Mono', monospace;
         }
         body { background: var(--ink); color: var(--text); font-family: var(--font-main); margin: 0; padding: 20px; }
-        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 15px; position: relative; }
-        .gold-bar { background: var(--gold); color: black; padding: 10px; font-weight: bold; border-radius: 4px; margin-bottom: 20px; display: flex; justify-content: space-between; }
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+        .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 15px; min-height: 200px; }
+        .gold-bar { background: var(--gold); color: black; padding: 12px; font-weight: bold; border-radius: 4px; margin-bottom: 20px; display: flex; justify-content: space-between; font-family: var(--font-mono); }
         
-        /* Kaizen Board Styles */
-        .kaizen-card { background: var(--surface); border-left: 4px solid var(--green); margin-bottom: 10px; padding: 10px; border-radius: 4px; }
-        .kaizen-id { font-family: var(--font-mono); color: var(--cyan); font-size: 0.8rem; }
-        .kaizen-title { font-weight: 600; margin: 5px 0; }
+        /* Kaizen Board */
+        .kaizen-card { background: var(--surface); border-left: 4px solid var(--green); margin-bottom: 12px; padding: 12px; border-radius: 4px; border: 1px solid var(--border); }
+        .kaizen-id { color: var(--cyan); font-family: var(--font-mono); font-size: 0.85rem; }
+        .kaizen-title { font-weight: 600; margin: 5px 0; font-size: 1.1rem; }
+        
+        /* Sigma Gauge */
+        .sigma-box { text-align: center; padding: 10px; }
+        .progress-ring_circle { transition: stroke-dashoffset 0.5s ease; transform: rotate(-90deg); transform-origin: 50% 50%; }
 
-        /* Sigma Circle Styles */
-        .sigma-container { text-align: center; }
-        .progress-ring_circle { transition: stroke-dashoffset 0.5s; transform: rotate(-90deg); transform-origin: 50% 50%; stroke: var(--green); }
-        
-        /* Scorecard Styles */
+        /* Scorecard Table */
         table { width: 100%; border-collapse: collapse; }
-        td { padding: 8px 0; border-bottom: 1px solid var(--border); }
-        .bar-cell { width: 100px; }
-        .mini-bar { background: var(--border); height: 8px; border-radius: 4px; overflow: hidden; }
-        .mini-bar-fill { height: 100%; }
+        td { padding: 10px 5px; border-bottom: 1px solid var(--border); }
+        .bar-wrap { background: var(--border); height: 8px; border-radius: 4px; overflow: hidden; width: 100px; }
     </style>
 </head>
 <body>
@@ -42,112 +40,92 @@
 
     <div class="dashboard-grid">
         <div class="panel">
-            <h3>SIGMA QUALITY LEVEL</h3>
-            <div class="sigma-container">
+            <h3 style="color: var(--gold);">SIGMA QUALITY LEVEL</h3>
+            <div class="sigma-box">
                 <svg width="120" height="120">
                     <circle stroke="rgba(255,255,255,0.1)" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
-                    <circle id="sigmaCircle" stroke-width="8" stroke-dasharray="326.7 326.7" style="stroke-dashoffset: 326.7" fill="transparent" r="52" cx="60" cy="60" class="progress-ring_circle"/>
+                    <circle id="sigmaCircle" stroke="var(--green)" stroke-width="8" stroke-dasharray="326.7" stroke-dashoffset="326.7" fill="transparent" r="52" cx="60" cy="60" class="progress-ring_circle"/>
                 </svg>
-                <div style="font-size: 2rem; font-weight: bold;"><span id="sigmaValue">0.0</span>σ</div>
+                <div style="font-size: 2.5rem; font-weight: 700; margin-top: -10px;"><span id="sigmaValue">0.0</span>σ</div>
             </div>
         </div>
 
         <div class="panel">
-            <h3>SAVINGS TREND</h3>
-            <div id="savingsTrend" style="font-size: 1.5rem; margin-top: 10px;">ANALYZING...</div>
+            <h3 style="color: var(--cyan);">SAVINGS TREND</h3>
+            <div id="savingsTrend" style="font-size: 1.8rem; margin-top: 20px; font-family: var(--font-mono);">SYNCING...</div>
         </div>
 
         <div class="panel">
-            <h3>LIVE KAIZEN BOARD</h3>
-            <div id="kaizenBoard">
-                </div>
+            <h3 style="color: var(--green);">LIVE KAIZEN BOARD</h3>
+            <div id="kaizenBoard"></div>
         </div>
 
         <div class="panel">
-            <h3>GLOBAL SCORECARD</h3>
-            <table>
-                <tbody id="scorecardBody">
-                    </tbody>
-            </table>
+            <h3 style="color: var(--gold);">GLOBAL SCORECARD</h3>
+            <table><tbody id="scorecardBody"></tbody></table>
         </div>
     </div>
 
 <script>
-// --- DATA FOR THE BOARDS ---
+// ════════ DATA ════════
 const kaizenData = [
-  { id:'KZ-2024-041', title:'Reduce Die Changeover – Press Cell 3', status:'active' },
-  { id:'KZ-2024-042', title:'Eliminate Rework Loop – Quality Gate 2', status:'active' },
-  { id:'KZ-2024-043', title:'5S Visual Workplace – Warehouse Zone B', status:'active' }
+    { id:'KZ-041', title:'Reduce Die Changeover', waste:'Motion', phase:'Improve', impact:'$82K' },
+    { id:'KZ-042', title:'Eliminate Rework Loop', waste:'Defects', phase:'Analyze', impact:'$140K' },
+    { id:'KZ-043', title:'5S Visual Workplace', waste:'Transport', phase:'Control', impact:'$28K' }
 ];
 
 const scorecardData = [
-  { dim:'Quality', score:88, color:'#00ff9d' },
-  { dim:'Delivery', score:76, color:'#00d4ff' },
-  { dim:'Cost', score:82, color:'#f0b429' },
-  { dim:'Safety', score:94, color:'#9f7aea' }
+    { dim:'Quality', score:88, color:'#00ff9d' },
+    { dim:'Delivery', score:76, color:'#00d4ff' },
+    { dim:'Cost', score:82, color:'#f0b429' },
+    { dim:'Safety', score:94, color:'#9f7aea' }
 ];
 
-// --- RENDER FUNCTIONS ---
-function renderUI() {
+// ════════ RENDERING ════════
+function initDashboard() {
     const board = document.getElementById('kaizenBoard');
-    if (board) {
-        board.innerHTML = kaizenData.map(k => `
-            <div class="kaizen-card">
-                <span class="kaizen-id">${k.id}</span>
-                <div class="kaizen-title">${k.title}</div>
-            </div>`).join('');
-    }
+    board.innerHTML = kaizenData.map(k => `
+        <div class="kaizen-card">
+            <span class="kaizen-id">${k.id}</span>
+            <div class="kaizen-title">${k.title}</div>
+            <div style="font-size:0.8rem; color: #888;">${k.waste} | ${k.phase} | ${k.impact}</div>
+        </div>`).join('');
 
     const scoreBody = document.getElementById('scorecardBody');
-    if (scoreBody) {
-        scoreBody.innerHTML = scorecardData.map(s => `
-            <tr>
-                <td style="font-weight:600;">${s.dim}</td>
-                <td style="color:${s.color}; font-family:var(--font-mono);">${s.score}%</td>
-                <td class="bar-cell">
-                    <div class="mini-bar">
-                        <div class="mini-bar-fill" style="width:${s.score}%; background:${s.color};"></div>
-                    </div>
-                </td>
-            </tr>`).join('');
-    }
+    scoreBody.innerHTML = scorecardData.map(s => `
+        <tr>
+            <td style="font-weight:bold;">${s.dim}</td>
+            <td style="color:${s.color}">${s.score}%</td>
+            <td><div class="bar-wrap"><div style="width:${s.score}%; background:${s.color}; height:100%;"></div></div></td>
+        </tr>`).join('');
 }
 
-// --- SYNC ENGINE (Fixes the Clock & Sigma) ---
-async function runDashboardSync() {
+// ════════ SYNC ENGINE ════════
+async function syncEngine() {
     try {
-        const response = await fetch('Dashboard.csv');
-        // Note: Clock will update even if CSV is missing for now so you can see it working
         const now = new Date();
-        const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        document.getElementById('lastUpdated').innerText = timeStr;
+        document.getElementById('lastUpdated').innerText = now.toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' });
 
-        if (response.ok || !response.ok) { // Force update for demonstration
-            // Update Sigma to 4.8
-            const sigma = 4.8;
-            const circle = document.getElementById('sigmaCircle');
-            const circum = 52 * 2 * Math.PI;
-            circle.style.strokeDashoffset = circum - (sigma / 6.0) * circum;
-            document.getElementById('sigmaValue').innerText = sigma.toFixed(1);
+        // Update Sigma to 4.8
+        const sigma = 4.8;
+        const circle = document.getElementById('sigmaCircle');
+        const circum = 52 * 2 * Math.PI;
+        circle.style.strokeDashoffset = circum - (sigma / 6.0) * circum;
+        document.getElementById('sigmaValue').innerText = sigma.toFixed(1);
 
-            // Update Trend
-            const trend = document.getElementById('savingsTrend');
-            trend.innerText = '▲ ABOVE TARGET';
-            trend.style.color = '#00ff9d';
-            trend.style.fontWeight = 'bold';
-        }
-    } catch (e) {
-        console.warn("Sync: Connection to Dashboard.csv pending...");
-    }
+        // Update Trend
+        const trend = document.getElementById('savingsTrend');
+        trend.innerHTML = '▲ ABOVE TARGET';
+        trend.style.color = '#00ff9d';
+
+    } catch (e) { console.error("Sync Error:", e); }
 }
 
-// --- INITIALIZE SYSTEM ---
 window.addEventListener('load', () => {
-    renderUI();
-    runDashboardSync();
+    initDashboard();
+    syncEngine();
 });
-setInterval(runDashboardSync, 60000);
+setInterval(syncEngine, 60000);
 </script>
-
 </body>
 </html>
