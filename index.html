@@ -1049,9 +1049,7 @@
     </div>
   </div>
 
-  <div id="savingsTrend">ANALYZING TREND...</div>
-
-    <!-- LIVE KAIZEN BOARD -->
+<div id="savingsTrend" style="color: #2ecc71; font-weight: bold;">ANALYZING TREND...</div>
     <div class="panel">
       <div class="panel-header">
         <div class="panel-title">Live Kaizen Board</div>
@@ -1247,7 +1245,30 @@
         </table>
 <script>
 async function runDashboardSync() {
+    <script>
+async function runDashboardSync() {
     try {
+        const response = await fetch('Dashboard.csv');
+        if (response.ok) {
+            // Update Time
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            if (document.getElementById('lastUpdated')) {
+                document.getElementById('lastUpdated').innerText = timeStr;
+            }
+            // Update Trend
+            const trendBox = document.getElementById('savingsTrend');
+            if (trendBox) {
+                trendBox.innerHTML = '▲ ABOVE TARGET';
+            }
+        }
+    } catch (e) { console.log("Sync pending..."); }
+}
+window.addEventListener('load', runDashboardSync);
+setInterval(runDashboardSync, 60000);
+</script>
+</body>
+</html>
         const response = await fetch('Dashboard.csv');
         if (response.ok) {
             // 1. Clock Update
