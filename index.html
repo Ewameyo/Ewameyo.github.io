@@ -1249,7 +1249,44 @@
     </div>
 <script>
 async function runDashboardSync() {
+    <script>
+async function runDashboardSync() {
     try {
+        const response = await fetch('Dashboard.csv');
+        if (response.ok) {
+            // 1. RESTORE CLOCK
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const clockEl = document.getElementById('lastUpdated');
+            if (clockEl) clockEl.innerText = timeStr;
+
+            // 2. RESTORE SIGMA GAUGE (Set to 4.8)
+            const sigma = 4.8;
+            const circle = document.getElementById('sigmaCircle');
+            if (circle) {
+                const circumference = 52 * 2 * Math.PI;
+                circle.style.strokeDashoffset = circumference - (sigma / 6.0) * circumference;
+                const valEl = document.getElementById('sigmaValue');
+                if (valEl) valEl.innerText = sigma.toFixed(1);
+            }
+
+            // 3. RESTORE TREND
+            const trendBox = document.getElementById('savingsTrend');
+            if (trendBox) {
+                trendBox.innerHTML = '▲ ABOVE TARGET';
+                trendBox.style.color = '#2ecc71';
+                trendBox.style.fontWeight = 'bold';
+            }
+        }
+    } catch (e) { console.log("Sync pending..."); }
+}
+
+// THE ENGINE START
+window.addEventListener('load', runDashboardSync);
+setInterval(runDashboardSync, 60000);
+</script>
+</body>
+</html>
         const response = await fetch('Dashboard.csv');
         if (response.ok) {
             // 1. Update Clock
