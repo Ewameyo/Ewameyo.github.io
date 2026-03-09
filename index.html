@@ -3,95 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edgar Wameyo | MBB 360° Digital Twin</title>
+    <title>Edgar Wameyo | LSSBB Digital Twin</title>
     <link href="https://fonts.googleapis.com/css?family=Bebas+Neue|Rajdhani:wght@300;500;700|Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
-            --ink: #0a0e17; --surface: #0f1623; --panel: #141c2e; --border: #1e2d47;
+            --ink: #05080f; --surface: #0c121d; --panel: #111927; --border: #1e2d47;
             --gold: #f0b429; --cyan: #00d4ff; --green: #00ff9d; --red: #ff4757;
             --text: #e2e8f0; --font-main: 'Rajdhani', sans-serif; --font-mono: 'Share Tech Mono', monospace;
         }
-        body { background: var(--ink); color: var(--text); font-family: var(--font-main); margin: 0; padding: 0; }
-        .sync-bar { background: #000; color: var(--gold); padding: 8px 25px; font-family: var(--font-mono); font-size: 11px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--gold); }
-        header { padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); background: var(--surface); }
-        .logo { font-family: 'Bebas Neue'; font-size: 24px; letter-spacing: 2px; color: #fff; }
-        .logo span { color: var(--gold); }
+        body { background: var(--ink); color: var(--text); font-family: var(--font-main); margin: 0; padding: 0; overflow-x: hidden; }
+        
+        /* MOVING TEXT LINE (TICKER) */
+        .ticker-wrap { background: #000; border-bottom: 1px solid var(--border); padding: 5px 0; overflow: hidden; white-space: nowrap; }
+        .ticker { display: inline-block; padding-left: 100%; animation: ticker 30s linear infinite; font-family: var(--font-mono); font-size: 11px; color: var(--cyan); }
+        @keyframes ticker { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
+
+        /* HEADER IDENTITY */
+        .identity-bar { background: var(--surface); border-bottom: 2px solid var(--gold); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
+        .name-brand { font-family: 'Bebas Neue'; font-size: 32px; letter-spacing: 2px; color: #fff; }
+        .name-brand span { color: var(--gold); }
+        .live-status { font-family: var(--font-mono); font-size: 12px; color: var(--green); display: flex; align-items: center; gap: 8px; }
+        .pulse { width: 10px; height: 10px; background: var(--green); border-radius: 50%; box-shadow: 0 0 10px var(--green); animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
         /* GRID LAYOUT */
-        .main-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; padding: 25px; }
-        .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 4px; padding: 15px; }
-        .panel-h { color: var(--gold); font-family: 'Bebas Neue'; font-size: 16px; letter-spacing: 1px; margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+        .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 25px; }
+        .kpi-card { background: var(--panel); border: 1px solid var(--border); padding: 20px; border-bottom: 3px solid var(--cyan); }
+        .kpi-label { font-family: var(--font-mono); font-size: 11px; color: var(--gold); text-transform: uppercase; }
+        .kpi-val { font-size: 32px; font-weight: 700; color: #fff; margin-top: 5px; }
 
-        /* DMAIC PROGRESS BAR */
-        .dmaic-step { margin-bottom: 12px; font-family: var(--font-mono); font-size: 12px; }
-        .dmaic-bar { height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; margin-top: 4px; overflow: hidden; }
-        .dmaic-fill { height: 100%; transition: width 1s ease-in-out; }
+        .grid { display: grid; grid-template-columns: 1.2fr 1fr 0.8fr; gap: 20px; padding: 0 25px 25px 25px; }
+        .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 4px; padding: 20px; }
+        .panel-h { color: var(--gold); font-family: 'Bebas Neue'; font-size: 18px; letter-spacing: 1px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
 
-        /* WASTE RADAR */
-        .waste-row { display: flex; justify-content: space-between; font-size: 13px; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        /* DMAIC FULL CAPTURE */
+        .dmaic-step { margin-bottom: 15px; }
+        .dmaic-info { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 12px; margin-bottom: 5px; }
+        .bar-bg { background: rgba(255,255,255,0.05); height: 8px; border-radius: 4px; overflow: hidden; }
+        .bar-fill { height: 100%; transition: width 2s ease-in-out; }
+
+        table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 13px; }
+        td { padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        
+        @media (max-width: 1000px) { .grid, .kpi-row { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
-<div class="sync-bar">
-    <span>● SYSTEM LIVE: EDGAR WAMEYO DIGITAL TWIN</span>
-    <span>ENGINE SYNC: <span id="clock">--:--:--</span></span>
-</div>
+    <div class="ticker-wrap">
+        <div class="ticker">
+            SYSTEM STATUS: OPERATIONAL || LSSBB DIGITAL TWIN SYNC: ACTIVE || CTQ PARAMETERS: OPTIMIZED || PROJECT PORTFOLIO: LIVE || OPEX EXPONENTIAL ECOSYSTEM || 413+ IMPRESSIONS LOGGED || EDGAR WAMEYO COMMAND CENTRE 
+        </div>
+    </div>
 
-<header>
-    <div class="logo">OPERATIONAL EXCELLENCE <span>DMAIC COMMAND</span></div>
-    <div style="text-align: right; font-family: var(--font-mono); font-size: 11px; color: var(--cyan);">MBB | INDUSTRIAL CHEMIST</div>
-</header>
+    <div class="identity-bar">
+        <div class="name-brand">EDGAR WAMEYO | <span>LSSBB DIGITAL TWIN</span></div>
+        <div class="live-status">
+            <div class="pulse"></div> LIVE ENGINE: <span id="clock">00:00:00</span>
+        </div>
+    </div>
 
-<div class="main-grid">
-    <div class="panel">
-        <div class="panel-h">DMAIC PROJECT NAVIGATOR</div>
-        <div id="dmaicContent">
-            <div class="dmaic-step">DEFINE: Project Charter & CTQ <span style="float:right; color:var(--green);">100%</span>
-                <div class="dmaic-bar"><div class="dmaic-fill" style="width:100%; background:var(--green);"></div></div>
+    <div style="padding: 10px 30px; background: var(--surface); font-family: var(--font-mono); font-size: 11px; color: var(--cyan); border-bottom: 1px solid var(--border);">
+        INDUSTRIAL CHEMIST • LEAN SIX SIGMA BLACK BELT • PMP • ISO IMS ARCHITECT • QHSE
+    </div>
+
+    <div class="kpi-row">
+        <div class="kpi-card"><div class="kpi-label">Sigma Level</div><div class="kpi-val">4.8σ</div></div>
+        <div class="kpi-card"><div class="kpi-label">Financial Impact</div><div class="kpi-val">$2.14M</div></div>
+        <div class="kpi-card"><div class="kpi-label">Yield (RTY)</div><div class="kpi-val">98.2%</div></div>
+        <div class="kpi-card"><div class="kpi-label">DPMO</div><div class="kpi-val">3.4</div></div>
+    </div>
+
+    <div class="grid">
+        
+
+[Image of the DMAIC process steps]
+
+        <div class="panel">
+            <div class="panel-h">DMAIC PROJECT NAVIGATOR</div>
+            <div class="dmaic-step">
+                <div class="dmaic-info"><span>D: DEFINE (Charter & Voice of Customer)</span><span>100%</span></div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 100%; background: var(--green);"></div></div>
             </div>
-            <div class="dmaic-step">MEASURE: GR&R & Capability <span style="float:right; color:var(--green);">100%</span>
-                <div class="dmaic-bar"><div class="dmaic-fill" style="width:100%; background:var(--green);"></div></div>
+            <div class="dmaic-step">
+                <div class="dmaic-info"><span>M: MEASURE (GR&R & Process Mapping)</span><span>100%</span></div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 100%; background: var(--green);"></div></div>
             </div>
-            <div class="dmaic-step">ANALYZE: Root Cause (Fishbone) <span style="float:right; color:var(--cyan);">85%</span>
-                <div class="dmaic-bar"><div class="dmaic-fill" style="width:85%; background:var(--cyan);"></div></div>
+            <div class="dmaic-step">
+                <div class="dmaic-info"><span>A: ANALYZE (Fishbone & Root Cause)</span><span>85%</span></div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 85%; background: var(--cyan);"></div></div>
             </div>
-            <div class="dmaic-step">IMPROVE: DOE & Pilot Run <span style="float:right; color:var(--gold);">40%</span>
-                <div class="dmaic-bar"><div class="dmaic-fill" style="width:40%; background:var(--gold);"></div></div>
+            <div class="dmaic-step">
+                <div class="dmaic-info"><span>I: IMPROVE (DOE & Implementation)</span><span>40%</span></div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 40%; background: var(--gold);"></div></div>
             </div>
-            <div class="dmaic-step">CONTROL: SPC & Control Plan <span style="float:right; color:var(--red);">5%</span>
-                <div class="dmaic-bar"><div class="dmaic-fill" style="width:5%; background:var(--red);"></div></div>
+            <div class="dmaic-step">
+                <div class="dmaic-info"><span>C: CONTROL (SPC & Sustainment)</span><span>5%</span></div>
+                <div class="bar-bg"><div class="bar-fill" style="width: 5%; background: var(--red);"></div></div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-h">GLOBAL SCORECARD</div>
+            <table>
+                <tr style="color: var(--gold); font-size: 11px;"><td>DIMENSION</td><td>ACTUAL</td><td>TARGET</td></tr>
+                <tr><td>OEE Efficiency</td><td style="color: var(--red);">84.2%</td><td>85.0%</td></tr>
+                <tr><td>Process Capability (CpK)</td><td style="color: var(--green);">1.67</td><td>1.33</td></tr>
+                <tr><td>On-Time Delivery</td><td style="color: var(--cyan);">92.0%</td><td>95.0%</td></tr>
+                <tr><td>Safety Rate (TRIR)</td><td style="color: var(--green);">0.12</td><td>0.15</td></tr>
+            </table>
+        </div>
+
+        <div class="panel">
+            <div class="panel-h">WASTE RADAR (DOWNTIME)</div>
+            <div style="display:flex; flex-direction:column; gap:15px;">
+                <div style="display:flex; justify-content:space-between;"><span>Defects</span><span style="color:var(--red);">CRITICAL</span></div>
+                <div style="display:flex; justify-content:space-between;"><span>Waiting</span><span style="color:var(--gold);">MEDIUM</span></div>
+                <div style="display:flex; justify-content:space-between;"><span>Overproduction</span><span style="color:var(--green);">LOW</span></div>
+                <div style="display:flex; justify-content:space-between;"><span>Inventory</span><span style="color:var(--green);">LOW</span></div>
             </div>
         </div>
     </div>
 
-    <div class="panel">
-        <div class="panel-h">GLOBAL SCORECARD</div>
-        <table style="width:100%; border-collapse:collapse; font-family:var(--font-mono); font-size:12px;">
-            <tr style="color:var(--gold);"><td>METRIC</td><td>ACTUAL</td><td>TARGET</td></tr>
-            <tr><td>DPMO</td><td style="color:var(--green);">3.4</td><td>< 10</td></tr>
-            <tr><td>RTY</td><td style="color:var(--green);">98.2%</td><td>98.0%</td></tr>
-            <tr><td>OEE</td><td style="color:var(--red);">72.4%</td><td>85.0%</td></tr>
-            <tr><td>CpK</td><td style="color:var(--cyan);">1.67</td><td>1.33</td></tr>
-        </table>
-    </div>
-
-    <div class="panel">
-        <div class="panel-h">WASTE RADAR (DOWNTIME)</div>
-        <div class="waste-row"><span>Defects</span><span style="color:var(--red);">CRITICAL</span></div>
-        <div class="waste-row"><span>Overproduction</span><span style="color:var(--green);">OPTIMIZED</span></div>
-        <div class="waste-row"><span>Waiting</span><span style="color:var(--gold);">WARNING</span></div>
-        <div class="waste-row"><span>Inventory</span><span style="color:var(--cyan);">STABLE</span></div>
-        <div class="waste-row"><span>Non-Utilized Talent</span><span style="color:var(--green);">GOOD</span></div>
-    </div>
-</div>
-
 <script>
-    function sync() {
+    function updateEngine() {
         document.getElementById('clock').innerText = new Date().toLocaleTimeString();
     }
-    setInterval(sync, 1000);
-    sync();
+    setInterval(updateEngine, 1000);
+    updateEngine();
 </script>
 </body>
 </html>
