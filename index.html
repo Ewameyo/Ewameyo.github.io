@@ -1252,7 +1252,23 @@ const kaizenData = [
   { id:'KZ-2024-045', title:'Overproduction Reduction – MFG Line 1', status:'active', waste:'Overproduction', phase:'Improve', pct:62, impact:'$95K' },
   { id:'KZ-2024-046', title:'Supplier Lead Time Kaizen', status:'pending', waste:'Inventory', phase:'Define', pct:15, impact:'$67K' },
   { id:'KZ-2024-038', title:'Assembly Error-Proofing (Poka-Yoke)', status:'closed', waste:'Defects', phase:'Control', pct:100, impact:'$112K' },
-];
+];// This function tells the "Initializing..." text to show the real time
+async function refreshSyncClock() {
+    try {
+        const response = await fetch('Dashboard.csv');
+        if (response.ok) {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            // This targets the specific ID in your Gold Bar
+            document.getElementById('lastUpdated').innerText = timeStr;
+        }
+    } catch (e) {
+        console.log("Sync pending...");
+    }
+}
+
+// Start the clock as soon as the page finishes loading
+window.addEventListener('load', refreshSyncClock);
 
 const wasteData = [
   { icon:'🚫', name:'Defects', score: 72 },
