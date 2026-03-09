@@ -3,134 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kaizen Exponential Ecosystem - MBB 360°</title>
-    <link href="https://fonts.googleapis.com/css?family=Bebas+Neue&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <title>Edgar Wameyo | MBB 360° Digital Twin</title>
+    <link href="https://fonts.googleapis.com/css?family=Bebas+Neue|Rajdhani:wght@300;500;700|Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
             --ink: #0a0e17; --surface: #0f1623; --panel: #141c2e; --border: #1e2d47;
-            --gold: #f0b429; --gold2: #ffd166; --cyan: #00d4ff; --green: #00ff9d;
-            --red: #ff4757; --purple: #9f7aea; --text: #c8d8f0; --muted: #5a7090;
-            --font-display: 'Bebas Neue', sans-serif; --font-body: 'Rajdhani', sans-serif; --font-mono: 'Share Tech Mono', monospace;
+            --gold: #f0b429; --cyan: #00d4ff; --green: #00ff9d; --red: #ff4757;
+            --text: #e2e8f0; --font-main: 'Rajdhani', sans-serif; --font-mono: 'Share Tech Mono', monospace;
         }
-        body { background: var(--ink); color: var(--text); font-family: var(--font-body); margin: 0; padding: 0; line-height: 1.5; }
-        
-        /* SYNC BAR */
-        #sync-status-bar { text-align: center; background: #1a1a1a; padding: 10px; border-bottom: 2px solid var(--gold); font-family: var(--font-mono); font-size: 13px; }
-        
-        /* HEADER */
-        header { position: sticky; top: 0; z-index: 100; background: rgba(10,14,23,0.96); border-bottom: 1px solid var(--border); backdrop-filter: blur(16px); display: flex; align-items: center; justify-content: space-between; padding: 0 28px; height: 58px; }
-        .logo { font-family: var(--font-display); font-size: 22px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; }
-        .logo span { color: var(--cyan); }
-        .header-badges { display: flex; gap: 10px; align-items: center; }
-        .badge { font-family: var(--font-mono); font-size: 10px; padding: 3px 10px; border-radius: 2px; text-transform: uppercase; border: 1px solid var(--border); }
-        
-        /* GRID & PANELS */
-        .main-grid { display: grid; grid-template-columns: 340px 1fr 300px; gap: 16px; padding: 20px 28px; }
-        .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
-        .panel-header { padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--gold); font-family: var(--font-display); letter-spacing: 2px; }
-        .panel-body { padding: 16px; }
+        body { background: var(--ink); color: var(--text); font-family: var(--font-main); margin: 0; padding: 0; }
+        .sync-bar { background: #000; color: var(--gold); padding: 8px 25px; font-family: var(--font-mono); font-size: 11px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--gold); }
+        header { padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); background: var(--surface); }
+        .logo { font-family: 'Bebas Neue'; font-size: 24px; letter-spacing: 2px; color: #fff; }
+        .logo span { color: var(--gold); }
 
-        /* KPI TILES */
-        .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 20px 28px; }
-        .kpi-tile { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 16px; position: relative; }
-        .kpi-label { font-family: var(--font-mono); font-size: 10px; color: var(--muted); text-transform: uppercase; }
-        .kpi-value { font-family: var(--font-display); font-size: 38px; color: var(--cyan); }
+        /* GRID LAYOUT */
+        .main-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; padding: 25px; }
+        .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 4px; padding: 15px; }
+        .panel-h { color: var(--gold); font-family: 'Bebas Neue'; font-size: 16px; letter-spacing: 1px; margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
 
-        /* KAIZEN CARDS */
-        .kaizen-card { background: var(--ink); border: 1px solid var(--border); border-radius: 4px; padding: 12px; margin-bottom: 8px; }
-        .kaizen-id { font-family: var(--font-mono); font-size: 10px; color: var(--muted); }
-        .kaizen-title { font-weight: 600; font-size: 14px; color: #fff; margin-top: 4px; }
+        /* DMAIC PROGRESS BAR */
+        .dmaic-step { margin-bottom: 12px; font-family: var(--font-mono); font-size: 12px; }
+        .dmaic-bar { height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; margin-top: 4px; overflow: hidden; }
+        .dmaic-fill { height: 100%; transition: width 1s ease-in-out; }
 
-        /* SIGMA GAUGE */
-        .sigma-container { text-align: center; padding: 20px; }
-        .progress-ring_circle { transition: stroke-dashoffset 0.5s ease; transform: rotate(-90deg); transform-origin: 50% 50%; stroke: var(--green); }
-        
-        @media (max-width: 1100px) { .main-grid { grid-template-columns: 1fr; } }
+        /* WASTE RADAR */
+        .waste-row { display: flex; justify-content: space-between; font-size: 13px; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
     </style>
 </head>
 <body>
 
-    <div id="sync-status-bar">
-        <span style="color: var(--green);">● LIVE SYSTEM</span>
-        <span style="margin-left: 15px;">LAST SYNC: </span>
-        <span id="lastUpdated" style="color: var(--gold);">INITIALIZING...</span>
-    </div>
+<div class="sync-bar">
+    <span>● SYSTEM LIVE: EDGAR WAMEYO DIGITAL TWIN</span>
+    <span>ENGINE SYNC: <span id="clock">--:--:--</span></span>
+</div>
 
-    <header>
-        <div class="logo">MBB COMMAND <span>360°</span></div>
-        <div class="header-badges">
-            <span class="badge" style="color: var(--gold); border-color: var(--gold);">MBB LEVEL</span>
-            <span class="badge" style="color: var(--cyan); border-color: var(--cyan);">LSS STRATEGY</span>
-        </div>
-    </header>
+<header>
+    <div class="logo">OPERATIONAL EXCELLENCE <span>DMAIC COMMAND</span></div>
+    <div style="text-align: right; font-family: var(--font-mono); font-size: 11px; color: var(--cyan);">MBB | INDUSTRIAL CHEMIST</div>
+</header>
 
-    <div class="kpi-row">
-        <div class="kpi-tile"><div class="kpi-label">Sigma Level</div><div class="kpi-value" id="kpiSigma">4.8σ</div></div>
-        <div class="kpi-tile"><div class="kpi-label">Savings YTD</div><div class="kpi-value" id="kpiSavings">$2.1M</div></div>
-        <div class="kpi-tile"><div class="kpi-label">Active Kaizens</div><div class="kpi-value" id="kpiKaizens">12</div></div>
-        <div class="kpi-tile"><div class="kpi-label">Engagement</div><div class="kpi-value" id="kpiEng">87%</div></div>
-    </div>
-
-    <div class="main-grid">
-        <div class="panel">
-            <div class="panel-header">DMAIC Navigator</div>
-            <div class="panel-body" id="dmaicNav">
-                <p style="font-size: 13px; color: var(--muted);">Establishing CTQ Trees and Project Charters...</p>
+<div class="main-grid">
+    <div class="panel">
+        <div class="panel-h">DMAIC PROJECT NAVIGATOR</div>
+        <div id="dmaicContent">
+            <div class="dmaic-step">DEFINE: Project Charter & CTQ <span style="float:right; color:var(--green);">100%</span>
+                <div class="dmaic-bar"><div class="dmaic-fill" style="width:100%; background:var(--green);"></div></div>
             </div>
-        </div>
-
-        <div class="panel">
-            <div class="panel-header">Live Kaizen Board</div>
-            <div class="panel-body" id="kaizenBoard">
-                </div>
-        </div>
-
-        <div class="panel">
-            <div class="panel-header">Sigma Quality Level</div>
-            <div class="panel-body">
-                <div class="sigma-container">
-                    <svg width="120" height="120">
-                        <circle stroke="rgba(255,255,255,0.1)" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
-                        <circle id="sigmaCircle" stroke-width="8" stroke-dasharray="326.7" stroke-dashoffset="326.7" fill="transparent" r="52" cx="60" cy="60" class="progress-ring_circle"/>
-                    </svg>
-                    <div style="font-size: 2.5rem; font-weight: bold; margin-top: -10px;"><span id="sigmaValue">0.0</span>σ</div>
-                </div>
+            <div class="dmaic-step">MEASURE: GR&R & Capability <span style="float:right; color:var(--green);">100%</span>
+                <div class="dmaic-bar"><div class="dmaic-fill" style="width:100%; background:var(--green);"></div></div>
+            </div>
+            <div class="dmaic-step">ANALYZE: Root Cause (Fishbone) <span style="float:right; color:var(--cyan);">85%</span>
+                <div class="dmaic-bar"><div class="dmaic-fill" style="width:85%; background:var(--cyan);"></div></div>
+            </div>
+            <div class="dmaic-step">IMPROVE: DOE & Pilot Run <span style="float:right; color:var(--gold);">40%</span>
+                <div class="dmaic-bar"><div class="dmaic-fill" style="width:40%; background:var(--gold);"></div></div>
+            </div>
+            <div class="dmaic-step">CONTROL: SPC & Control Plan <span style="float:right; color:var(--red);">5%</span>
+                <div class="dmaic-bar"><div class="dmaic-fill" style="width:5%; background:var(--red);"></div></div>
             </div>
         </div>
     </div>
+
+    <div class="panel">
+        <div class="panel-h">GLOBAL SCORECARD</div>
+        <table style="width:100%; border-collapse:collapse; font-family:var(--font-mono); font-size:12px;">
+            <tr style="color:var(--gold);"><td>METRIC</td><td>ACTUAL</td><td>TARGET</td></tr>
+            <tr><td>DPMO</td><td style="color:var(--green);">3.4</td><td>< 10</td></tr>
+            <tr><td>RTY</td><td style="color:var(--green);">98.2%</td><td>98.0%</td></tr>
+            <tr><td>OEE</td><td style="color:var(--red);">72.4%</td><td>85.0%</td></tr>
+            <tr><td>CpK</td><td style="color:var(--cyan);">1.67</td><td>1.33</td></tr>
+        </table>
+    </div>
+
+    <div class="panel">
+        <div class="panel-h">WASTE RADAR (DOWNTIME)</div>
+        <div class="waste-row"><span>Defects</span><span style="color:var(--red);">CRITICAL</span></div>
+        <div class="waste-row"><span>Overproduction</span><span style="color:var(--green);">OPTIMIZED</span></div>
+        <div class="waste-row"><span>Waiting</span><span style="color:var(--gold);">WARNING</span></div>
+        <div class="waste-row"><span>Inventory</span><span style="color:var(--cyan);">STABLE</span></div>
+        <div class="waste-row"><span>Non-Utilized Talent</span><span style="color:var(--green);">GOOD</span></div>
+    </div>
+</div>
 
 <script>
-const kaizenData = [
-    { id: 'KZ-2024-001', title: 'OEE Optimization - Line A' },
-    { id: 'KZ-2024-002', title: 'Inventory Waste Reduction' },
-    { id: 'KZ-2024-003', title: 'SMED Changeover Improvement' }
-];
-
-function updateDashboard() {
-    // Update Clock
-    const now = new Date();
-    document.getElementById('lastUpdated').innerText = now.toLocaleTimeString();
-
-    // Render Kaizens
-    const board = document.getElementById('kaizenBoard');
-    board.innerHTML = kaizenData.map(k => `
-        <div class="kaizen-card">
-            <div class="kaizen-id">${k.id}</div>
-            <div class="kaizen-title">${k.title}</div>
-        </div>
-    `).join('');
-
-    // Update Sigma Gauge
-    const sigma = 4.8;
-    const circum = 52 * 2 * Math.PI;
-    document.getElementById('sigmaCircle').style.strokeDashoffset = circum - (sigma / 6.0) * circum;
-    document.getElementById('sigmaValue').innerText = sigma.toFixed(1);
-}
-
-window.onload = () => {
-    updateDashboard();
-    setInterval(updateDashboard, 1000);
-};
+    function sync() {
+        document.getElementById('clock').innerText = new Date().toLocaleTimeString();
+    }
+    setInterval(sync, 1000);
+    sync();
 </script>
 </body>
 </html>
