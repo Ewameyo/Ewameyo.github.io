@@ -1249,7 +1249,33 @@
       </div>
     </div>
 
-  </div>
+  // Function to update Time and Sigma Circle
+async function runDashboardSync() {
+    try {
+        const response = await fetch('Dashboard.csv');
+        if (response.ok) {
+            // 1. Update Sync Time
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            document.getElementById('lastUpdated').innerText = timeStr;
+
+            // 2. Update Sigma Circle (Logic for 4.8 Sigma)
+            const sigma = 4.8; 
+            const circle = document.getElementById('sigmaCircle');
+            const circumference = 52 * 2 * Math.PI;
+            const offset = circumference - (sigma / 6.0) * circumference;
+            
+            if (circle) {
+                circle.style.strokeDashoffset = offset;
+                document.getElementById('sigmaValue').innerText = sigma.toFixed(1);
+            }
+        }
+    } catch (e) { console.log("Sync pending..."); }
+}
+
+// Set the pulse: Run on load and every 60 seconds
+window.addEventListener('load', runDashboardSync);
+setInterval(runDashboardSync, 60000);
 </div>
 
 <script>
