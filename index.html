@@ -1049,13 +1049,7 @@
     </div>
   </div>
 
-  <div id="savingsTrend" style="color: #2ecc71; font-weight: bold; margin-bottom: 10px;"></div>
-        <div class="panel-title">Live Kaizen Board</div>
-        <span class="tag" id="kaizenCount">12 ACTIVE</span>
-      </div>
-      <div class="panel-body">
-        <div class="kaizen-list" id="kaizenBoard">
-          <!-- Cards injected by JS -->
+  <div id="savingsTrend" style="color: #2ecc71; font-weight: bold;"></div>
         </div>
       </div>
     </div>
@@ -1248,569 +1242,65 @@ async function runDashboardSync() {
 <script>
 /**
  * MASTER CONTROL SCRIPT
- * Handles Auto-Sync, Sigma Gauge, and Trend Logic
- */
-async function runDashboardSync() {
-    try {
-        const response = await fetch('Dashboard.csv');
-        if (response.ok) {
-            // 1. UPDATE SYNC CLOCK
-            const now = new Date();
-            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            const clock = document.getElementById('lastUpdated');
-            if (clock) clock.innerText = timeStr;
-
-            // 2. UPDATE SIGMA GAUGE (Logic for 4.8)
-            const sigma = 4.8;
-            const circle = document.getElementById('sigmaCircle');
-            const sigmaVal = document.getElementById('sigmaValue');
-            if (circle && sigmaVal) {
-                const circumference = 52 * 2 * Math.PI;
-                circle.style.strokeDashoffset = circumference - (sigma / 6.0) * circumference;
-                sigmaVal.innerText = sigma.toFixed(1);
-            }
-
-            // 3. UPDATE TREND (Line 1052 Target)
-            const trend = document.getElementById('savingsTrend');
-            if (trend) {
-                trend.innerHTML = '▲ ABOVE TARGET';
-                trend.style.color = '#2ecc71';
-                trend.style.fontWeight = 'bold';
-            }
-        }
-    } catch (err) {
-        console.warn("Nexus Sync: Waiting for CSV data...");
-    }
-}
-
-// Initialize System
-window.addEventListener('load', runDashboardSync);
-setInterval(runDashboardSync, 60000);
-</script>
-</body>
-</html>
-        const response = await fetch('Dashboard.csv');
-        if (response.ok) {
-            // Restore Sync Time
-            const now = new Date();
-            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            if (document.getElementById('lastUpdated')) {
-                document.getElementById('lastUpdated').innerText = timeStr;
-            }
-            // Restore Sigma Gauge (4.8)
-            const sigma = 4.8;
-            const circle = document.getElementById('sigmaCircle');
-            if (circle) {
-                const circumference = 52 * 2 * Math.PI;
-                circle.style.strokeDashoffset = circumference - (sigma / 6.0) * circumference;
-                if (document.getElementById('sigmaValue')) {
-                    document.getElementById('sigmaValue').innerText = sigma.toFixed(1);
-                }
-            }
-            // Restore Trend
-            const trendBox = document.getElementById('savingsTrend');
-            if (trendBox) {
-                trendBox.innerHTML = '▲ ABOVE TARGET';
-            }
-        }
-    } catch (e) { console.log("Sync pending..."); }
-}
-window.addEventListener('load', runDashboardSync);
-setInterval(runDashboardSync, 60000);
-</script>
-</body>
-</html>
-async function runDashboardSync() {
-    try {
-        const response = await fetch('Dashboard.csv');
-        if (response.ok) {
-            // Update Time
-            const now = new Date();
-            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            if (document.getElementById('lastUpdated')) {
-                document.getElementById('lastUpdated').innerText = timeStr;
-            }
-            // Update Trend
-            const trendBox = document.getElementById('savingsTrend');
-            if (trendBox) {
-                trendBox.innerHTML = '▲ ABOVE TARGET';
-            }
-        }
-    } catch (e) { console.log("Sync pending..."); }
-}
-window.addEventListener('load', runDashboardSync);
-setInterval(runDashboardSync, 60000);
-</script>
-</body>
-</html>
-        const response = await fetch('Dashboard.csv');
-        if (response.ok) {
-            // 1. Clock Update
-            const now = new Date();
-            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            const clockEl = document.getElementById('lastUpdated');
-            if (clockEl) clockEl.innerText = timeStr;
-
-            // 2. Sigma Gauge Update
-            const sigma = 4.8;
-            const circle = document.getElementById('sigmaCircle');
-            if (circle) {
-                const circumference = 52 * 2 * Math.PI;
-                circle.style.strokeDashoffset = circumference - (sigma / 6.0) * circumference;
-                const valEl = document.getElementById('sigmaValue');
-                if (valEl) valEl.innerText = sigma.toFixed(1);
-            }
-
-            // 3. Trend Message Update
-            const trendBox = document.getElementById('savingsTrend');
-            if (trendBox) {
-                trendBox.innerHTML = '▲ ABOVE TARGET';
-                trendBox.style.color = '#2ecc71';
-                trendBox.style.fontWeight = 'bold';
-            }
-        }
-    } catch (e) { console.log("Sync pending..."); }
-}
-
-// These start the engine automatically
-window.addEventListener('load', runDashboardSync);
-setInterval(runDashboardSync, 60000);
-</script>
-</body>
-</html>
-    </div>
 <script>
-async function runDashboardSync() {
-    <script>
-async function runDashboardSync() {
-    try {
-        const response = await fetch('Dashboard.csv');
-        if (response.ok) {
-            // 1. RESTORE CLOCK
-            const now = new Date();
-            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            const clockEl = document.getElementById('lastUpdated');
-            if (clockEl) clockEl.innerText = timeStr;
-
-            // 2. RESTORE SIGMA GAUGE (Set to 4.8)
-            const sigma = 4.8;
-            const circle = document.getElementById('sigmaCircle');
-            if (circle) {
-                const circumference = 52 * 2 * Math.PI;
-                circle.style.strokeDashoffset = circumference - (sigma / 6.0) * circumference;
-                const valEl = document.getElementById('sigmaValue');
-                if (valEl) valEl.innerText = sigma.toFixed(1);
-            }
-
-            // 3. RESTORE TREND
-            const trendBox = document.getElementById('savingsTrend');
-            if (trendBox) {
-                trendBox.innerHTML = '▲ ABOVE TARGET';
-                trendBox.style.color = '#2ecc71';
-                trendBox.style.fontWeight = 'bold';
-            }
-        }
-    } catch (e) { console.log("Sync pending..."); }
-}
-
-// THE ENGINE START
-window.addEventListener('load', runDashboardSync);
-setInterval(runDashboardSync, 60000);
-</script>
-</body>
-</html>
-        const response = await fetch('Dashboard.csv');
-        if (response.ok) {
-            // 1. Update Clock
-            const now = new Date();
-            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            const clockEl = document.getElementById('lastUpdated');
-            if (clockEl) clockEl.innerText = timeStr;
-
-            // 2. Update Sigma Circle
-            const sigma = 4.8;
-            const circle = document.getElementById('sigmaCircle');
-            if (circle) {
-                const circumference = 52 * 2 * Math.PI;
-                const offset = circumference - (sigma / 6.0) * circumference;
-                circle.style.strokeDashoffset = offset;
-                const valEl = document.getElementById('sigmaValue');
-                if (valEl) valEl.innerText = sigma.toFixed(1);
-            }
-
-            // 3. Update Trend
-            const trendBox = document.getElementById('savingsTrend');
-            if (trendBox) {
-                trendBox.innerHTML = '▲ ABOVE TARGET';
-                trendBox.style.color = '#2ecc71';
-                trendBox.style.fontWeight = 'bold';
-            }
-        }
-    } catch (e) {
-        console.log("Sync check pending...");
-    }
-}
-
-// These lines tell the browser to start the engine
-window.addEventListener('load', runDashboardSync);
-setInterval(runDashboardSync, 60000);
-</script>
-</body>
-</html>
-// Function to update Time and Sigma Circle
-async function runDashboardSync() {
-    try {
-        const response = await fetch('Dashboard.csv');
-        if (response.ok) {
-            // 1. Update Sync Time
-            const now = new Date();
-            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            document.getElementById('lastUpdated').innerText = timeStr;
-
-            // 2. Update Sigma Circle (Logic for 4.8 Sigma)
-            const sigma = 4.8; 
-            const circle = document.getElementById('sigmaCircle');
-            const circumference = 52 * 2 * Math.PI;
-            const offset = circumference - (sigma / 6.0) * circumference;
-            
-            if (circle) {
-                circle.style.strokeDashoffset = offset;
-                document.getElementById('sigmaValue').innerText = sigma.toFixed(1);
-            }
-        }
-    } catch (e) { console.log("Sync pending..."); }
-}
-
-// Set the pulse: Run on load and every 60 seconds
-window.addEventListener('load', runDashboardSync);
-setInterval(runDashboardSync, 60000);
-</div>
-
-<script>
-// ════════════════════════════════════════════════════════
-//  DATA
-// ════════════════════════════════════════════════════════
+// --- KAIZEN & SCORECARD DATA ---
 const kaizenData = [
-  { id:'KZ-2024-041', title:'Reduce Die Changeover – Press Cell 3', status:'active', waste:'Motion', phase:'Improve', pct:78, impact:'$82K' },
-  { id:'KZ-2024-042', title:'Eliminate Rework Loop – Quality Gate 2', status:'active', waste:'Defects', phase:'Analyze', pct:55, impact:'$140K' },
-  { id:'KZ-2024-043', title:'5S Visual Workplace – Warehouse Zone B', status:'active', waste:'Transport', phase:'Control', pct:91, impact:'$28K' },
-  { id:'KZ-2024-044', title:'OEE Improvement – Injection Moulding', status:'pending', waste:'Waiting', phase:'Measure', pct:30, impact:'$210K' },
-  { id:'KZ-2024-045', title:'Overproduction Reduction – MFG Line 1', status:'active', waste:'Overproduction', phase:'Improve', pct:62, impact:'$95K' },
-  { id:'KZ-2024-046', title:'Supplier Lead Time Kaizen', status:'pending', waste:'Inventory', phase:'Define', pct:15, impact:'$67K' },
-  { id:'KZ-2024-038', title:'Assembly Error-Proofing (Poka-Yoke)', status:'closed', waste:'Defects', phase:'Control', pct:100, impact:'$112K' },
-];// This function tells the "Initializing..." text to show the real time
-async function refreshSyncClock() {
-    try {
-        const response = await fetch('Dashboard.csv');
-        if (response.ok) {
-            const now = new Date();
-            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            // This targets the specific ID in your Gold Bar
-            document.getElementById('lastUpdated').innerText = timeStr;
-        }
-    } catch (e) {
-        console.log("Sync pending...");
-    }
-}
-
-// Start the clock as soon as the page finishes loading
-window.addEventListener('load', refreshSyncClock);
-
-const wasteData = [
-  { icon:'🚫', name:'Defects', score: 72 },
-  { icon:'⏳', name:'Waiting', score: 58 },
-  { icon:'🏭', name:'Overprod.', score: 45 },
-  { icon:'🚚', name:'Transport', score: 38 },
-  { icon:'📦', name:'Inventory', score: 61 },
-  { icon:'🔄', name:'Motion', score: 29 },
-  { icon:'⚙️', name:'Overproc.', score: 34 },
-  { icon:'🧠', name:'Skills', score: 80 },
+  { id:'KZ-2024-041', title:'Reduce Die Changeover', status:'active', waste:'Motion', phase:'Improve', pct:78, impact:'$82K' },
+  { id:'KZ-2024-042', title:'Eliminate Rework Loop', status:'active', waste:'Defects', phase:'Analyze', pct:55, impact:'$140K' },
+  { id:'KZ-2024-045', title:'Overproduction Reduction', status:'active', waste:'Overproduction', phase:'Improve', pct:62, impact:'$95K' }
 ];
 
 const scorecardData = [
   { dim:'Quality', score:88, color:'#00ff9d' },
   { dim:'Delivery', score:76, color:'#00d4ff' },
   { dim:'Cost', score:82, color:'#f0b429' },
-  { dim:'Safety', score:94, color:'#9f7aea' },
-  { dim:'People', score:71, color:'#ff4757' },
-  { dim:'Innovation', score:65, color:'#ffd166' },
+  { dim:'Safety', score:94, color:'#9f7aea' }
 ];
 
-// ════════════════════════════════════════════════════════
-//  RENDER KAIZEN BOARD
-// ════════════════════════════════════════════════════════
-function renderKaizens(data) {
-  const board = document.getElementById('kaizenBoard');
-  board.innerHTML = data.map(k => `
-    <div class="kaizen-card">
-      <div class="kaizen-top">
-        <span class="kaizen-id">${k.id}</span>
-        <span class="kaizen-status status-${k.status}">${k.status}</span>
-      </div>
-      <div class="kaizen-title">${k.title}</div>
-      <div class="kaizen-meta">
-        <span>🗂 ${k.waste}</span>
-        <span>📍 ${k.phase}</span>
-        <span>💰 ${k.impact}</span>
-      </div>
-      <div class="kaizen-bar-wrap">
-        <div class="kaizen-bar" style="width:${k.pct}%;background:${k.status==='closed'?'var(--muted)':k.status==='pending'?'var(--gold)':'var(--green)'}"></div>
-      </div>
-    </div>
-  `).join('');
-}
-renderKaizens(kaizenData);
-
-// ════════════════════════════════════════════════════════
-//  LAUNCH KAIZEN
-// ════════════════════════════════════════════════════════
-function launchKaizen() {
-  const title = document.getElementById('kzTitle').value.trim();
-  const waste = document.getElementById('kzWaste').value;
-  const phase = document.getElementById('kzPhase').value;
-  const impact = document.getElementById('kzImpact').value;
-  if (!title) { document.getElementById('kzTitle').focus(); return; }
-  const id = 'KZ-' + Date.now().toString().slice(-6);
-  kaizenData.unshift({ id, title, status:'active', waste, phase, pct:5, impact: impact ? '$'+Number(impact).toLocaleString() : 'TBD' });
-  renderKaizens(kaizenData);
-  document.getElementById('kaizenCount').textContent = kaizenData.filter(k=>k.status==='active').length + ' ACTIVE';
-  document.getElementById('kzTitle').value = '';
-  document.getElementById('kzImpact').value = '';
-  // animate KPI
-  const kpi = document.getElementById('kpiKaizens');
-  kpi.textContent = kaizenData.filter(k=>k.status==='active').length;
+// --- RENDER FUNCTIONS ---
+function renderDashboard() {
+    const board = document.getElementById('kaizenBoard');
+    if (board) {
+        board.innerHTML = kaizenData.map(k => `
+            <div class="kaizen-card">
+                <div class="kaizen-top"><span class="kaizen-id">${k.id}</span></div>
+                <div class="kaizen-title">${k.title}</div>
+            </div>`).join('');
+    }
+    const scoreBody = document.getElementById('scorecardBody');
+    if (scoreBody) {
+        scoreBody.innerHTML = scorecardData.map(s => `
+            <tr><td>${s.dim}</td><td style="color:${s.color}">${s.score}%</td></tr>`).join('');
+    }
 }
 
-// ════════════════════════════════════════════════════════
-//  DMAIC TOGGLE
-// ════════════════════════════════════════════════════════
-function toggleDmaic(el) {
-  document.querySelectorAll('.dmaic-item').forEach(i => { if(i!==el) i.classList.remove('open'); });
-  el.classList.toggle('open');
+// --- SYNC ENGINE ---
+async function runDashboardSync() {
+    try {
+        const response = await fetch('Dashboard.csv');
+        if (response.ok) {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            if (document.getElementById('lastUpdated')) document.getElementById('lastUpdated').innerText = timeStr;
+            
+            const sigma = 4.8;
+            const circle = document.getElementById('sigmaCircle');
+            if (circle) {
+                const circum = 52 * 2 * Math.PI;
+                circle.style.strokeDashoffset = circum - (sigma / 6.0) * circum;
+                document.getElementById('sigmaValue').innerText = sigma.toFixed(1);
+            }
+            if (document.getElementById('savingsTrend')) document.getElementById('savingsTrend').innerHTML = '▲ ABOVE TARGET';
+        }
+    } catch (e) { console.warn("Syncing..."); }
 }
 
-// ════════════════════════════════════════════════════════
-//  PHASE RIBBON
-// ════════════════════════════════════════════════════════
-function setPhase(phase, btn) {
-  document.querySelectorAll('.phase-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-}
-
-// ════════════════════════════════════════════════════════
-//  SIGMA GAUGE
-// ════════════════════════════════════════════════════════
-function drawSigmaArc() {
-  const canvas = document.getElementById('sigmaCanvas');
-  const ctx = canvas.getContext('2d');
-  canvas.width = 200; canvas.height = 110;
-  const cx = 100, cy = 100, r = 85;
-  const startAngle = Math.PI, endAngle = 0;
-  // Background arc
-  ctx.beginPath();
-  ctx.arc(cx, cy, r, startAngle, endAngle);
-  ctx.strokeStyle = 'rgba(255,255,255,0.06)';
-  ctx.lineWidth = 14;
-  ctx.lineCap = 'round';
-  ctx.stroke();
-  // Colored zones
-  const zones = [
-    { from: 0, to: 1/6, color: '#ff4757' },
-    { from: 1/6, to: 2/6, color: '#ff6b35' },
-    { from: 2/6, to: 3/6, color: '#f0b429' },
-    { from: 3/6, to: 4/6, color: '#ffd166' },
-    { from: 4/6, to: 5/6, color: '#80ff9d' },
-    { from: 5/6, to: 6/6, color: '#00ff9d' },
-  ];
-  zones.forEach(z => {
-    ctx.beginPath();
-    ctx.arc(cx, cy, r, Math.PI + z.from * Math.PI, Math.PI + z.to * Math.PI);
-    ctx.strokeStyle = z.color;
-    ctx.lineWidth = 14;
-    ctx.lineCap = 'butt';
-    ctx.stroke();
-  });
-}
-drawSigmaArc();
-
-function setSigmaLevel(sigma) {
-  const pct = (sigma - 1) / 5; // 1σ–6σ mapped 0–1
-  const angle = -90 + (pct * 180) - 90; // -180 to 0 deg as CSS rotate
-  const needle = document.getElementById('sigmaNeedle');
-  needle.style.transform = `translateX(-50%) rotate(${angle + 90}deg)`;
-  // rotate(0) = pointing left (1σ), rotate(180) = pointing right (6σ)
-  // Actually: left = -90deg for needle pointing left, we map:
-  const rotateDeg = pct * 180;
-  needle.style.transform = `translateX(-50%) rotate(${rotateDeg - 90}deg)`;
-  document.getElementById('sigmaDisplay').textContent = sigma.toFixed(1) + 'σ';
-}
-setTimeout(() => setSigmaLevel(4.8), 800);
-
-// ════════════════════════════════════════════════════════
-//  8 WASTES GRID
-// ════════════════════════════════════════════════════════
-function renderWastes() {
-  const grid = document.getElementById('wasteGrid');
-  grid.innerHTML = wasteData.map((w,i) => `
-    <div class="waste-cell" id="wc${i}" onclick="toggleWaste(${i})">
-      <div class="waste-icon">${w.icon}</div>
-      <div class="waste-name">${w.name}</div>
-      <div class="waste-score">${w.score}</div>
-    </div>
-  `).join('');
-}
-renderWastes();
-function toggleWaste(i) {
-  document.getElementById('wc'+i).classList.toggle('flagged');
-}
-
-// ════════════════════════════════════════════════════════
-//  SCORECARD
-// ════════════════════════════════════════════════════════
-function renderScorecard() {
-  document.getElementById('scorecardBody').innerHTML = scorecardData.map(s => `
-    <tr>
-      <td style="font-weight:600;">${s.dim}</td>
-      <td style="font-family:var(--font-mono);font-size:12px;color:${s.color};">${s.score}%</td>
-      <td class="bar-cell">
-        <div class="mini-bar">
-          <div class="mini-bar-fill" style="width:${s.score}%;background:${s.color};"></div>
-        </div>
-      </td>
-    </tr>
-  `).join('');
-}
-renderScorecard();
-
-// ════════════════════════════════════════════════════════
-//  CONTROL CHART CANVAS
-// ════════════════════════════════════════════════════════
-function drawControlChart() {
-  const canvas = document.getElementById('controlChart');
-  const ctx = canvas.getContext('2d');
-  const W = canvas.parentElement.offsetWidth - 32;
-  canvas.width = W; canvas.height = 60;
-  const UCL = 45, LCL = 15, CL = 30;
-  const n = Math.floor(W/12);
-  const pts = Array.from({length:n}, (_,i) => {
-    const noise = (Math.random()-0.5)*22;
-    const trend = Math.sin(i/8)*5;
-    return Math.round(CL + noise + trend);
-  });
-
-  // Lines
-  const drawLine = (y, color, dash=[]) => {
-    ctx.beginPath(); ctx.setLineDash(dash);
-    ctx.moveTo(0, y); ctx.lineTo(W, y);
-    ctx.strokeStyle = color; ctx.lineWidth = 1; ctx.stroke();
-    ctx.setLineDash([]);
-  };
-  drawLine(UCL - 10, 'rgba(255,71,87,0.4)', [4,4]);
-  drawLine(LCL + 20, 'rgba(255,71,87,0.4)', [4,4]);
-  drawLine(30, 'rgba(0,212,255,0.3)');
-
-  // Data line
-  ctx.beginPath();
-  pts.forEach((p,i) => {
-    const x = i*(W/n) + 6;
-    const y = 60 - (p/60)*60;
-    i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
-  });
-  ctx.strokeStyle = 'rgba(0,255,157,0.7)'; ctx.lineWidth = 1.5; ctx.stroke();
-
-  // Points
-  pts.forEach((p,i) => {
-    const x = i*(W/n) + 6;
-    const y = 60 - (p/60)*60;
-    const oop = p > UCL || p < LCL;
-    ctx.beginPath();
-    ctx.arc(x, y, oop?4:2, 0, Math.PI*2);
-    ctx.fillStyle = oop ? '#ff4757' : 'rgba(0,255,157,0.8)';
-    ctx.fill();
-  });
-}
-setTimeout(drawControlChart, 100);
-window.addEventListener('resize', drawControlChart);
-
-// ════════════════════════════════════════════════════════
-//  AI CHAT (Claude API)
-// ════════════════════════════════════════════════════════
-const systemPrompt = `You are a Master Black Belt (MBB) in Lean Six Sigma with 20+ years of global manufacturing experience. You coach Black Belts, lead complex DMAIC projects, and drive 360° organizational transformation. Your expertise covers: DMAIC methodology, DOE, SPC, regression analysis, Minitab, Kaizen events, VSM, Hoshin Kanri, change management, financial impact modeling, and building Lean cultures. You speak with authority, precision, and MBB-level language. Keep responses concise, practical, and action-oriented. Use LSS terminology naturally. Reference tools like Gage R&R, Cp/Cpk, DPMO, fishbone, SMED, Poka-Yoke, FMEA, control plans where relevant.`;
-
-const chatHistory = [];
-
-async function sendChat() {
-  const input = document.getElementById('chatInput');
-  const btn = document.getElementById('chatSendBtn');
-  const msg = input.value.trim();
-  if (!msg) return;
-
-  addMessage('user', msg);
-  input.value = '';
-  btn.disabled = true;
-
-  chatHistory.push({ role:'user', content: msg });
-
-  const typing = addMessage('ai', '⏳ Analyzing...', true);
-
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method:'POST',
-      headers:{ 'Content-Type':'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: systemPrompt,
-        messages: chatHistory
-      })
-    });
-    const data = await res.json();
-    const reply = data.content?.[0]?.text || 'Unable to get response.';
-    typing.querySelector('.msg-bubble').textContent = reply;
-    chatHistory.push({ role:'assistant', content: reply });
-  } catch(e) {
-    typing.querySelector('.msg-bubble').textContent = 'Connection error. Please check your network.';
-  }
-
-  btn.disabled = false;
-  input.focus();
-}
-
-function addMessage(role, text, temp=false) {
-  const box = document.getElementById('chatBox');
-  const div = document.createElement('div');
-  div.className = `msg ${role}`;
-  div.innerHTML = `
-    <div class="msg-avatar ${role}">${role==='ai'?'MBB':'YOU'}</div>
-    <div class="msg-bubble">${text}</div>
-  `;
-  box.appendChild(div);
-  box.scrollTop = box.scrollHeight;
-  return div;
-}
-
-// ════════════════════════════════════════════════════════
-//  LIVE KPI ANIMATION
-// ════════════════════════════════════════════════════════
-function animateCount(el, target, prefix='', suffix='') {
-  let current = 0;
-  const step = target / 40;
-  const interval = setInterval(() => {
-    current = Math.min(current + step, target);
-    el.textContent = prefix + Math.round(current).toLocaleString() + suffix;
-    if (current >= target) clearInterval(interval);
-  }, 30);
-}
+// --- LAUNCH ---
+window.addEventListener('load', () => {
+    renderDashboard();
+    runDashboardSync();
+});
+setInterval(runDashboardSync, 60000);
 </script>
 </body>
 </html>
-<script>
-  document.getElementById('mbbBtn').onclick = function() {
-    alert('Switching to Master Black Belt Strategic View...');
-    // This is where we will link your MBB-specific data later
-  };
-  document.getElementById('lssBtn').onclick = function() {
-    alert('Loading Lean Six Sigma 360 Portfolio...');
-    // This is where we will link your Training Pipeline data later
-  };
-</script>
