@@ -5,7 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kaizen Exponential Ecosystem — MBB 360°</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-<style>
+<style/* Progress Circle Design */
+.sigma-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+.progress-ring { transform: rotate(-90deg); }
+.progress-ring__circle {
+  transition: stroke-dashoffset 0.5s ease-in-out;
+  transform-origin: 50% 50%;
+  stroke: #2ecc71; /* Lean Green */
+}>
   :root {
     --ink: #0a0e17;
     --surface: #0f1623;
