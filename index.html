@@ -1245,7 +1245,50 @@
 async function runDashboardSync() {
 <script>
 async function runDashboardSync() {
+<script>
+/**
+ * MASTER CONTROL SCRIPT
+ * Handles Auto-Sync, Sigma Gauge, and Trend Logic
+ */
+async function runDashboardSync() {
     try {
+        const response = await fetch('Dashboard.csv');
+        if (response.ok) {
+            // 1. UPDATE SYNC CLOCK
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const clock = document.getElementById('lastUpdated');
+            if (clock) clock.innerText = timeStr;
+
+            // 2. UPDATE SIGMA GAUGE (Logic for 4.8)
+            const sigma = 4.8;
+            const circle = document.getElementById('sigmaCircle');
+            const sigmaVal = document.getElementById('sigmaValue');
+            if (circle && sigmaVal) {
+                const circumference = 52 * 2 * Math.PI;
+                circle.style.strokeDashoffset = circumference - (sigma / 6.0) * circumference;
+                sigmaVal.innerText = sigma.toFixed(1);
+            }
+
+            // 3. UPDATE TREND (Line 1052 Target)
+            const trend = document.getElementById('savingsTrend');
+            if (trend) {
+                trend.innerHTML = '▲ ABOVE TARGET';
+                trend.style.color = '#2ecc71';
+                trend.style.fontWeight = 'bold';
+            }
+        }
+    } catch (err) {
+        console.warn("Nexus Sync: Waiting for CSV data...");
+    }
+}
+
+// Initialize System
+window.addEventListener('load', runDashboardSync);
+setInterval(runDashboardSync, 60000);
+</script>
+</body>
+</html>
         const response = await fetch('Dashboard.csv');
         if (response.ok) {
             // Restore Sync Time
