@@ -2,6 +2,11 @@
 ?  KAIZEN EXPONENTIAL ECOSYSTEM  |  MBB 360� TRANSFORMATION COMMAND CENTER,,,,,,,,,,,,,,,
 LEAN SIX SIGMA  �  MASTER BLACK BELT  �  GLOBAL MINDSET  �  CONTINUOUS IMPROVEMENT AT SCALE,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,
+<div id="sync-status-bar" style="text-align: center; background: #1a1a1a; padding: 10px; border-bottom: 2px solid #ffd700;">
+  <span style="color: #00ff00; font-weight: bold;">● LIVE SYSTEM</span> 
+  <span style="color: white; margin-left: 15px;">LAST SYNC: </span>
+  <span id="lastUpdated" style="color: #ffd700; font-weight: bold;">Initializing...</span>
+</div>
 ,SIGMA LEVEL,,,COST SAVINGS YTD,,,ACTIVE KAIZENS,,,TEAM ENGAGEMENT,,,,,
 ,4.8?,,,"$2,100,000",,,12,,,87%,,,,,
 ,Current Performance,,,Hard + Soft Combined,,,Events In Progress,,,Post-Coaching Score,,,,,
@@ -55,3 +60,4 @@ FMEA",,,,,,,,,,Planned,,,
 ,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,
+
