@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edgar Wameyo | MBB Executive Command</title>
+    <title>Edgar Wameyo | MBB Command Center</title>
     <link href="https://fonts.googleapis.com/css?family=Bebas+Neue|Rajdhani:wght@300;500;700|Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -12,128 +12,99 @@
             --text: #e2e8f0; --font-main: 'Rajdhani', sans-serif; --font-mono: 'Share Tech Mono', monospace;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        html, body { background: var(--ink); color: var(--text); font-family: var(--font-main); height: 100vh; width: 100vw; overflow: hidden; display: flex; flex-direction: column; }
+        html, body { background: var(--ink); color: var(--text); font-family: var(--font-main); height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
 
-        /* 1. TOP TICKER - FULL WIDTH */
-        .ticker-wrap { background: #000; border-bottom: 1px solid var(--border); padding: 8px 0; overflow: hidden; white-space: nowrap; flex-shrink: 0; }
-        .ticker { display: inline-block; padding-left: 100%; animation: ticker 40s linear infinite; font-family: var(--font-mono); font-size: 13px; color: var(--cyan); text-transform: uppercase; letter-spacing: 3px; }
+        .ticker-wrap { background: #000; border-bottom: 1px solid var(--border); padding: 6px 0; overflow: hidden; white-space: nowrap; flex-shrink: 0; }
+        .ticker { display: inline-block; padding-left: 100%; animation: ticker 40s linear infinite; font-family: var(--font-mono); font-size: 11px; color: var(--cyan); text-transform: uppercase; }
         @keyframes ticker { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
 
-        /* 2. NAVIGATION */
-        .nav-menu { background: #000; border-bottom: 1px solid var(--border); padding: 0 40px; display: flex; gap: 30px; height: 45px; align-items: center; flex-shrink: 0; }
-        .nav-item { font-family: var(--font-mono); font-size: 11px; color: #64748b; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; }
-        .nav-item.active { color: var(--gold); font-weight: bold; border-bottom: 2px solid var(--gold); height: 100%; display: flex; align-items: center; }
+        .nav-menu { background: #000; border-bottom: 1px solid var(--border); padding: 0 30px; display: flex; gap: 20px; height: 40px; align-items: center; flex-shrink: 0; }
+        .nav-item { font-family: var(--font-mono); font-size: 11px; color: #64748b; text-decoration: none; text-transform: uppercase; }
+        .nav-item.active { color: var(--gold); border-bottom: 2px solid var(--gold); height: 100%; display: flex; align-items: center; }
 
-        /* 3. IDENTITY BAR */
-        .identity-bar { background: var(--surface); border-bottom: 2px solid var(--gold); padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
-        .name-brand { font-family: 'Bebas Neue'; font-size: 38px; letter-spacing: 2px; color: #fff; line-height: 1; }
+        .identity-bar { background: var(--surface); border-bottom: 2px solid var(--gold); padding: 10px 30px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+        .name-brand { font-family: 'Bebas Neue'; font-size: 32px; letter-spacing: 1px; color: #fff; }
         .name-brand span { color: var(--gold); }
-        .live-status { font-family: var(--font-mono); font-size: 14px; color: var(--green); display: flex; align-items: center; gap: 10px; }
-        .pulse { width: 10px; height: 10px; background: var(--green); border-radius: 50%; box-shadow: 0 0 10px var(--green); animation: pulse 1.5s infinite; }
+        .live-status { font-family: var(--font-mono); font-size: 12px; color: var(--green); display: flex; align-items: center; gap: 8px; }
+        .pulse { width: 8px; height: 8px; background: var(--green); border-radius: 50%; animation: pulse 1.5s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
-        /* 4. KPI ROW */
-        .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 20px 40px; flex-shrink: 0; }
-        .kpi-card { background: var(--panel); border: 1px solid var(--border); padding: 15px 25px; border-top: 4px solid var(--cyan); }
-        .kpi-label { font-family: var(--font-mono); font-size: 11px; color: var(--gold); text-transform: uppercase; }
-        .kpi-val { font-size: 38px; font-weight: 700; color: #fff; margin-top: 5px; }
+        .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 15px 30px; flex-shrink: 0; }
+        .kpi-card { background: var(--panel); border: 1px solid var(--border); padding: 15px; border-top: 3px solid var(--cyan); }
+        .kpi-label { font-family: var(--font-mono); font-size: 10px; color: var(--gold); text-transform: uppercase; }
+        .kpi-val { font-size: 32px; font-weight: 700; color: #fff; }
 
-        /* 5. MAIN CONTENT GRID */
-        .main-grid { display: grid; grid-template-columns: 1.2fr 1fr 0.8fr; gap: 25px; padding: 0 40px 20px; flex-grow: 1; min-height: 0; }
-        .panel { background: var(--panel); border: 1px solid var(--border); padding: 20px; border-radius: 4px; display: flex; flex-direction: column; overflow: hidden; }
-        .panel-h { color: var(--gold); font-family: 'Bebas Neue'; font-size: 22px; border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 15px; flex-shrink: 0; }
+        .main-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; padding: 0 30px 15px; flex-grow: 1; min-height: 0; }
+        .panel { background: var(--panel); border: 1px solid var(--border); padding: 15px; display: flex; flex-direction: column; overflow: hidden; border-radius: 4px; }
+        .panel-h { color: var(--gold); font-family: 'Bebas Neue'; font-size: 20px; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 12px; flex-shrink: 0; }
         
-        .content-area { flex-grow: 1; overflow-y: auto; padding-right: 5px; }
-        .content-area::-webkit-scrollbar { width: 4px; }
-        .content-area::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+        .content { flex-grow: 1; overflow-y: auto; font-size: 13px; line-height: 1.4; }
+        .project-box { background: rgba(255,255,255,0.03); padding: 10px; border-left: 3px solid var(--green); margin-bottom: 10px; }
+        .p-title { color: var(--cyan); font-weight: 700; margin-bottom: 3px; }
 
-        /* DATA STYLES */
-        .project-detail { background: rgba(255,255,255,0.03); padding: 12px; border-left: 3px solid var(--green); margin-bottom: 12px; }
-        .p-title { color: var(--cyan); font-weight: 700; font-size: 15px; margin-bottom: 4px; }
-        .p-desc { font-size: 12.5px; color: #cbd5e1; line-height: 1.4; }
-
-        .dmaic-step { display: flex; gap: 15px; background: rgba(0,212,255,0.05); padding: 10px; margin-bottom: 8px; border-radius: 4px; border: 1px solid var(--border); }
-        .step-tag { font-family: 'Bebas Neue'; font-size: 22px; color: var(--cyan); min-width: 20px; }
-        .step-info b { font-size: 13px; color: #fff; text-transform: uppercase; display: block; }
-        .step-info p { margin: 2px 0 0; font-size: 12px; color: #94a3b8; }
-
-        table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 14px; }
-        td { padding: 12px 0; border-bottom: 1px solid var(--border); }
+        table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 12px; }
+        td { padding: 8px 0; border-bottom: 1px solid var(--border); }
         .val-up { color: var(--green); font-weight: bold; }
 
-        .exec-sum { margin-top: auto; padding: 15px; background: rgba(240,180,41,0.1); border: 1px solid var(--gold); border-radius: 4px; font-size: 13px; line-height: 1.5; }
+        .footer-summary { margin-top: auto; padding: 10px; background: rgba(240,180,41,0.1); border: 1px solid var(--gold); font-size: 12px; border-radius: 4px; flex-shrink: 0; }
     </style>
 </head>
 <body>
 
 <div class="ticker-wrap">
-    <div class="ticker">
-        LSSBB SYSTEM STATUS: OPTIMIZED || ENGINE SYNC: REAL-TIME || DMAIC PHASE: IMPROVE/CONTROL || ISO 20022 COMPLIANT || MISSION CONTROL ACTIVE
-    </div>
+    <div class="ticker">SYSTEM STATUS: OPTIMIZED || ENGINE SYNC: REAL-TIME || DMAIC PHASE: IMPROVE/CONTROL || ISO 20022 COMPLIANT</div>
 </div>
 
 <nav class="nav-menu">
-    <a href="index.html" class="nav-item active">MBB Main Command</a>
+    <a href="index.html" class="nav-item active">Main Command</a>
     <a href="fintech.html" class="nav-item">Fintech Operations</a>
 </nav>
 
 <div class="identity-bar">
-    <div class="name-brand">EDGAR WAMEYO | <span>COMMAND CENTRE</span></div>
+    <div class="name-brand">EDGAR WAMEYO | <span>OPERATIONAL EXCELLENCE</span></div>
     <div class="live-status"><div class="pulse"></div> DATA ENGINE: <span id="clock">00:00:00</span></div>
 </div>
 
 <div class="kpi-row">
-    <div class="kpi-card"><div class="kpi-label">Sigma Level</div><div class="kpi-val">4.82σ</div></div>
+    <div class="kpi-card"><div class="kpi-label">Sigma Level</div><div class="kpi-val">4.82</div></div>
     <div class="kpi-card"><div class="kpi-label">Cost Savings</div><div class="kpi-val">$2.14M</div></div>
-    <div class="kpi-card"><div class="kpi-label">Cycle Time Red.</div><div class="kpi-val">-24.5%</div></div>
-    <div class="kpi-card"><div class="kpi-label">Process RTY</div><div class="kpi-val">99.1%</div></div>
+    <div class="kpi-card"><div class="kpi-label">Process Yield</div><div class="kpi-val">99.1%</div></div>
+    <div class="kpi-card"><div class="kpi-label">Throughput</div><div class="kpi-val">1.2M/hr</div></div>
 </div>
 
 <div class="main-grid">
     <div class="panel">
         <div class="panel-h">FLAGSHIP PROJECTS</div>
-        <div class="content-area">
-            <div class="project-detail">
-                <div class="p-title">Chemical Process Variance Reduction</div>
-                <div class="p-desc">Stabilized batch reactions using DMAIC methodology. Identified critical X-factors in temperature control through DOE.</div>
-            </div>
-            <div class="project-detail" style="border-left-color: var(--cyan);">
-                <div class="p-title">Value Stream Map (VSM) Redesign</div>
-                <div class="p-desc">Eliminated 48 hours of non-value-added waiting time, increasing throughput capacity by 15% across industrial nodes.</div>
-            </div>
-            <div class="project-detail" style="border-left-color: var(--gold);">
-                <div class="p-title">ISO IMS Architecture Launch</div>
-                <div class="p-desc">Architected an Integrated Management System merging Quality, Environmental, and Safety standards into a single digital twin.</div>
-            </div>
+        <div class="content">
+            <div class="project-box"><div class="p-title">Process Variance Reduction</div>Identified critical X-factors in temperature control via DOE to stabilize batch reactions.</div>
+            <div class="project-box" style="border-left-color: var(--cyan);"><div class="p-title">VSM Redesign</div>Eliminated 48 hours of non-value-added waiting time, increasing throughput by 15%.</div>
         </div>
     </div>
 
     <div class="panel">
-        <div class="panel-h">DMAIC STRATEGIC ROADMAP</div>
-        <div class="content-area">
-            <div class="dmaic-step"><div class="step-tag">D</div><div class="step-info"><b>Define</b><p>Scoped defects as &lt;10 DPMO requirements for banking nodes.</p></div></div>
-            <div class="dmaic-step"><div class="step-tag">M</div><div class="step-info"><b>Measure</b><p>Baseline latency recorded at -18.2ms for settlement flows.</p></div></div>
-            <div class="dmaic-step"><div class="step-tag">A</div><div class="step-info"><b>Analyze</b><p>Root cause analysis on transaction bottlenecks via VSM.</p></div></div>
-            <div class="dmaic-step"><div class="step-tag">I</div><div class="step-info"><b>Improve</b><p>Implemented ISO 20022 compliant data structures.</p></div></div>
-            <div class="dmaic-step"><div class="step-letter">C</div><div class="step-info"><b>Control</b><p>Real-time Poka-Yoke fraud detection logic active.</p></div></div>
+        <div class="panel-h">DMAIC ROADMAP</div>
+        <div class="content">
+            <p><b>Define:</b> Scoped defects as &lt;10 DPMO requirements.</p><br>
+            <p><b>Measure:</b> Baseline latency recorded at -18.2ms.</p><br>
+            <p><b>Analyze:</b> Root cause analysis via VSM bottlenecks.</p><br>
+            <p><b>Improve:</b> Implemented ISO 20022 data structures.</p><br>
+            <p><b>Control:</b> Real-time Poka-Yoke logic active.</p>
         </div>
     </div>
 
     <div class="panel">
-        <div class="panel-h">OPERATIONAL SCORECARD</div>
-        <div class="content-area">
+        <div class="panel-h">SCORECARD</div>
+        <div class="content">
             <table>
-                <tr><td>INDICATOR</td><td>ACTUAL</td><td>GOAL</td></tr>
+                <tr><td>METRIC</td><td>ACTUAL</td><td>GOAL</td></tr>
                 <tr><td>Capability (CpK)</td><td class="val-up">1.67</td><td>1.33</td></tr>
                 <tr><td>Defects (DPMO)</td><td class="val-up">3.4</td><td>&lt;10</td></tr>
                 <tr><td>System Yield</td><td class="val-up">99.1%</td><td>98.5%</td></tr>
-                <tr><td>On-Time Delivery</td><td class="val-up">96.4%</td><td>95.0%</td></tr>
             </table>
-            
-            <div class="exec-sum">
-                <b style="color:var(--gold);">EXECUTIVE SUMMARY:</b><br>
-                System operating at Sigma Level 4.82. The Integrated Management System successfully merges Industrial and Fintech protocols for global scaling.
-            </div>
+        </div>
+        <div class="footer-summary">
+            <b>EXECUTIVE SUMMARY:</b><br>
+            Operating at Sigma Level 4.82. IMS successfully merges Industrial and Fintech protocols.
         </div>
     </div>
 </div>
