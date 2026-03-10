@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edgar Wameyo | MBB Command Center</title>
+    <title>Edgar Wameyo | LSSBB Executive Command</title>
     <link href="https://fonts.googleapis.com/css?family=Bebas+Neue|Rajdhani:wght@300;500;700|Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -14,45 +14,53 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html, body { background: var(--ink); color: var(--text); font-family: var(--font-main); height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
 
+        /* HEADER SECTION */
         .ticker-wrap { background: #000; border-bottom: 1px solid var(--border); padding: 6px 0; overflow: hidden; white-space: nowrap; flex-shrink: 0; }
-        .ticker { display: inline-block; padding-left: 100%; animation: ticker 40s linear infinite; font-family: var(--font-mono); font-size: 11px; color: var(--cyan); text-transform: uppercase; }
+        .ticker { display: inline-block; padding-left: 100%; animation: ticker 45s linear infinite; font-family: var(--font-mono); font-size: 11px; color: var(--cyan); text-transform: uppercase; letter-spacing: 2px; }
         @keyframes ticker { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
 
         .nav-menu { background: #000; border-bottom: 1px solid var(--border); padding: 0 30px; display: flex; gap: 20px; height: 40px; align-items: center; flex-shrink: 0; }
         .nav-item { font-family: var(--font-mono); font-size: 11px; color: #64748b; text-decoration: none; text-transform: uppercase; }
         .nav-item.active { color: var(--gold); border-bottom: 2px solid var(--gold); height: 100%; display: flex; align-items: center; }
 
-        .identity-bar { background: var(--surface); border-bottom: 2px solid var(--gold); padding: 10px 30px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
-        .name-brand { font-family: 'Bebas Neue'; font-size: 32px; letter-spacing: 1px; color: #fff; }
+        .identity-bar { background: var(--surface); border-bottom: 2px solid var(--gold); padding: 12px 30px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+        .name-brand { font-family: 'Bebas Neue'; font-size: 34px; letter-spacing: 1px; color: #fff; line-height: 1; }
         .name-brand span { color: var(--gold); }
+        .credentials { font-family: var(--font-mono); font-size: 12px; color: var(--cyan); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+        
         .live-status { font-family: var(--font-mono); font-size: 12px; color: var(--green); display: flex; align-items: center; gap: 8px; }
         .pulse { width: 8px; height: 8px; background: var(--green); border-radius: 50%; animation: pulse 1.5s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
+        /* KPI SECTION */
         .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 15px 30px; flex-shrink: 0; }
         .kpi-card { background: var(--panel); border: 1px solid var(--border); padding: 15px; border-top: 3px solid var(--cyan); }
         .kpi-label { font-family: var(--font-mono); font-size: 10px; color: var(--gold); text-transform: uppercase; }
-        .kpi-val { font-size: 32px; font-weight: 700; color: #fff; }
+        .kpi-val { font-size: 34px; font-weight: 700; color: #fff; }
 
-        .main-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; padding: 0 30px 15px; flex-grow: 1; min-height: 0; }
+        /* MAIN LAYOUT */
+        .main-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; padding: 0 30px 15px; flex-grow: 1; min-height: 0; }
         .panel { background: var(--panel); border: 1px solid var(--border); padding: 15px; display: flex; flex-direction: column; overflow: hidden; border-radius: 4px; }
-        .panel-h { color: var(--gold); font-family: 'Bebas Neue'; font-size: 20px; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 12px; flex-shrink: 0; }
+        .panel-h { color: var(--gold); font-family: 'Bebas Neue'; font-size: 22px; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 12px; flex-shrink: 0; }
         
-        .content { flex-grow: 1; overflow-y: auto; font-size: 13px; line-height: 1.4; }
-        .project-box { background: rgba(255,255,255,0.03); padding: 10px; border-left: 3px solid var(--green); margin-bottom: 10px; }
-        .p-title { color: var(--cyan); font-weight: 700; margin-bottom: 3px; }
+        .content { flex-grow: 1; overflow-y: auto; font-size: 13px; line-height: 1.4; padding-right: 5px; }
+        .content::-webkit-scrollbar { width: 4px; }
+        .content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
 
-        table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 12px; }
-        td { padding: 8px 0; border-bottom: 1px solid var(--border); }
+        .project-box { background: rgba(255,255,255,0.03); padding: 12px; border-left: 3px solid var(--green); margin-bottom: 12px; }
+        .p-title { color: var(--cyan); font-weight: 700; margin-bottom: 4px; text-transform: uppercase; font-size: 14px; }
+
+        table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 13px; }
+        td { padding: 10px 0; border-bottom: 1px solid var(--border); }
         .val-up { color: var(--green); font-weight: bold; }
 
-        .footer-summary { margin-top: auto; padding: 10px; background: rgba(240,180,41,0.1); border: 1px solid var(--gold); font-size: 12px; border-radius: 4px; flex-shrink: 0; }
+        .footer-summary { margin-top: auto; padding: 12px; background: rgba(240,180,41,0.1); border: 1px solid var(--gold); font-size: 13px; border-radius: 4px; flex-shrink: 0; line-height: 1.5; }
     </style>
 </head>
 <body>
 
 <div class="ticker-wrap">
-    <div class="ticker">SYSTEM STATUS: OPTIMIZED || ENGINE SYNC: REAL-TIME || DMAIC PHASE: IMPROVE/CONTROL || ISO 20022 COMPLIANT</div>
+    <div class="ticker">LSSBB STATUS: OPTIMIZED || DMAIC ENGINE: ACTIVE || ISO 20022 COMPLIANT || LEAN SIX SIGMA BLACK BELT ARCHITECTURE || EDGAR WAMEYO MISSION CONTROL</div>
 </div>
 
 <nav class="nav-menu">
@@ -61,50 +69,64 @@
 </nav>
 
 <div class="identity-bar">
-    <div class="name-brand">EDGAR WAMEYO | <span>OPERATIONAL EXCELLENCE</span></div>
+    <div>
+        <div class="name-brand">EDGAR WAMEYO | <span>LSSBB DIGITAL TWIN</span></div>
+        <div class="credentials">LEAN SIX SIGMA BLACK BELT | PMP | ISO IMS ARCHITECT</div>
+    </div>
     <div class="live-status"><div class="pulse"></div> DATA ENGINE: <span id="clock">00:00:00</span></div>
 </div>
 
 <div class="kpi-row">
-    <div class="kpi-card"><div class="kpi-label">Sigma Level</div><div class="kpi-val">4.82</div></div>
-    <div class="kpi-card"><div class="kpi-label">Cost Savings</div><div class="kpi-val">$2.14M</div></div>
+    <div class="kpi-card"><div class="kpi-label">Sigma Level</div><div class="kpi-val">4.82σ</div></div>
+    <div class="kpi-card"><div class="kpi-label">Cost Savings (YTD)</div><div class="kpi-val">$2.14M</div></div>
     <div class="kpi-card"><div class="kpi-label">Process Yield</div><div class="kpi-val">99.1%</div></div>
-    <div class="kpi-card"><div class="kpi-label">Throughput</div><div class="kpi-val">1.2M/hr</div></div>
+    <div class="kpi-card"><div class="kpi-label">Cycle Time Red.</div><div class="kpi-val">-24.5%</div></div>
 </div>
 
 <div class="main-grid">
     <div class="panel">
         <div class="panel-h">FLAGSHIP PROJECTS</div>
         <div class="content">
-            <div class="project-box"><div class="p-title">Process Variance Reduction</div>Identified critical X-factors in temperature control via DOE to stabilize batch reactions.</div>
-            <div class="project-box" style="border-left-color: var(--cyan);"><div class="p-title">VSM Redesign</div>Eliminated 48 hours of non-value-added waiting time, increasing throughput by 15%.</div>
+            <div class="project-box">
+                <div class="p-title">Chemical Process Variance Reduction</div>
+                Applied DMAIC to stabilize batch reactions. Utilized Design of Experiments (DOE) to optimize temperature control parameters.
+            </div>
+            <div class="project-box" style="border-left-color: var(--cyan);">
+                <div class="p-title">Value Stream Map (VSM) Redesign</div>
+                Eliminated 48 hours of non-value-added waiting time in the global supply chain, increasing throughput by 15%.
+            </div>
+            <div class="project-box" style="border-left-color: var(--gold);">
+                <div class="p-title">ISO IMS Architecture</div>
+                Architected an Integrated Management System merging Quality, Environmental, and Safety standards into a unified dashboard.
+            </div>
         </div>
     </div>
 
     <div class="panel">
         <div class="panel-h">DMAIC ROADMAP</div>
         <div class="content">
-            <p><b>Define:</b> Scoped defects as &lt;10 DPMO requirements.</p><br>
-            <p><b>Measure:</b> Baseline latency recorded at -18.2ms.</p><br>
-            <p><b>Analyze:</b> Root cause analysis via VSM bottlenecks.</p><br>
-            <p><b>Improve:</b> Implemented ISO 20022 data structures.</p><br>
-            <p><b>Control:</b> Real-time Poka-Yoke logic active.</p>
+            <p style="margin-bottom:12px;"><b>Define:</b> Scoped defects as &lt;10 DPMO requirements for critical nodes.</p>
+            <p style="margin-bottom:12px;"><b>Measure:</b> Baseline latency recorded at -18.2ms for high-frequency settlement flows.</p>
+            <p style="margin-bottom:12px;"><b>Analyze:</b> Root cause analysis performed on transaction bottlenecks via VSM.</p>
+            <p style="margin-bottom:12px;"><b>Improve:</b> Implemented ISO 20022 compliant data structures for system interoperability.</p>
+            <p style="margin-bottom:12px;"><b>Control:</b> Real-time Poka-Yoke fraud detection logic active and monitoring.</p>
         </div>
     </div>
 
     <div class="panel">
-        <div class="panel-h">SCORECARD</div>
+        <div class="panel-h">OPERATIONAL SCORECARD</div>
         <div class="content">
             <table>
-                <tr><td>METRIC</td><td>ACTUAL</td><td>GOAL</td></tr>
+                <tr style="color:var(--gold); font-size:11px;"><td>INDICATOR</td><td>ACTUAL</td><td>GOAL</td></tr>
                 <tr><td>Capability (CpK)</td><td class="val-up">1.67</td><td>1.33</td></tr>
                 <tr><td>Defects (DPMO)</td><td class="val-up">3.4</td><td>&lt;10</td></tr>
                 <tr><td>System Yield</td><td class="val-up">99.1%</td><td>98.5%</td></tr>
+                <tr><td>On-Time Delivery</td><td class="val-up">96.4%</td><td>95.0%</td></tr>
             </table>
         </div>
         <div class="footer-summary">
             <b>EXECUTIVE SUMMARY:</b><br>
-            Operating at Sigma Level 4.82. IMS successfully merges Industrial and Fintech protocols.
+            System operating at Sigma Level 4.82. The IMS successfully merges Industrial Chemist expertise with Fintech protocols for global scaling.
         </div>
     </div>
 </div>
