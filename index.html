@@ -12,60 +12,75 @@
             --text: #e2e8f0; --font-main: 'Rajdhani', sans-serif; --font-mono: 'Share Tech Mono', monospace;
         }
         * { box-sizing: border-box; }
-        body { background: var(--ink); color: var(--text); font-family: var(--font-main); margin: 0; padding: 0; overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
+        html, body { 
+            background: var(--ink); color: var(--text); font-family: var(--font-main); 
+            margin: 0; padding: 0; height: 100vh; overflow: hidden; 
+        }
 
-        /* ADVANCED HORIZONTAL TICKER */
-        .ticker-wrap { background: #000; border-bottom: 1px solid var(--border); padding: 8px 0; overflow: hidden; white-space: nowrap; }
-        .ticker { display: inline-block; padding-left: 100%; animation: ticker 35s linear infinite; font-family: var(--font-mono); font-size: 12px; color: var(--cyan); text-transform: uppercase; letter-spacing: 2px; }
+        /* 1. ANIMATED TOP TICKER - FIXED SPACING */
+        .ticker-wrap { background: #000; border-bottom: 1px solid var(--border); padding: 10px 0; overflow: hidden; white-space: nowrap; }
+        .ticker { 
+            display: inline-block; padding-left: 100%; animation: ticker 40s linear infinite; 
+            font-family: var(--font-mono); font-size: 13px; color: var(--cyan); 
+            text-transform: uppercase; letter-spacing: 3px; 
+        }
         @keyframes ticker { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
 
-        /* NAVIGATION & HEADER */
-        .nav-menu { background: #000; border-bottom: 1px solid var(--border); padding: 0 30px; display: flex; gap: 25px; height: 50px; align-items: center; }
-        .nav-item { font-family: var(--font-mono); font-size: 11px; color: #64748b; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; padding: 5px 12px; border: 1px solid transparent; transition: 0.3s; }
-        .nav-item.active { color: var(--gold); border: 1px solid var(--gold); background: rgba(240, 180, 41, 0.1); }
-        .nav-item:hover { color: #fff; border-bottom: 1px solid var(--gold); }
+        /* 2. HEADER SECTION */
+        .nav-menu { background: #000; border-bottom: 1px solid var(--border); padding: 0 40px; display: flex; gap: 30px; height: 45px; align-items: center; }
+        .nav-item { font-family: var(--font-mono); font-size: 12px; color: #64748b; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; }
+        .nav-item.active { color: var(--gold); font-weight: bold; border-bottom: 2px solid var(--gold); height: 100%; display: flex; align-items: center; }
 
-        .identity-bar { background: var(--surface); border-bottom: 2px solid var(--gold); padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; }
-        .name-brand { font-family: 'Bebas Neue'; font-size: 42px; letter-spacing: 3px; color: #fff; }
+        .identity-bar { background: var(--surface); border-bottom: 2px solid var(--gold); padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; }
+        .name-brand { font-family: 'Bebas Neue'; font-size: 38px; letter-spacing: 2px; color: #fff; line-height: 1; }
         .name-brand span { color: var(--gold); }
         .live-status { font-family: var(--font-mono); font-size: 14px; color: var(--green); display: flex; align-items: center; gap: 10px; }
-        .pulse { width: 12px; height: 12px; background: var(--green); border-radius: 50%; box-shadow: 0 0 15px var(--green); animation: pulse 1.5s infinite; }
+        .pulse { width: 12px; height: 12px; background: var(--green); border-radius: 50%; box-shadow: 0 0 10px var(--green); animation: pulse 1.5s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
-        /* EXECUTIVE KPI GRID */
-        .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 25px 40px; }
-        .kpi-card { background: var(--panel); border: 1px solid var(--border); padding: 30px; border-top: 5px solid var(--cyan); position: relative; }
-        .kpi-label { font-family: var(--font-mono); font-size: 12px; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; }
-        .kpi-val { font-size: 48px; font-weight: 700; color: #fff; margin-top: 10px; line-height: 1; }
+        /* 3. KPI ROW - SCALED FOR 100% ZOOM */
+        .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 20px 40px; }
+        .kpi-card { background: var(--panel); border: 1px solid var(--border); padding: 15px 25px; border-top: 4px solid var(--cyan); }
+        .kpi-label { font-family: var(--font-mono); font-size: 11px; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; }
+        .kpi-val { font-size: 38px; font-weight: 700; color: #fff; margin-top: 5px; }
 
-        /* 3-COLUMN MISSION CONTROL GRID */
-        .main-grid { display: grid; grid-template-columns: 1.2fr 1fr 0.8fr; gap: 25px; padding: 0 40px 40px; flex-grow: 1; }
-        .panel { background: var(--panel); border: 1px solid var(--border); padding: 30px; border-radius: 4px; display: flex; flex-direction: column; }
-        .panel-h { color: var(--gold); font-family: 'Bebas Neue'; font-size: 24px; letter-spacing: 2px; border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 25px; display: flex; justify-content: space-between; }
+        /* 4. MAIN CONTENT GRID - FLEXIBLE HEIGHT */
+        .main-grid { 
+            display: grid; grid-template-columns: 1.2fr 1fr 0.8fr; gap: 25px; 
+            padding: 0 40px 20px; height: calc(100vh - 280px); /* Forces grid to stay on screen */
+        }
+        .panel { 
+            background: var(--panel); border: 1px solid var(--border); 
+            padding: 20px; border-radius: 4px; display: flex; flex-direction: column; 
+            overflow: hidden; /* Prevents panel contents from spilling out */
+        }
+        .panel-h { color: var(--gold); font-family: 'Bebas Neue'; font-size: 22px; border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 15px; }
 
-        /* DMAIC STEPS */
-        .dmaic-box { display: flex; flex-direction: column; gap: 12px; }
-        .dmaic-step { display: flex; gap: 20px; align-items: center; background: rgba(255,255,255,0.02); padding: 15px; border-left: 4px solid var(--border); transition: 0.3s; }
-        .dmaic-step:hover { border-left-color: var(--cyan); background: rgba(0,212,255,0.05); }
-        .step-letter { font-family: 'Bebas Neue'; font-size: 28px; color: var(--cyan); min-width: 30px; }
-        .step-text b { display: block; font-size: 15px; color: #fff; text-transform: uppercase; }
-        .step-text p { margin: 2px 0 0; font-size: 13px; color: #94a3b8; }
+        /* DMAIC ROADMAP - COMPACT FOR BOARDROOM */
+        .dmaic-step { display: flex; gap: 15px; align-items: flex-start; background: rgba(255,255,255,0.02); padding: 10px; margin-bottom: 8px; border-left: 3px solid var(--border); }
+        .step-letter { font-family: 'Bebas Neue'; font-size: 24px; color: var(--cyan); line-height: 1; }
+        .step-text b { display: block; font-size: 14px; color: #fff; }
+        .step-text p { margin: 0; font-size: 12px; color: #94a3b8; line-height: 1.3; }
 
-        /* SCORECARD TABLE */
-        table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 15px; }
-        td { padding: 18px 0; border-bottom: 1px solid var(--border); }
+        /* TABLES & LISTS */
+        table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 13px; }
+        td { padding: 10px 0; border-bottom: 1px solid var(--border); }
         .val-up { color: var(--green); font-weight: bold; }
-        .val-warn { color: var(--red); font-weight: bold; }
 
-        /* WASTE RADAR */
-        .waste-item { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid var(--border); font-family: var(--font-mono); }
+        .waste-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); font-family: var(--font-mono); font-size: 13px; }
+        
+        /* EXECUTIVE SUMMARY FOOTER */
+        .exec-sum { 
+            margin-top: auto; padding: 15px; background: rgba(0,212,255,0.08); 
+            border: 1px solid var(--cyan); font-size: 12.5px; border-radius: 4px;
+        }
     </style>
 </head>
 <body>
 
 <div class="ticker-wrap">
     <div class="ticker">
-        LSSBB SYSTEM STATUS: OPTIMIZED || DMAIC PHASE: IMPROVE/CONTROL || REAL-TIME ENGINE SYNC: ACTIVE || ISO 20022 COMPLIANCE: VERIFIED || OPEX EXPONENTIAL ECOSYSTEM
+        LSSBB SYSTEM STATUS: OPTIMIZED || ENGINE SYNC: REAL-TIME || DMAIC PHASE: IMPROVE/CONTROL || ISO 20022 COMPLIANT || EDGAR WAMEYO MISSION CONTROL
     </div>
 </div>
 
@@ -75,64 +90,54 @@
 </nav>
 
 <div class="identity-bar">
-    <div class="name-brand">EDGAR WAMEYO | <span>MISSION CONTROL</span></div>
-    <div class="live-status">
-        <div class="pulse"></div> ENGINE CLOCK: <span id="clock">00:00:00</span>
-    </div>
+    <div class="name-brand">EDGAR WAMEYO | <span>OPERATIONAL EXCELLENCE</span></div>
+    <div class="live-status"><div class="pulse"></div> DATA ENGINE: <span id="clock">00:00:00</span></div>
 </div>
 
 <div class="kpi-row">
     <div class="kpi-card"><div class="kpi-label">Sigma Level</div><div class="kpi-val">4.82σ</div></div>
-    <div class="kpi-card"><div class="kpi-label">Cost Savings (YTD)</div><div class="kpi-val">$2,142,500</div></div>
-    <div class="kpi-card"><div class="kpi-label">Process Yield</div><div class="kpi-val">99.1%</div></div>
-    <div class="kpi-card"><div class="kpi-label">Operational Stability</div><div class="kpi-val">STABLE</div></div>
+    <div class="kpi-card"><div class="kpi-label">Cost Savings</div><div class="kpi-val">$2.14M</div></div>
+    <div class="kpi-card"><div class="kpi-label">Process RTY</div><div class="kpi-val">99.1%</div></div>
+    <div class="kpi-card"><div class="kpi-label">Throughput</div><div class="kpi-val">1.2M/hr</div></div>
 </div>
 
 <div class="main-grid">
     <div class="panel">
         <div class="panel-h">DMAIC STRATEGIC ROADMAP</div>
-        <div class="dmaic-box">
-            <div class="dmaic-step"><div class="step-letter">D</div><div class="step-text"><b>Define</b><p>Scoped defects as &lt;10 DPMO requirements for Fintech nodes[cite: 263].</p></div></div>
-            <div class="dmaic-step"><div class="step-letter">M</div><div class="step-text"><b>Measure</b><p>Baseline latency recorded at -18.2ms for high-frequency settlement[cite: 230].</p></div></div>
-            <div class="dmaic-step"><div class="step-letter">A</div><div class="step-text"><b>Analyze</b><p>Root cause analysis on transaction bottlenecks using VSM[cite: 244].</p></div></div>
-            <div class="dmaic-step"><div class="step-letter">I</div><div class="step-text"><b>Improve</b><p>Implemented ISO 20022 compliant data structures[cite: 249].</p></div></div>
-            <div class="dmaic-step"><div class="step-letter">C</div><div class="step-text"><b>Control</b><p>Real-time Poka-Yoke fraud detection logic active[cite: 239].</p></div></div>
-        </div>
+        <div class="dmaic-step"><div class="step-letter">D</div><div class="step-text"><b>Define</b><p>Scoped defects as &lt;10 DPMO requirements for banking nodes.</p></div></div>
+        <div class="dmaic-step"><div class="step-letter">M</div><div class="step-text"><b>Measure</b><p>Baseline latency recorded at -18.2ms for settlement flows.</p></div></div>
+        <div class="dmaic-step"><div class="step-letter">A</div><div class="step-text"><b>Analyze</b><p>Root cause analysis on transaction bottlenecks using VSM.</p></div></div>
+        <div class="dmaic-step"><div class="step-letter">I</div><div class="step-text"><b>Improve</b><p>Implemented ISO 20022 compliant data structures.</p></div></div>
+        <div class="dmaic-step" style="margin:0;"><div class="step-letter">C</div><div class="step-text"><b>Control</b><p>Real-time Poka-Yoke fraud detection logic active.</p></div></div>
     </div>
 
     <div class="panel">
-        <div class="panel-h">PROCESS CAPABILITY (CpK)</div>
+        <div class="panel-h">OPERATIONAL SCORECARD</div>
         <table>
-            <tr style="color: var(--gold); font-size: 11px;"><td>INDICATOR</td><td>ACTUAL</td><td>BENCHMARK</td></tr>
-            <tr><td>Overall Effectiveness (OEE)</td><td class="val-warn">84.2%</td><td>85.0%</td></tr>
+            <tr><td>Metric</td><td>Actual</td><td>Goal</td></tr>
             <tr><td>Process Capability (CpK)</td><td class="val-up">1.67</td><td>1.33</td></tr>
-            <tr><td>Defects (DPMO)</td><td class="val-up">3.4</td><td>&lt; 10</td></tr>
-            <tr><td>First Pass Yield</td><td class="val-up">99.1%</td><td>98.5%</td></tr>
-            <tr><td>On-Time Delivery (OTD)</td><td class="val-up">96.4%</td><td>95.0%</td></tr>
+            <tr><td>Defects (DPMO)</td><td class="val-up">3.4</td><td>&lt;10</td></tr>
+            <tr><td>System Availability</td><td class="val-up">99.9%</td><td>99.5%</td></tr>
+            <tr><td>On-Time Delivery</td><td class="val-up">96.4%</td><td>95.0%</td></tr>
         </table>
     </div>
 
     <div class="panel">
         <div class="panel-h">WASTE RADAR (DOWNTIME)</div>
-        <div class="waste-item"><span>DEFECTS/REWORK</span><span style="color:var(--red); font-weight:bold;">CRITICAL</span></div>
+        <div class="waste-item"><span>REWORK</span><span style="color:var(--red); font-weight:bold;">CRITICAL</span></div>
+        <div class="waste-item"><span>WAITING</span><span style="color:var(--gold); font-weight:bold;">WARNING</span></div>
         <div class="waste-item"><span>OVERPRODUCTION</span><span style="color:var(--green); font-weight:bold;">MINIMAL</span></div>
-        <div class="waste-item"><span>WAITING/LATENCY</span><span style="color:var(--gold); font-weight:bold;">WARNING</span></div>
-        <div class="waste-item"><span>INVENTORY</span><span style="color:var(--green); font-weight:bold;">LEAN</span></div>
-        <div class="waste-item" style="border:none;"><span>TRANSPORTATION</span><span style="color:var(--cyan); font-weight:bold;">STABLE</span></div>
         
-        <div style="margin-top:auto; padding: 20px; background:rgba(0,212,255,0.05); border: 1px dashed var(--cyan); font-size: 13px;">
+        <div class="exec-sum">
             <b style="color:var(--cyan);">EXECUTIVE SUMMARY:</b><br>
-            System is operating at **Sigma Level 4.82**[cite: 228]. Integrated Management System (IMS) successfully merging Industrial and Fintech protocols[cite: 250].
+            System is operating at **Sigma Level 4.82**. The Integrated Management System (IMS) successfully merges Industrial and Fintech protocols.
         </div>
     </div>
 </div>
 
 <script>
-    function updateEngine() {
-        document.getElementById('clock').innerText = new Date().toLocaleTimeString();
-    }
-    setInterval(updateEngine, 1000);
-    updateEngine();
+    function update() { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }
+    setInterval(update, 1000); update();
 </script>
 </body>
 </html>
