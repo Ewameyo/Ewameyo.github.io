@@ -14,84 +14,85 @@
         * { box-sizing: border-box; }
         html, body { 
             background: var(--ink); color: var(--text); font-family: var(--font-main); 
-            margin: 0; padding: 0; height: 100vh; overflow: hidden; 
+            margin: 0; padding: 0; height: 100vh; width: 100vw; overflow: hidden; 
+            display: flex; flex-direction: column;
         }
 
-        /* 1. ANIMATED TOP TICKER - FIXED SPACING */
-        .ticker-wrap { background: #000; border-bottom: 1px solid var(--border); padding: 10px 0; overflow: hidden; white-space: nowrap; }
+        /* 1. FIXED TOP NAV & TICKER */
+        .header-stack { flex-shrink: 0; }
+        .ticker-wrap { background: #000; border-bottom: 1px solid var(--border); padding: 0.5vh 0; overflow: hidden; white-space: nowrap; }
         .ticker { 
-            display: inline-block; padding-left: 100%; animation: ticker 40s linear infinite; 
-            font-family: var(--font-mono); font-size: 13px; color: var(--cyan); 
-            text-transform: uppercase; letter-spacing: 3px; 
+            display: inline-block; padding-left: 100%; animation: ticker 45s linear infinite; 
+            font-family: var(--font-mono); font-size: 1.4vh; color: var(--cyan); 
+            text-transform: uppercase; letter-spacing: 2px; 
         }
         @keyframes ticker { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
 
-        /* 2. HEADER SECTION */
-        .nav-menu { background: #000; border-bottom: 1px solid var(--border); padding: 0 40px; display: flex; gap: 30px; height: 45px; align-items: center; }
-        .nav-item { font-family: var(--font-mono); font-size: 12px; color: #64748b; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; }
-        .nav-item.active { color: var(--gold); font-weight: bold; border-bottom: 2px solid var(--gold); height: 100%; display: flex; align-items: center; }
+        .nav-menu { background: #000; border-bottom: 1px solid var(--border); padding: 0 2vw; display: flex; gap: 2vw; height: 4vh; align-items: center; }
+        .nav-item { font-family: var(--font-mono); font-size: 1.2vh; color: #64748b; text-decoration: none; text-transform: uppercase; }
+        .nav-item.active { color: var(--gold); border-bottom: 2px solid var(--gold); height: 100%; display: flex; align-items: center; }
 
-        .identity-bar { background: var(--surface); border-bottom: 2px solid var(--gold); padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; }
-        .name-brand { font-family: 'Bebas Neue'; font-size: 38px; letter-spacing: 2px; color: #fff; line-height: 1; }
+        .identity-bar { background: var(--surface); border-bottom: 2px solid var(--gold); padding: 1.5vh 2vw; display: flex; justify-content: space-between; align-items: center; }
+        .name-brand { font-family: 'Bebas Neue'; font-size: 4vh; letter-spacing: 2px; color: #fff; line-height: 1; }
         .name-brand span { color: var(--gold); }
-        .live-status { font-family: var(--font-mono); font-size: 14px; color: var(--green); display: flex; align-items: center; gap: 10px; }
-        .pulse { width: 12px; height: 12px; background: var(--green); border-radius: 50%; box-shadow: 0 0 10px var(--green); animation: pulse 1.5s infinite; }
+        .live-status { font-family: var(--font-mono); font-size: 1.5vh; color: var(--green); display: flex; align-items: center; gap: 0.5vw; }
+        .pulse { width: 1vh; height: 1vh; background: var(--green); border-radius: 50%; box-shadow: 0 0 10px var(--green); animation: pulse 1.5s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
-        /* 3. KPI ROW - SCALED FOR 100% ZOOM */
-        .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 20px 40px; }
-        .kpi-card { background: var(--panel); border: 1px solid var(--border); padding: 15px 25px; border-top: 4px solid var(--cyan); }
-        .kpi-label { font-family: var(--font-mono); font-size: 11px; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; }
-        .kpi-val { font-size: 38px; font-weight: 700; color: #fff; margin-top: 5px; }
+        /* 2. KPI SECTION - DYNAMIC HEIGHT */
+        .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5vw; padding: 2vh 2vw; flex-shrink: 0; }
+        .kpi-card { background: var(--panel); border: 1px solid var(--border); padding: 1.5vh; border-top: 3px solid var(--cyan); }
+        .kpi-label { font-family: var(--font-mono); font-size: 1.1vh; color: var(--gold); text-transform: uppercase; }
+        .kpi-val { font-size: 3.5vh; font-weight: 700; color: #fff; }
 
-        /* 4. MAIN CONTENT GRID - FLEXIBLE HEIGHT */
+        /* 3. MAIN CONTENT - AUTO-FILL REMAINING SPACE */
         .main-grid { 
-            display: grid; grid-template-columns: 1.2fr 1fr 0.8fr; gap: 25px; 
-            padding: 0 40px 20px; height: calc(100vh - 280px); /* Forces grid to stay on screen */
+            display: grid; grid-template-columns: 1.2fr 1fr 0.8fr; gap: 1.5vw; 
+            padding: 0 2vw 2vh; flex-grow: 1; overflow: hidden;
         }
         .panel { 
             background: var(--panel); border: 1px solid var(--border); 
-            padding: 20px; border-radius: 4px; display: flex; flex-direction: column; 
-            overflow: hidden; /* Prevents panel contents from spilling out */
+            padding: 1.5vh; border-radius: 4px; display: flex; flex-direction: column; 
+            min-height: 0; /* Critical for flex scrolling */
         }
-        .panel-h { color: var(--gold); font-family: 'Bebas Neue'; font-size: 22px; border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 15px; }
+        .panel-h { color: var(--gold); font-family: 'Bebas Neue'; font-size: 2.2vh; border-bottom: 1px solid var(--border); padding-bottom: 0.8vh; margin-bottom: 1.5vh; flex-shrink: 0; }
 
-        /* DMAIC ROADMAP - COMPACT FOR BOARDROOM */
-        .dmaic-step { display: flex; gap: 15px; align-items: flex-start; background: rgba(255,255,255,0.02); padding: 10px; margin-bottom: 8px; border-left: 3px solid var(--border); }
-        .step-letter { font-family: 'Bebas Neue'; font-size: 24px; color: var(--cyan); line-height: 1; }
-        .step-text b { display: block; font-size: 14px; color: #fff; }
-        .step-text p { margin: 0; font-size: 12px; color: #94a3b8; line-height: 1.3; }
+        /* CONTENT LISTS - SCALED */
+        .dmaic-step { display: flex; gap: 1vw; background: rgba(255,255,255,0.02); padding: 0.8vh; margin-bottom: 0.5vh; border-left: 3px solid var(--border); }
+        .step-letter { font-family: 'Bebas Neue'; font-size: 2.5vh; color: var(--cyan); }
+        .step-text b { display: block; font-size: 1.4vh; color: #fff; }
+        .step-text p { margin: 0; font-size: 1.2vh; color: #94a3b8; }
 
-        /* TABLES & LISTS */
-        table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 13px; }
-        td { padding: 10px 0; border-bottom: 1px solid var(--border); }
+        table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 1.3vh; }
+        td { padding: 0.8vh 0; border-bottom: 1px solid var(--border); }
         .val-up { color: var(--green); font-weight: bold; }
 
-        .waste-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); font-family: var(--font-mono); font-size: 13px; }
+        .waste-item { display: flex; justify-content: space-between; padding: 0.8vh 0; border-bottom: 1px solid var(--border); font-family: var(--font-mono); font-size: 1.3vh; }
         
-        /* EXECUTIVE SUMMARY FOOTER */
         .exec-sum { 
-            margin-top: auto; padding: 15px; background: rgba(0,212,255,0.08); 
-            border: 1px solid var(--cyan); font-size: 12.5px; border-radius: 4px;
+            margin-top: auto; padding: 1vh; background: rgba(0,212,255,0.08); 
+            border: 1px solid var(--cyan); font-size: 1.3vh; border-radius: 4px; line-height: 1.4;
         }
     </style>
 </head>
 <body>
 
-<div class="ticker-wrap">
-    <div class="ticker">
-        LSSBB SYSTEM STATUS: OPTIMIZED || ENGINE SYNC: REAL-TIME || DMAIC PHASE: IMPROVE/CONTROL || ISO 20022 COMPLIANT || EDGAR WAMEYO MISSION CONTROL
+<div class="header-stack">
+    <div class="ticker-wrap">
+        <div class="ticker">
+            LSSBB SYSTEM STATUS: OPTIMIZED || ENGINE SYNC: REAL-TIME || DMAIC PHASE: IMPROVE/CONTROL || ISO 20022 COMPLIANT || EDGAR WAMEYO MISSION CONTROL
+        </div>
     </div>
-</div>
 
-<nav class="nav-menu">
-    <a href="index.html" class="nav-item active">MBB Main Command</a>
-    <a href="fintech.html" class="nav-item">Fintech Operations</a>
-</nav>
+    <nav class="nav-menu">
+        <a href="index.html" class="nav-item active">MBB Main Command</a>
+        <a href="fintech.html" class="nav-item">Fintech Operations</a>
+    </nav>
 
-<div class="identity-bar">
-    <div class="name-brand">EDGAR WAMEYO | <span>OPERATIONAL EXCELLENCE</span></div>
-    <div class="live-status"><div class="pulse"></div> DATA ENGINE: <span id="clock">00:00:00</span></div>
+    <div class="identity-bar">
+        <div class="name-brand">EDGAR WAMEYO | <span>OPERATIONAL EXCELLENCE</span></div>
+        <div class="live-status"><div class="pulse"></div> DATA ENGINE: <span id="clock">00:00:00</span></div>
+    </div>
 </div>
 
 <div class="kpi-row">
@@ -106,38 +107,3 @@
         <div class="panel-h">DMAIC STRATEGIC ROADMAP</div>
         <div class="dmaic-step"><div class="step-letter">D</div><div class="step-text"><b>Define</b><p>Scoped defects as &lt;10 DPMO requirements for banking nodes.</p></div></div>
         <div class="dmaic-step"><div class="step-letter">M</div><div class="step-text"><b>Measure</b><p>Baseline latency recorded at -18.2ms for settlement flows.</p></div></div>
-        <div class="dmaic-step"><div class="step-letter">A</div><div class="step-text"><b>Analyze</b><p>Root cause analysis on transaction bottlenecks using VSM.</p></div></div>
-        <div class="dmaic-step"><div class="step-letter">I</div><div class="step-text"><b>Improve</b><p>Implemented ISO 20022 compliant data structures.</p></div></div>
-        <div class="dmaic-step" style="margin:0;"><div class="step-letter">C</div><div class="step-text"><b>Control</b><p>Real-time Poka-Yoke fraud detection logic active.</p></div></div>
-    </div>
-
-    <div class="panel">
-        <div class="panel-h">OPERATIONAL SCORECARD</div>
-        <table>
-            <tr><td>Metric</td><td>Actual</td><td>Goal</td></tr>
-            <tr><td>Process Capability (CpK)</td><td class="val-up">1.67</td><td>1.33</td></tr>
-            <tr><td>Defects (DPMO)</td><td class="val-up">3.4</td><td>&lt;10</td></tr>
-            <tr><td>System Availability</td><td class="val-up">99.9%</td><td>99.5%</td></tr>
-            <tr><td>On-Time Delivery</td><td class="val-up">96.4%</td><td>95.0%</td></tr>
-        </table>
-    </div>
-
-    <div class="panel">
-        <div class="panel-h">WASTE RADAR (DOWNTIME)</div>
-        <div class="waste-item"><span>REWORK</span><span style="color:var(--red); font-weight:bold;">CRITICAL</span></div>
-        <div class="waste-item"><span>WAITING</span><span style="color:var(--gold); font-weight:bold;">WARNING</span></div>
-        <div class="waste-item"><span>OVERPRODUCTION</span><span style="color:var(--green); font-weight:bold;">MINIMAL</span></div>
-        
-        <div class="exec-sum">
-            <b style="color:var(--cyan);">EXECUTIVE SUMMARY:</b><br>
-            System is operating at **Sigma Level 4.82**. The Integrated Management System (IMS) successfully merges Industrial and Fintech protocols.
-        </div>
-    </div>
-</div>
-
-<script>
-    function update() { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }
-    setInterval(update, 1000); update();
-</script>
-</body>
-</html>
