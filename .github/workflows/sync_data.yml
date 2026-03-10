@@ -1,25 +1,38 @@
 name: Sync External Dept Data
+
 on:
   schedule:
-    - cron: '0 * * * *' # This triggers the "robot" every hour
-  workflow_dispatch: # This adds a button so you can run it manually
+    - cron: '0 * * * *' # Standardized Cycle: Runs every hour
+  workflow_dispatch:      # Manual Override: Allows for instant testing
 
 jobs:
-  sync:
+  sync_engine:
     runs-on: ubuntu-latest
+    timeout-minutes: 5    # Poka-Yoke: Prevents the 46s+ hanging runs
+
     steps:
       - name: Checkout Command Center
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4 # Upgraded to v4 for 100% stability
 
-      - name: Pull External Data
+      - name: Pull External Data (Precision Fetch)
         run: |
-          # This command 'grabs' the file from the other department
-          curl -L -o Financial_Update.csv https://raw.githubusercontent.com/Ewameyo/MBB-Command-Center/main/Financial%20Impact.csv
-          
-      - name: Commit and Push to TV Dashboard
+          # Precision: Retry 5 times with 10s delay to eliminate network variance
+          curl --retry 5 --retry-delay 10 -L -o Financial_Update.csv "https://raw.githubusercontent.com/Ewameyo/MBB-Command-Center/main/Financial%20Impact.csv"
+
+      - name: Data Integrity Gate (Accuracy Check)
+        run: |
+          # Accuracy: If the file is empty, STOP. Do not push defects to the dashboard.
+          if [ ! -s Financial_Update.csv ]; then
+            echo "ERROR: Source file is empty or missing. Process Aborted."
+            exit 1
+          fi
+
+      - name: Lean Commit and Push
         run: |
           git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add .
-          git commit -m "DTO: Automated sync from departmental folder" || exit 0
-          git push
+          git config --local user.name "LSSBB-Automation-Bot"
+          git add Financial_Update.csv
+          
+          # Waste Elimination (Muda): Only commit if data HAS changed. 
+          # If no change, it exits gracefully without a 'failed' red mark.
+          git diff --quiet && git diff --staged --quiet || (git commit -m "DTO: Automated sync (Zero-Defect)" && git push)
