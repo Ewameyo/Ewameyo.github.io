@@ -3,18 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edgar Wameyo | Fintech Systems Architecture</title> [cite: 6]
-    <link href="https://fonts.googleapis.com/css?family=Bebas+Neue|Rajdhani:wght@300;500;700|Share+Tech+Mono&display=swap" rel="stylesheet"> [cite: 8, 9]
+    <title>Edgar Wameyo | Fintech Systems Architecture</title>
+    <link href="https://fonts.googleapis.com/css?family=Bebas+Neue|Rajdhani:wght@300;500;700|Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
             --ink: #05080f; --surface: #0c121d; --panel: #111927; --border: #1e2d47;
             --gold: #f0b429; --cyan: #00d4ff; --green: #00ff9d; --red: #ff4757;
             --text: #e2e8f0; --font-main: 'Rajdhani', sans-serif; --font-mono: 'Share Tech Mono', monospace;
-        } [cite: 11-16]
+        }
         
-        body { background: var(--ink); color: var(--text); font-family: var(--font-main); margin: 0; padding: 0; overflow-x: hidden; } [cite: 17]
+        body { background: var(--ink); color: var(--text); font-family: var(--font-main); margin: 0; padding: 0; overflow-x: hidden; }
 
-        /* UNIVERSAL NAV MENU */
         .nav-menu {
             background: #000;
             border-bottom: 1px solid var(--border);
@@ -42,36 +41,36 @@
             background: rgba(240, 180, 41, 0.1);
         }
 
-        .ticker-wrap { background: #000; border-bottom: 1px solid var(--border); padding: 6px 0; overflow: hidden; white-space: nowrap; } [cite: 19, 20]
-        .ticker { display: inline-block; padding-left: 100%; animation: ticker 40s linear infinite; font-family: var(--font-mono); font-size: 11px; color: var(--cyan); text-transform: uppercase; } [cite: 21, 22]
-        @keyframes ticker { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } } [cite: 23]
+        .ticker-wrap { background: #000; border-bottom: 1px solid var(--border); padding: 6px 0; overflow: hidden; white-space: nowrap; }
+        .ticker { display: inline-block; padding-left: 100%; animation: ticker 40s linear infinite; font-family: var(--font-mono); font-size: 11px; color: var(--cyan); text-transform: uppercase; }
+        @keyframes ticker { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
         
-        .identity-bar { background: var(--surface); border-bottom: 2px solid var(--gold); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; } [cite: 25, 26]
-        .name-brand { font-family: 'Bebas Neue'; font-size: 32px; letter-spacing: 2px; color: #fff; } [cite: 27]
-        .name-brand span { color: var(--gold); } [cite: 27]
-        .live-status { font-family: var(--font-mono); font-size: 12px; color: var(--green); display: flex; align-items: center; gap: 8px; } [cite: 28]
-        .pulse { width: 10px; height: 10px; background: var(--green); border-radius: 50%; box-shadow: 0 0 10px var(--green); animation: pulse 1.5s infinite; } [cite: 29]
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } } [cite: 31]
+        .identity-bar { background: var(--surface); border-bottom: 2px solid var(--gold); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
+        .name-brand { font-family: 'Bebas Neue'; font-size: 32px; letter-spacing: 2px; color: #fff; }
+        .name-brand span { color: var(--gold); }
+        .live-status { font-family: var(--font-mono); font-size: 12px; color: var(--green); display: flex; align-items: center; gap: 8px; }
+        .pulse { width: 10px; height: 10px; background: var(--green); border-radius: 50%; box-shadow: 0 0 10px var(--green); animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
         
-        .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 25px; } [cite: 33]
-        .kpi-card { background: var(--panel); border: 1px solid var(--border); padding: 20px; border-top: 3px solid var(--cyan); box-shadow: 0 4px 15px rgba(0,0,0,0.3); } [cite: 34, 35]
-        .kpi-label { font-family: var(--font-mono); font-size: 11px; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; } [cite: 36]
-        .kpi-val { font-size: 34px; font-weight: 700; color: #fff; margin-top: 5px; } [cite: 37]
+        .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 25px; }
+        .kpi-card { background: var(--panel); border: 1px solid var(--border); padding: 20px; border-top: 3px solid var(--cyan); box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .kpi-label { font-family: var(--font-mono); font-size: 11px; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; }
+        .kpi-val { font-size: 34px; font-weight: 700; color: #fff; margin-top: 5px; }
         
-        .grid { display: grid; grid-template-columns: 1.2fr 1fr 0.8fr; gap: 20px; padding: 0 25px 25px 25px; } [cite: 39]
-        .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 4px; padding: 20px; position: relative; } [cite: 40]
-        .panel-h { color: var(--gold); font-family: 'Bebas Neue'; font-size: 20px; letter-spacing: 1px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px; display: flex; justify-content: space-between; } [cite: 41, 42]
-        .status-tag { font-family: var(--font-mono); font-size: 10px; background: var(--green); color: #000; padding: 2px 8px; border-radius: 2px; height: fit-content; } [cite: 43]
+        .grid { display: grid; grid-template-columns: 1.2fr 1fr 0.8fr; gap: 20px; padding: 0 25px 25px 25px; }
+        .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 4px; padding: 20px; position: relative; }
+        .panel-h { color: var(--gold); font-family: 'Bebas Neue'; font-size: 20px; letter-spacing: 1px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px; display: flex; justify-content: space-between; }
+        .status-tag { font-family: var(--font-mono); font-size: 10px; background: var(--green); color: #000; padding: 2px 8px; border-radius: 2px; height: fit-content; }
         
-        .project-detail { background: rgba(255,255,255,0.03); padding: 15px; border-left: 3px solid var(--green); margin-bottom: 15px; } [cite: 45, 46]
-        .p-title { color: var(--cyan); font-weight: 700; font-size: 16px; margin-bottom: 5px; } [cite: 47]
-        .p-desc { font-size: 13px; color: #cbd5e1; line-height: 1.4; } [cite: 48]
+        .project-detail { background: rgba(255,255,255,0.03); padding: 15px; border-left: 3px solid var(--green); margin-bottom: 15px; }
+        .p-title { color: var(--cyan); font-weight: 700; font-size: 16px; margin-bottom: 5px; }
+        .p-desc { font-size: 13px; color: #cbd5e1; line-height: 1.4; }
         
-        table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 13px; } [cite: 50, 51]
-        td { padding: 14px 0; border-bottom: 1px solid var(--border); } [cite: 52]
-        .val-up { color: var(--green); font-weight: bold; } [cite: 53]
-        .val-warn { color: var(--red); font-weight: bold; } [cite: 54]
-        @media (max-width: 1100px) { .grid, .kpi-row { grid-template-columns: 1fr; } } [cite: 55]
+        table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 13px; }
+        td { padding: 14px 0; border-bottom: 1px solid var(--border); }
+        .val-up { color: var(--green); font-weight: bold; }
+        .val-warn { color: var(--red); font-weight: bold; }
+        @media (max-width: 1100px) { .grid, .kpi-row { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -84,64 +83,64 @@
 <div class="ticker-wrap">
     <div class="ticker">
         FINTECH SYSTEM STATUS: OPTIMIZED || ENGINE SYNC: REAL-TIME || TRANSACTION STATUS: SECURE || ISO 20022 COMPLIANT || EDGAR WAMEYO FINTECH COMMAND
-    </div> [cite: 61-63]
+    </div>
 </div>
 
 <div class="identity-bar">
-    <div class="name-brand">EDGAR WAMEYO | <span>FINTECH COMMAND CENTER</span></div> [cite: 67]
+    <div class="name-brand">EDGAR WAMEYO | <span>FINTECH COMMAND CENTER</span></div>
     <div class="live-status">
-        <div class="pulse"></div> LIVE DATA ENGINE: <span id="clock">00:00:00</span> [cite: 69]
+        <div class="pulse"></div> LIVE DATA ENGINE: <span id="clock">00:00:00</span>
     </div>
 </div>
 
 <div style="padding: 10px 30px; background: var(--surface); font-family: var(--font-mono); font-size: 11px; color: var(--cyan); border-bottom: 1px solid var(--border); letter-spacing: 1px;">
-    FINANCIAL SYSTEMS ARCHITECT | LEAN SIX SIGMA BLACK BELT | PMP [cite: 74, 75]
+    FINANCIAL SYSTEMS ARCHITECT | LEAN SIX SIGMA BLACK BELT | PMP
 </div>
 
 <div class="kpi-row">
     <div class="kpi-card"><div class="kpi-label">Fraud Detection Rate</div><div class="kpi-val">99.98%</div></div>
-    <div class="kpi-card"><div class="kpi-label">Operational Savings (YTD)</div><div class="kpi-val">$2,142,500</div></div> [cite: 80]
+    <div class="kpi-card"><div class="kpi-label">Operational Savings (YTD)</div><div class="kpi-val">$2,142,500</div></div>
     <div class="kpi-card"><div class="kpi-label">Settlement Latency</div><div class="kpi-val">-18.2ms</div></div>
     <div class="kpi-card"><div class="kpi-label">Transaction Throughput</div><div class="kpi-val">1.2M/hr</div></div>
-</div> [cite: 78-83]
+</div>
 
 <div class="grid">
     <div class="panel">
-        <div class="panel-h">FLAGSHIP PROJECT: FINTECH OPTIMIZATION <span class="status-tag">COMPLETED</span></div> [cite: 86, 87]
+        <div class="panel-h">FLAGSHIP PROJECT: FINTECH OPTIMIZATION <span class="status-tag">COMPLETED</span></div>
         <div class="project-detail">
             <div class="p-title">Automated Fraud Detection Pipeline</div>
-            <div class="p-desc">Implemented DMAIC methodology to stabilize fraud detection algorithms. Utilized DOE to identify critical X-factors in transaction security.</div> [cite: 90-92]
+            <div class="p-desc">Implemented DMAIC methodology to stabilize fraud detection algorithms. Utilized DOE to identify critical X-factors in transaction security.</div>
         </div>
         <div class="project-detail" style="border-left-color: var(--cyan);">
             <div class="p-title">High-Frequency Settlement VSM</div>
-            <div class="p-desc">Eliminated non-value-added waiting time in cross-border payment flows, resulting in a 15% increase in throughput capacity.</div> [cite: 96, 97]
+            <div class="p-desc">Eliminated non-value-added waiting time in cross-border payment flows, resulting in a 15% increase in throughput capacity.</div>
         </div>
         <div class="project-detail" style="border-left-color: var(--gold);">
             <div class="p-title">ISO 20022 Compliance Launch</div>
-            <div class="p-desc">Architected an Integrated Management System merging financial standards and digital-first security protocols.</div> [cite: 101, 102]
+            <div class="p-desc">Architected an Integrated Management System merging financial standards and digital-first security protocols.</div>
         </div>
     </div>
 
     <div class="panel">
-        <div class="panel-h">OPERATIONAL SCORECARD</div> [cite: 106]
+        <div class="panel-h">OPERATIONAL SCORECARD</div>
         <table>
-            <tr style="color: var(--gold); font-size: 10px; letter-spacing: 1px;"><td>INDICATOR</td><td>ACTUAL</td><td>BENCHMARK</td></tr> [cite: 109]
-            <tr><td>System Availability</td><td class="val-up">99.9%</td><td>99.5%</td></tr> [cite: 110]
-            <tr><td>Processing Precision</td><td class="val-up">1.67 CpK</td><td>1.33</td></tr> [cite: 112, 113]
-            <tr><td>Transaction Defects</td><td class="val-up">3.4 DPMO</td><td>< 10</td></tr> [cite: 114]
-            <tr><td>Settlement Yield</td><td class="val-up">99.1%</td><td>98.5%</td></tr> [cite: 115]
-            <tr><td>Service Level (SLA)</td><td class="val-up">96.4%</td><td>95.0%</td></tr> [cite: 116, 117]
+            <tr style="color: var(--gold); font-size: 10px; letter-spacing: 1px;"><td>INDICATOR</td><td>ACTUAL</td><td>BENCHMARK</td></tr>
+            <tr><td>System Availability</td><td class="val-up">99.9%</td><td>99.5%</td></tr>
+            <tr><td>Processing Precision</td><td class="val-up">1.67 CpK</td><td>1.33</td></tr>
+            <tr><td>Transaction Defects</td><td class="val-up">3.4 DPMO</td><td>&lt; 10</td></tr>
+            <tr><td>Settlement Yield</td><td class="val-up">99.1%</td><td>98.5%</td></tr>
+            <tr><td>Service Level (SLA)</td><td class="val-up">96.4%</td><td>95.0%</td></tr>
         </table>
     </div>
 
     <div class="panel">
-        <div class="panel-h">WASTE RADAR (FINANCIAL)</div> [cite: 121]
+        <div class="panel-h">WASTE RADAR (FINANCIAL)</div>
         <div style="display: flex; flex-direction:column; gap:18px; margin-top: 10px;">
-            <div style="display: flex; justify-content:space-between;"><span>REWORK/DEFECTS</span><span style="color:var(--red); font-weight:bold;">CRITICAL</span></div> [cite: 124, 125]
-            <div style="display: flex; justify-content:space-between;"><span>OVER-PROCESSING</span><span style="color:var(--green); font-weight:bold;">MINIMAL</span></div> [cite: 127, 128]
-            <div style="display: flex; justify-content:space-between;"><span>LATENCY/WAITING</span><span style="color:var(--gold); font-weight:bold;">WARNING</span></div> [cite: 130, 131]
-            <div style="display: flex; justify-content:space-between;"><span>DATA INVENTORY</span><span style="color:var(--green); font-weight:bold;">LEAN</span></div> [cite: 133]
-            <div style="display: flex; justify-content:space-between;"><span>REDUNDANCY</span><span style="color:var(--cyan); font-weight:bold;">STABLE</span></div> [cite: 135, 136]
+            <div style="display: flex; justify-content:space-between;"><span>REWORK/DEFECTS</span><span style="color:var(--red); font-weight:bold;">CRITICAL</span></div>
+            <div style="display: flex; justify-content:space-between;"><span>OVER-PROCESSING</span><span style="color:var(--green); font-weight:bold;">MINIMAL</span></div>
+            <div style="display: flex; justify-content:space-between;"><span>LATENCY/WAITING</span><span style="color:var(--gold); font-weight:bold;">WARNING</span></div>
+            <div style="display: flex; justify-content:space-between;"><span>DATA INVENTORY</span><span style="color:var(--green); font-weight:bold;">LEAN</span></div>
+            <div style="display: flex; justify-content:space-between;"><span>REDUNDANCY</span><span style="color:var(--cyan); font-weight:bold;">STABLE</span></div>
         </div>
     </div>
 </div>
@@ -150,9 +149,9 @@
     function updateEngine() {
         const now = new Date();
         document.getElementById('clock').innerText = now.toLocaleTimeString();
-    } [cite: 141-143]
-    setInterval(updateEngine, 1000); [cite: 145]
-    updateEngine(); [cite: 146]
+    }
+    setInterval(updateEngine, 1000);
+    updateEngine();
 </script>
 </body>
 </html>
