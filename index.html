@@ -14,96 +14,83 @@
         * { box-sizing: border-box; }
         html, body { 
             background: var(--ink); color: var(--text); font-family: var(--font-main); 
-            margin: 0; padding: 0; height: 100vh; width: 100vw; overflow: hidden; 
-            display: flex; flex-direction: column;
+            margin: 0; padding: 0; height: 100vh; overflow: hidden; display: flex; flex-direction: column;
         }
 
-        /* 1. FIXED TOP NAV & TICKER */
-        .header-stack { flex-shrink: 0; }
-        .ticker-wrap { background: #000; border-bottom: 1px solid var(--border); padding: 0.5vh 0; overflow: hidden; white-space: nowrap; }
+        /* 1. TOP TICKER - RESTORED POWER */
+        .ticker-wrap { background: #000; border-bottom: 1px solid var(--border); padding: 8px 0; overflow: hidden; white-space: nowrap; flex-shrink: 0; }
         .ticker { 
-            display: inline-block; padding-left: 100%; animation: ticker 45s linear infinite; 
-            font-family: var(--font-mono); font-size: 1.4vh; color: var(--cyan); 
-            text-transform: uppercase; letter-spacing: 2px; 
+            display: inline-block; padding-left: 100%; animation: ticker 40s linear infinite; 
+            font-family: var(--font-mono); font-size: 12px; color: var(--cyan); text-transform: uppercase; letter-spacing: 2px;
         }
         @keyframes ticker { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
 
-        .nav-menu { background: #000; border-bottom: 1px solid var(--border); padding: 0 2vw; display: flex; gap: 2vw; height: 4vh; align-items: center; }
-        .nav-item { font-family: var(--font-mono); font-size: 1.2vh; color: #64748b; text-decoration: none; text-transform: uppercase; }
-        .nav-item.active { color: var(--gold); border-bottom: 2px solid var(--gold); height: 100%; display: flex; align-items: center; }
+        /* 2. NAVIGATION */
+        .nav-menu { background: #000; border-bottom: 1px solid var(--border); padding: 0 30px; display: flex; gap: 20px; height: 45px; align-items: center; flex-shrink: 0; }
+        .nav-item { font-family: var(--font-mono); font-size: 11px; color: #64748b; text-decoration: none; text-transform: uppercase; padding: 5px 10px; border: 1px solid transparent; }
+        .nav-item.active { color: var(--gold); border: 1px solid var(--gold); background: rgba(240, 180, 41, 0.1); }
 
-        .identity-bar { background: var(--surface); border-bottom: 2px solid var(--gold); padding: 1.5vh 2vw; display: flex; justify-content: space-between; align-items: center; }
-        .name-brand { font-family: 'Bebas Neue'; font-size: 4vh; letter-spacing: 2px; color: #fff; line-height: 1; }
+        /* 3. IDENTITY BAR */
+        .identity-bar { background: var(--surface); border-bottom: 2px solid var(--gold); padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+        .name-brand { font-family: 'Bebas Neue'; font-size: 38px; letter-spacing: 2px; color: #fff; }
         .name-brand span { color: var(--gold); }
-        .live-status { font-family: var(--font-mono); font-size: 1.5vh; color: var(--green); display: flex; align-items: center; gap: 0.5vw; }
-        .pulse { width: 1vh; height: 1vh; background: var(--green); border-radius: 50%; box-shadow: 0 0 10px var(--green); animation: pulse 1.5s infinite; }
+        .live-status { font-family: var(--font-mono); font-size: 13px; color: var(--green); display: flex; align-items: center; gap: 10px; }
+        .pulse { width: 10px; height: 10px; background: var(--green); border-radius: 50%; box-shadow: 0 0 10px var(--green); animation: pulse 1.5s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
-        /* 2. KPI SECTION - DYNAMIC HEIGHT */
-        .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5vw; padding: 2vh 2vw; flex-shrink: 0; }
-        .kpi-card { background: var(--panel); border: 1px solid var(--border); padding: 1.5vh; border-top: 3px solid var(--cyan); }
-        .kpi-label { font-family: var(--font-mono); font-size: 1.1vh; color: var(--gold); text-transform: uppercase; }
-        .kpi-val { font-size: 3.5vh; font-weight: 700; color: #fff; }
+        /* 4. KPI DENSITY */
+        .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; padding: 20px 30px; flex-shrink: 0; }
+        .kpi-card { background: var(--panel); border: 1px solid var(--border); padding: 20px; border-top: 3px solid var(--cyan); }
+        .kpi-label { font-family: var(--font-mono); font-size: 11px; color: var(--gold); text-transform: uppercase; }
+        .kpi-val { font-size: 34px; font-weight: 700; color: #fff; margin-top: 5px; }
 
-        /* 3. MAIN CONTENT - AUTO-FILL REMAINING SPACE */
-        .main-grid { 
-            display: grid; grid-template-columns: 1.2fr 1fr 0.8fr; gap: 1.5vw; 
-            padding: 0 2vw 2vh; flex-grow: 1; overflow: hidden;
-        }
-        .panel { 
-            background: var(--panel); border: 1px solid var(--border); 
-            padding: 1.5vh; border-radius: 4px; display: flex; flex-direction: column; 
-            min-height: 0; /* Critical for flex scrolling */
-        }
-        .panel-h { color: var(--gold); font-family: 'Bebas Neue'; font-size: 2.2vh; border-bottom: 1px solid var(--border); padding-bottom: 0.8vh; margin-bottom: 1.5vh; flex-shrink: 0; }
+        /* 5. DYNAMIC MAIN GRID */
+        .main-grid { display: grid; grid-template-columns: 1.2fr 1fr 0.8fr; gap: 20px; padding: 0 30px 20px; flex-grow: 1; overflow: hidden; }
+        .panel { background: var(--panel); border: 1px solid var(--border); padding: 20px; border-radius: 4px; display: flex; flex-direction: column; min-height: 0; }
+        .panel-h { color: var(--gold); font-family: 'Bebas Neue'; font-size: 22px; border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 15px; flex-shrink: 0; }
+        
+        /* SCROLLABLE CONTENT AREA */
+        .panel-content { flex-grow: 1; overflow-y: auto; padding-right: 5px; }
+        .panel-content::-webkit-scrollbar { width: 4px; }
+        .panel-content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
 
-        /* CONTENT LISTS - SCALED */
-        .dmaic-step { display: flex; gap: 1vw; background: rgba(255,255,255,0.02); padding: 0.8vh; margin-bottom: 0.5vh; border-left: 3px solid var(--border); }
-        .step-letter { font-family: 'Bebas Neue'; font-size: 2.5vh; color: var(--cyan); }
-        .step-text b { display: block; font-size: 1.4vh; color: #fff; }
-        .step-text p { margin: 0; font-size: 1.2vh; color: #94a3b8; }
+        /* PROJECT CARDS */
+        .project-detail { background: rgba(255,255,255,0.03); padding: 12px; border-left: 3px solid var(--green); margin-bottom: 12px; }
+        .p-title { color: var(--cyan); font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+        .p-desc { font-size: 12.5px; color: #cbd5e1; line-height: 1.4; }
 
-        table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 1.3vh; }
-        td { padding: 0.8vh 0; border-bottom: 1px solid var(--border); }
+        /* DMAIC BOXES */
+        .dmaic-step { display: flex; gap: 15px; background: rgba(0,212,255,0.05); padding: 10px; margin-bottom: 8px; border-radius: 4px; border: 1px solid var(--border); }
+        .step-tag { font-family: 'Bebas Neue'; font-size: 20px; color: var(--cyan); min-width: 20px; }
+        .step-info b { font-size: 13px; color: #fff; text-transform: uppercase; display: block; }
+        .step-info p { margin: 2px 0 0; font-size: 12px; color: #94a3b8; }
+
+        /* TABLE SCALING */
+        table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 13px; }
+        td { padding: 12px 0; border-bottom: 1px solid var(--border); }
         .val-up { color: var(--green); font-weight: bold; }
 
-        .waste-item { display: flex; justify-content: space-between; padding: 0.8vh 0; border-bottom: 1px solid var(--border); font-family: var(--font-mono); font-size: 1.3vh; }
-        
-        .exec-sum { 
-            margin-top: auto; padding: 1vh; background: rgba(0,212,255,0.08); 
-            border: 1px solid var(--cyan); font-size: 1.3vh; border-radius: 4px; line-height: 1.4;
-        }
+        .exec-sum { margin-top: auto; padding: 12px; background: rgba(240,180,41,0.1); border: 1px solid var(--gold); border-radius: 4px; font-size: 12px; line-height: 1.4; }
     </style>
 </head>
 <body>
 
-<div class="header-stack">
-    <div class="ticker-wrap">
-        <div class="ticker">
-            LSSBB SYSTEM STATUS: OPTIMIZED || ENGINE SYNC: REAL-TIME || DMAIC PHASE: IMPROVE/CONTROL || ISO 20022 COMPLIANT || EDGAR WAMEYO MISSION CONTROL
-        </div>
+<div class="ticker-wrap">
+    <div class="ticker">
+        LSSBB SYSTEM STATUS: OPTIMIZED || ENGINE SYNC: REAL-TIME || DMAIC PHASE: IMPROVE/CONTROL || ISO 20022 COMPLIANT || MBB COMMAND CENTRE
     </div>
+</div>
 
-    <nav class="nav-menu">
-        <a href="index.html" class="nav-item active">MBB Main Command</a>
-        <a href="fintech.html" class="nav-item">Fintech Operations</a>
-    </nav>
+<nav class="nav-menu">
+    <a href="index.html" class="nav-item active">MBB Main Command</a>
+    <a href="fintech.html" class="nav-item">Fintech Operations</a>
+</nav>
 
-    <div class="identity-bar">
-        <div class="name-brand">EDGAR WAMEYO | <span>OPERATIONAL EXCELLENCE</span></div>
-        <div class="live-status"><div class="pulse"></div> DATA ENGINE: <span id="clock">00:00:00</span></div>
-    </div>
+<div class="identity-bar">
+    <div class="name-brand">EDGAR WAMEYO | <span>LSSBB DIGITAL TWIN</span></div>
+    <div class="live-status"><div class="pulse"></div> DATA ENGINE: <span id="clock">00:00:00</span></div>
 </div>
 
 <div class="kpi-row">
     <div class="kpi-card"><div class="kpi-label">Sigma Level</div><div class="kpi-val">4.82σ</div></div>
-    <div class="kpi-card"><div class="kpi-label">Cost Savings</div><div class="kpi-val">$2.14M</div></div>
-    <div class="kpi-card"><div class="kpi-label">Process RTY</div><div class="kpi-val">99.1%</div></div>
-    <div class="kpi-card"><div class="kpi-label">Throughput</div><div class="kpi-val">1.2M/hr</div></div>
-</div>
-
-<div class="main-grid">
-    <div class="panel">
-        <div class="panel-h">DMAIC STRATEGIC ROADMAP</div>
-        <div class="dmaic-step"><div class="step-letter">D</div><div class="step-text"><b>Define</b><p>Scoped defects as &lt;10 DPMO requirements for banking nodes.</p></div></div>
-        <div class="dmaic-step"><div class="step-letter">M</div><div class="step-text"><b>Measure</b><p>Baseline latency recorded at -18.2ms for settlement flows.</p></div></div>
+    <div class="kpi-card"><div class="
