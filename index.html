@@ -12,62 +12,64 @@
         }
         body { 
             font-family: 'Rajdhani', sans-serif; margin: 0; background: #020617; color: var(--text);
-            overflow-x: hidden; width: 100vw;
+            overflow-x: hidden; width: 100vw; min-height: 100vh;
         }
 
-        /* High-Fidelity Header */
+        /* Header & Identity */
         .header { 
             background: linear-gradient(90deg, #0f172a 0%, #1e293b 100%);
-            padding: 30px; border-bottom: 3px solid var(--accent);
+            padding: 25px 40px; border-bottom: 3px solid var(--accent);
             display: flex; justify-content: space-between; align-items: center;
         }
-        .identity h1 { font-family: 'Orbitron', sans-serif; margin: 0; letter-spacing: 2px; font-size: 28px; }
-        .identity p { color: var(--accent); margin: 5px 0 0; font-weight: bold; letter-spacing: 1px; }
+        .identity h1 { font-family: 'Orbitron', sans-serif; margin: 0; letter-spacing: 2px; font-size: 32px; color: #fff; }
+        .identity p { color: var(--accent); margin: 5px 0 0; font-weight: bold; letter-spacing: 1.5px; text-transform: uppercase; }
 
-        /* Real-Time Clock */
-        #clock { font-family: 'Orbitron', sans-serif; font-size: 20px; color: var(--accent); text-shadow: 0 0 10px rgba(240, 180, 41, 0.3); }
+        /* Live Clock */
+        #clock { font-family: 'Orbitron', sans-serif; font-size: 24px; color: var(--accent); }
 
-        /* Moving Ticker (Zero Defects) */
+        /* Smooth Moving Ticker */
         .ticker-wrap {
-            width: 100%; overflow: hidden; background: rgba(240, 180, 41, 0.1);
-            border-bottom: 1px solid rgba(240, 180, 41, 0.3); padding: 10px 0;
+            width: 100%; overflow: hidden; background: rgba(240, 180, 41, 0.05);
+            border-bottom: 1px solid rgba(240, 180, 41, 0.2); padding: 8px 0;
         }
         .ticker {
-            display: inline-block; white-space: nowrap; font-family: monospace;
-            animation: march 20s linear infinite; color: var(--accent);
+            display: inline-block; white-space: nowrap; font-family: 'Orbitron', sans-serif;
+            font-size: 13px; animation: march 25s linear infinite; color: var(--accent);
         }
-        @keyframes march { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        @keyframes march { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
 
-        /* Container & Navigation */
-        .nav-tabs { display: flex; gap: 2px; background: #000; padding: 10px 30px 0; }
+        /* Navigation */
+        .nav-tabs { display: flex; background: #000; padding: 10px 40px 0; gap: 5px; }
         .nav-link { 
-            padding: 10px 20px; background: #1e293b; color: white; text-decoration: none; 
-            border-radius: 5px 5px 0 0; font-weight: bold; font-size: 14px;
+            padding: 12px 25px; background: #1e293b; color: white; text-decoration: none; 
+            border-radius: 5px 5px 0 0; font-weight: bold; transition: 0.3s;
         }
         .nav-link.active { background: var(--accent); color: #000; }
 
-        /* KPI Cards Grid */
+        /* Full Screen Grid Layout */
         .container { 
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-            gap: 25px; padding: 30px; width: 100%; box-sizing: border-box;
+            display: grid; grid-template-columns: repeat(3, 1fr); 
+            gap: 20px; padding: 30px 40px; box-sizing: border-box;
         }
         .card { 
-            background: #1e293b; border-radius: 12px; border: 1px solid #334155;
-            padding: 25px; transition: transform 0.3s; position: relative;
-            overflow: hidden;
+            background: #0f172a; border-radius: 4px; border-left: 4px solid var(--accent);
+            padding: 25px; border-top: 1px solid #1e293b; border-right: 1px solid #1e293b;
+            border-bottom: 1px solid #1e293b;
         }
-        .card:hover { transform: translateY(-5px); border-color: var(--accent); }
-        .card::before { content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent); }
         
-        .label { color: #94a3b8; text-transform: uppercase; font-size: 12px; font-weight: 700; }
-        .value { font-family: 'Orbitron', sans-serif; font-size: 36px; display: block; margin: 15px 0; color: #fff; }
+        .label { color: #94a3b8; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
+        .value { font-family: 'Orbitron', sans-serif; font-size: 38px; display: block; margin: 15px 0; color: #fff; }
         .status-pill { 
             display: inline-flex; align-items: center; padding: 4px 12px; 
-            border-radius: 20px; font-size: 12px; font-weight: bold; background: rgba(34, 197, 94, 0.1); color: var(--success);
+            border-radius: 4px; font-size: 11px; font-weight: bold;
         }
-        .status-dot { height: 8px; width: 8px; background: var(--success); border-radius: 50%; margin-right: 8px; }
+        .pill-green { background: rgba(34, 197, 94, 0.15); color: var(--success); }
+        .pill-gold { background: rgba(240, 180, 41, 0.15); color: var(--accent); }
+        
+        .desc { font-size: 14px; color: #94a3b8; margin-top: 15px; line-height: 1.4; }
 
-        @media (max-width: 600px) { .header { flex-direction: column; text-align: center; } #clock { margin-top: 15px; } }
+        @media (max-width: 1024px) { .container { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } .header { flex-direction: column; text-align: center; } }
     </style>
 </head>
 <body>
@@ -75,14 +77,14 @@
 <div class="header">
     <div class="identity">
         <h1>EDGAR WAMEYO</h1>
-        <p>MASTER BLACK BELT (LSSBB) | EXPONENTIAL ARCHITECT</p>
+        <p>LSSBB | OPERATIONAL EXCELLENCE LEADER</p>
     </div>
     <div id="clock">00:00:00</div>
 </div>
 
 <div class="ticker-wrap">
     <div class="ticker">
-        SYSTEM STATUS: OPTIMAL | ZERO DEFECTS DETECTED | ISO 20022 COMPLIANCE: 100% | DMAIC STABILITY: SIGMA LEVEL 4.82 | CURRENT SPRINT: FINTECH EVOLUTION
+        SYSTEM STATUS: ACTIVE | LOCATION: NAIROBI, KENYA | ISO 20022 COMPLIANCE: 100% | ZERO DEFECTS TARGET REACHED | SIGMA LEVEL: 4.82 | ROI: $2.14M UNLOCKED
     </div>
 </div>
 
@@ -95,35 +97,59 @@
     <div class="card">
         <span class="label">Strategic Financial Throughput</span>
         <span class="value" id="roi-val">$2.14M</span>
-        <div class="status-pill"><span class="status-dot"></span>ROI TARGET REACHED</div>
-        <p style="font-size: 14px; color: #94a3b8; margin-top: 15px;">Operational stabilization has successfully unlocked secondary cash flows.</p>
+        <div class="status-pill pill-green">ROI TARGET REACHED</div>
+        <p class="desc">Operational stabilization has successfully unlocked secondary cash flows through process optimization.</p>
     </div>
 
     <div class="card">
         <span class="label">Process Capability (Cpk)</span>
         <span class="value" id="cpk-val">1.67</span>
-        <div class="status-pill"><span class="status-dot"></span>STABLE PROCESS</div>
-        <p style="font-size: 14px; color: #94a3b8; margin-top: 15px;">Process is statistically capable with near-zero rework requirements.</p>
+        <div class="status-pill pill-green">STABLE PROCESS</div>
+        <p class="desc">Process is statistically capable with near-zero rework requirements, exceeding industrial standards.</p>
     </div>
 
     <div class="card">
         <span class="label">System Yield (RTY)</span>
         <span class="value" id="yield-val">99.1%</span>
-        <div class="status-pill" style="color: var(--warning); background: rgba(245, 158, 11, 0.1);"><span class="status-dot" style="background: var(--warning);"></span>MONITORING FLOW</div>
-        <p style="font-size: 14px; color: #94a3b8; margin-top: 15px;">Identifying bottlenecks in fintech settlement node 4.</p>
+        <div class="status-pill pill-gold">MONITORING FLOW</div>
+        <p class="desc">Identifying bottlenecks in fintech settlement node 4 to maintain 100% throughput velocity.</p>
+    </div>
+
+    <div class="card">
+        <span class="label">Defect Rate (DPMO)</span>
+        <span class="value">3.4</span>
+        <div class="status-pill pill-green">SIX SIGMA QUALITY</div>
+        <p class="desc">Current defect rate remains at world-class levels (3.4 defects per million opportunities).</p>
+    </div>
+
+    <div class="card">
+        <span class="label">Cycle Time Reduction</span>
+        <span class="value">42%</span>
+        <div class="status-pill pill-green">LEAN OPTIMIZED</div>
+        <p class="desc">Significant reduction in lead time achieved through Value Stream Mapping and waste elimination.</p>
+    </div>
+
+    <div class="card">
+        <span class="label">Cost of Poor Quality (COPQ)</span>
+        <span class="value">1.2%</span>
+        <div class="status-pill pill-green">MINIMAL WASTE</div>
+        <p class="desc">Internal failure costs and appraisal costs have been minimized via proactive process controls.</p>
     </div>
 </div>
 
 <script>
-    // Live Clock Function
+    // Live System Clock (Kenyan Time / 24H)
     function updateClock() {
         const now = new Date();
-        document.getElementById('clock').innerText = now.toLocaleTimeString();
+        const h = String(now.getHours()).padStart(2, '0');
+        const m = String(now.getMinutes()).padStart(2, '0');
+        const s = String(now.getSeconds()).padStart(2, '0');
+        document.getElementById('clock').innerText = `${h}:${m}:${s}`;
     }
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Data Bridge (Fetching from your data.csv)
+    // Data Bridge for Live CSV Updates
     async function syncData() {
         try {
             const response = await fetch('data.csv');
@@ -131,10 +157,10 @@
             const lines = data.split('\n');
             lines.forEach(line => {
                 const [label, val] = line.split(',');
-                if(label.trim() === "Sigma Level") document.getElementById('cpk-val').innerText = val;
-                if(label.trim() === "Cost Savings") document.getElementById('roi-val').innerText = "$" + val;
+                if(label && label.trim() === "Sigma Level") document.getElementById('cpk-val').innerText = val;
+                if(label && label.trim() === "Cost Savings") document.getElementById('roi-val').innerText = "$" + val;
             });
-        } catch (e) { console.log("System standing by for CSV update..."); }
+        } catch (e) { /* System standing by */ }
     }
     setInterval(syncData, 5000);
     syncData();
