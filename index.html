@@ -3,90 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MBB Executive Command Center</title>
+    <title>EDGAR WAMEYO | LSSBB COMMAND CENTER</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2c3e50;
-            --success: #27ae60;
-            --warning: #f39c12;
-            --danger: #e74c3c;
+            --primary: #0f172a; --accent: #f0b429; --success: #22c55e;
+            --warning: #f59e0b; --danger: #ef4444; --text: #f8fafc;
         }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f4f7f6; }
-        .header { background: var(--primary); color: white; padding: 20px; text-align: center; }
-        
-        /* The Responsive Grid */
-        .container { 
-            display: flex; 
-            flex-wrap: wrap; 
-            gap: 20px; 
-            padding: 20px; 
-            justify-content: center; 
+        body { 
+            font-family: 'Rajdhani', sans-serif; margin: 0; background: #020617; color: var(--text);
+            overflow-x: hidden; width: 100vw;
         }
-        
-        /* KPI Cards */
-        .card { 
-            background: white; 
-            border-radius: 8px; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
-            padding: 20px; 
-            flex: 1 1 300px; /* This makes it stack on mobile */
-            max-width: 400px;
-            text-align: center;
-        }
-        
-        .status-light { height: 15px; width: 15px; border-radius: 50%; display: inline-block; margin-right: 10px; }
-        .green { background: var(--success); }
-        .amber { background: var(--warning); }
-        .red { background: var(--danger); }
-        
-        .value { font-size: 2em; font-weight: bold; display: block; margin: 10px 0; }
-        .label { color: #7f8c8d; text-transform: uppercase; font-size: 0.8em; }
-        .interpretation { font-size: 0.9em; font-style: italic; color: #34495e; }
 
-        @media (max-width: 600px) {
-            .header h1 { font-size: 1.5em; }
+        /* High-Fidelity Header */
+        .header { 
+            background: linear-gradient(90deg, #0f172a 0%, #1e293b 100%);
+            padding: 30px; border-bottom: 3px solid var(--accent);
+            display: flex; justify-content: space-between; align-items: center;
         }
+        .identity h1 { font-family: 'Orbitron', sans-serif; margin: 0; letter-spacing: 2px; font-size: 28px; }
+        .identity p { color: var(--accent); margin: 5px 0 0; font-weight: bold; letter-spacing: 1px; }
+
+        /* Real-Time Clock */
+        #clock { font-family: 'Orbitron', sans-serif; font-size: 20px; color: var(--accent); text-shadow: 0 0 10px rgba(240, 180, 41, 0.3); }
+
+        /* Moving Ticker (Zero Defects) */
+        .ticker-wrap {
+            width: 100%; overflow: hidden; background: rgba(240, 180, 41, 0.1);
+            border-bottom: 1px solid rgba(240, 180, 41, 0.3); padding: 10px 0;
+        }
+        .ticker {
+            display: inline-block; white-space: nowrap; font-family: monospace;
+            animation: march 20s linear infinite; color: var(--accent);
+        }
+        @keyframes march { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        /* Container & Navigation */
+        .nav-tabs { display: flex; gap: 2px; background: #000; padding: 10px 30px 0; }
+        .nav-link { 
+            padding: 10px 20px; background: #1e293b; color: white; text-decoration: none; 
+            border-radius: 5px 5px 0 0; font-weight: bold; font-size: 14px;
+        }
+        .nav-link.active { background: var(--accent); color: #000; }
+
+        /* KPI Cards Grid */
+        .container { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 25px; padding: 30px; width: 100%; box-sizing: border-box;
+        }
+        .card { 
+            background: #1e293b; border-radius: 12px; border: 1px solid #334155;
+            padding: 25px; transition: transform 0.3s; position: relative;
+            overflow: hidden;
+        }
+        .card:hover { transform: translateY(-5px); border-color: var(--accent); }
+        .card::before { content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent); }
+        
+        .label { color: #94a3b8; text-transform: uppercase; font-size: 12px; font-weight: 700; }
+        .value { font-family: 'Orbitron', sans-serif; font-size: 36px; display: block; margin: 15px 0; color: #fff; }
+        .status-pill { 
+            display: inline-flex; align-items: center; padding: 4px 12px; 
+            border-radius: 20px; font-size: 12px; font-weight: bold; background: rgba(34, 197, 94, 0.1); color: var(--success);
+        }
+        .status-dot { height: 8px; width: 8px; background: var(--success); border-radius: 50%; margin-right: 8px; }
+
+        @media (max-width: 600px) { .header { flex-direction: column; text-align: center; } #clock { margin-top: 15px; } }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <h1>Strategic Command Center</h1>
-    <p>Operational Excellence & Financial Engineering Portal</p>
+    <div class="identity">
+        <h1>EDGAR WAMEYO</h1>
+        <p>MASTER BLACK BELT (LSSBB) | EXPONENTIAL ARCHITECT</p>
+    </div>
+    <div id="clock">00:00:00</div>
 </div>
+
+<div class="ticker-wrap">
+    <div class="ticker">
+        SYSTEM STATUS: OPTIMAL | ZERO DEFECTS DETECTED | ISO 20022 COMPLIANCE: 100% | DMAIC STABILITY: SIGMA LEVEL 4.82 | CURRENT SPRINT: FINTECH EVOLUTION
+    </div>
+</div>
+
+<nav class="nav-tabs">
+    <a href="index.html" class="nav-link active">MAIN COMMAND</a>
+    <a href="fintech.html" class="nav-link">FINTECH OPERATIONS</a>
+</nav>
 
 <div class="container">
     <div class="card">
-        <span class="label">Financial Throughput (ROI)</span>
-        <span class="value">$2.1M</span>
-        <div class="interpretation">
-            <span class="status-light green"></span>
-            <b>Executive Summary:</b> Process stabilization has unlocked 15% more cash flow this quarter.
-        </div>
+        <span class="label">Strategic Financial Throughput</span>
+        <span class="value" id="roi-val">$2.14M</span>
+        <div class="status-pill"><span class="status-dot"></span>ROI TARGET REACHED</div>
+        <p style="font-size: 14px; color: #94a3b8; margin-top: 15px;">Operational stabilization has successfully unlocked secondary cash flows.</p>
     </div>
 
     <div class="card">
         <span class="label">Process Capability (Cpk)</span>
-        <span class="value">1.45</span>
-        <div class="interpretation">
-            <span class="status-light green"></span>
-            <b>Executive Summary:</b> The "Engine" is stable. Minimal risk of defects or rework.
-        </div>
+        <span class="value" id="cpk-val">1.67</span>
+        <div class="status-pill"><span class="status-dot"></span>STABLE PROCESS</div>
+        <p style="font-size: 14px; color: #94a3b8; margin-top: 15px;">Process is statistically capable with near-zero rework requirements.</p>
     </div>
 
     <div class="card">
-        <span class="label">System Throughput (Pull)</span>
-        <span class="value">98%</span>
-        <div class="interpretation">
-            <span class="status-light amber"></span>
-            <b>Executive Summary:</b> Demand is high; bottleneck identified in Section 4. Action required.
-        </div>
+        <span class="label">System Yield (RTY)</span>
+        <span class="value" id="yield-val">99.1%</span>
+        <div class="status-pill" style="color: var(--warning); background: rgba(245, 158, 11, 0.1);"><span class="status-dot" style="background: var(--warning);"></span>MONITORING FLOW</div>
+        <p style="font-size: 14px; color: #94a3b8; margin-top: 15px;">Identifying bottlenecks in fintech settlement node 4.</p>
     </div>
 </div>
 
-<div style="text-align: center; margin-top: 30px;">
-    <a href="detailed-analytics.html" style="color: var(--primary); font-weight: bold;">Click for Deep-Dive MBB Analytics (Desktop Only) →</a>
-</div>
+<script>
+    // Live Clock Function
+    function updateClock() {
+        const now = new Date();
+        document.getElementById('clock').innerText = now.toLocaleTimeString();
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Data Bridge (Fetching from your data.csv)
+    async function syncData() {
+        try {
+            const response = await fetch('data.csv');
+            const data = await response.text();
+            const lines = data.split('\n');
+            lines.forEach(line => {
+                const [label, val] = line.split(',');
+                if(label.trim() === "Sigma Level") document.getElementById('cpk-val').innerText = val;
+                if(label.trim() === "Cost Savings") document.getElementById('roi-val').innerText = "$" + val;
+            });
+        } catch (e) { console.log("System standing by for CSV update..."); }
+    }
+    setInterval(syncData, 5000);
+    syncData();
+</script>
 
 </body>
 </html>
