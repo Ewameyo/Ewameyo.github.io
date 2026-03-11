@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fintech Operations | Edgar Wameyo LSSBB</title>
+    <title>Fintech Strategy | Edgar Wameyo LSSBB</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #0f172a; --accent: #f0b429; --success: #22c55e;
-            --text: #f8fafc;
+            --warning: #f59e0b; --text: #f8fafc;
         }
         body { 
             font-family: 'Rajdhani', sans-serif; margin: 0; background: #020617; color: var(--text);
@@ -19,19 +19,33 @@
             padding: 20px 40px; border-bottom: 3px solid var(--accent);
             display: flex; justify-content: space-between; align-items: center;
         }
-        .identity h1 { font-family: 'Orbitron', sans-serif; margin: 0; font-size: 24px; color: #fff; }
+        .identity h1 { font-family: 'Orbitron', sans-serif; margin: 0; letter-spacing: 2px; font-size: 28px; color: #fff; }
         .nav-tabs { display: flex; background: #000; padding: 10px 40px 0; gap: 5px; }
         .nav-link { 
             padding: 12px 25px; background: #1e293b; color: white; text-decoration: none; 
             border-radius: 5px 5px 0 0; font-weight: bold; font-size: 13px;
         }
         .nav-link.active { background: var(--accent); color: #000; }
-        .container { padding: 40px; }
-        .card { 
-            background: #0f172a; border-radius: 4px; padding: 25px; 
-            border: 1px solid #1e293b; border-left: 5px solid var(--accent);
-            max-width: 800px; margin: 0 auto;
+
+        .container { 
+            display: grid; grid-template-columns: repeat(3, 1fr); 
+            gap: 20px; padding: 30px 40px; box-sizing: border-box;
         }
+        .card { 
+            background: #0f172a; border-radius: 4px; border: 1px solid #1e293b; border-left: 5px solid var(--accent);
+            padding: 25px;
+        }
+        .label { color: #94a3b8; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
+        .value { font-family: 'Orbitron', sans-serif; font-size: 32px; display: block; margin: 15px 0; color: #fff; }
+        .status-pill { display: inline-flex; align-items: center; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: bold; }
+        .pill-green { background: rgba(34, 197, 94, 0.2); color: var(--success); }
+        .pill-gold { background: rgba(240, 180, 41, 0.2); color: var(--accent); }
+
+        .back-btn { 
+            grid-column: 1 / -1; text-align: center; margin-top: 20px; 
+            font-family: 'Orbitron'; color: var(--accent); text-decoration: none; font-size: 14px;
+        }
+        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -39,7 +53,7 @@
 <div class="header">
     <div class="identity">
         <h1>FINTECH OPERATIONS STRATEGY</h1>
-        <p style="color:var(--accent); margin:5px 0 0;">LSSBB CERTIFIED | EDGAR WAMEYO</p>
+        <p style="color:var(--accent); margin:5px 0 0; font-weight:bold; font-size:14px;">LSSBB CERTIFIED | EDGAR WAMEYO</p>
     </div>
 </div>
 
@@ -50,12 +64,27 @@
 
 <div class="container">
     <div class="card">
-        <h2 style="font-family: 'Orbitron'; color: var(--accent);">ISO 20022 Optimization</h2>
-        <p>Current Status: **In-Flight Migration**</p>
-        <p>This module tracks the transition of payment messaging standards to ensure 100% interoperability and zero-latency settlement.</p>
-        <hr style="border: 0; border-top: 1px solid #1e293b; margin: 20px 0;">
-        <a href="index.html" style="color: var(--accent); text-decoration: none; font-weight: bold;">← BACK TO COMMAND CENTER</a>
+        <span class="label">ISO 20022 Compliance</span>
+        <span class="value">100%</span>
+        <div class="status-pill pill-green">FULLY OPTIMIZED</div>
+        <p style="font-size:13px; color:#94a3b8;">Zero-latency settlement achieved through standardized XML messaging architecture.</p>
     </div>
+
+    <div class="card">
+        <span class="label">Transaction Velocity</span>
+        <span class="value">2.4ms</span>
+        <div class="status-pill pill-green">ULTRA-LOW LATENCY</div>
+        <p style="font-size:13px; color:#94a3b8;">Real-time processing node performance exceeding Swift standards.</p>
+    </div>
+
+    <div class="card">
+        <span class="label">Fraud Detection RTY</span>
+        <span class="value">99.98%</span>
+        <div class="status-pill pill-gold">AI MONITORING</div>
+        <p style="font-size:13px; color:#94a3b8;">Statistical process control applied to automated threat detection triggers.</p>
+    </div>
+
+    <a href="index.html" class="back-btn">← RETURN TO PRIMARY COMMAND CENTER</a>
 </div>
 
 </body>
