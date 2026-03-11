@@ -3,7 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EDGAR WAMEYO | LSSBB COMMAND CENTER</title>
+    
+    <title>Edgar Wameyo | LSSBB Operational Excellence Dashboard</title>
+    <meta name="description" content="Official Strategic Command Center of Edgar Wameyo. High-fidelity Operational Excellence and Fintech performance tracking.">
+    <meta name="keywords" content="Edgar Wameyo, LSSBB, Lean Six Sigma Black Belt, Operational Excellence, Fintech Dashboard, Nairobi, Kenya">
+    <meta name="author" content="Edgar Wameyo">
+
+    <meta property="og:title" content="Edgar Wameyo | LSSBB Command Center">
+    <meta property="og:description" content="Real-time Operational Excellence & Fintech Dashboard.">
+    <meta property="og:url" content="https://ewameyo.github.io/">
+    <meta property="og:type" content="website">
+
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -24,7 +34,7 @@
         .identity h1 { font-family: 'Orbitron', sans-serif; margin: 0; letter-spacing: 2px; font-size: 28px; color: #fff; }
         .identity p { color: var(--accent); margin: 5px 0 0; font-weight: bold; letter-spacing: 1.2px; text-transform: uppercase; font-size: 14px; }
 
-        /* Live System Indicator & Clock */
+        /* Status Block */
         .status-block { display: flex; align-items: center; gap: 20px; }
         .live-indicator {
             font-family: 'Orbitron', sans-serif; font-size: 12px; color: var(--success);
@@ -34,14 +44,14 @@
         @keyframes blinker { 50% { opacity: 0.1; } }
         #clock { font-family: 'Orbitron', sans-serif; font-size: 22px; color: var(--accent); min-width: 120px; text-align: right; }
 
-        /* High-Visibility Moving Ticker */
+        /* Ticker */
         .ticker-container {
-            width: 100%; background: #f0b429; /* Solid Gold background for visibility */
+            width: 100%; background: #f0b429; 
             padding: 10px 0; border-bottom: 2px solid #000; overflow: hidden;
         }
         .ticker-text {
             display: inline-block; white-space: nowrap; font-family: 'Orbitron', sans-serif;
-            font-size: 14px; font-weight: 800; color: #000; /* Black text on Gold background */
+            font-size: 14px; font-weight: 800; color: #000; 
             animation: slide-text 40s linear infinite;
         }
         @keyframes slide-text {
@@ -63,7 +73,7 @@
             gap: 20px; padding: 30px 40px; box-sizing: border-box;
         }
         .card { 
-            background: #0f172a; border-radius: 4px; border-left: 5px solid var(--accent);
+            background: #0f172a; border-radius: 4px; 
             padding: 25px; border: 1px solid #1e293b; border-left: 5px solid var(--accent);
         }
         .label { color: #94a3b8; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
@@ -159,6 +169,7 @@
     async function syncData() {
         try {
             const response = await fetch('data.csv');
+            if (!response.ok) throw new Error('No local data');
             const data = await response.text();
             const lines = data.split('\n');
             lines.forEach(line => {
@@ -166,7 +177,7 @@
                 if(label && label.trim() === "Sigma Level") document.getElementById('cpk-val').innerText = val;
                 if(label && label.trim() === "Cost Savings") document.getElementById('roi-val').innerText = "$" + val;
             });
-        } catch (e) { }
+        } catch (e) { console.log("System running on hardcoded defaults."); }
     }
     setInterval(syncData, 5000);
     syncData();
