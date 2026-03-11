@@ -18,58 +18,66 @@
         /* Header & Identity */
         .header { 
             background: linear-gradient(90deg, #0f172a 0%, #1e293b 100%);
-            padding: 25px 40px; border-bottom: 3px solid var(--accent);
+            padding: 20px 40px; border-bottom: 3px solid var(--accent);
             display: flex; justify-content: space-between; align-items: center;
         }
-        .identity h1 { font-family: 'Orbitron', sans-serif; margin: 0; letter-spacing: 2px; font-size: 32px; color: #fff; }
-        .identity p { color: var(--accent); margin: 5px 0 0; font-weight: bold; letter-spacing: 1.5px; text-transform: uppercase; }
+        .identity h1 { font-family: 'Orbitron', sans-serif; margin: 0; letter-spacing: 2px; font-size: 28px; color: #fff; }
+        .identity p { color: var(--accent); margin: 5px 0 0; font-weight: bold; letter-spacing: 1.2px; text-transform: uppercase; font-size: 14px; }
 
-        /* Live Clock */
-        #clock { font-family: 'Orbitron', sans-serif; font-size: 24px; color: var(--accent); }
+        /* Live Clock & System Status */
+        .system-time { display: flex; align-items: center; gap: 15px; font-family: 'Orbitron', sans-serif; }
+        .live-tag { color: var(--success); font-size: 14px; border: 1px solid var(--success); padding: 2px 8px; border-radius: 4px; animation: blink 1.5s infinite; }
+        #clock { font-size: 22px; color: var(--accent); min-width: 120px; text-align: right; }
 
-        /* Smooth Moving Ticker */
+        @keyframes blink { 50% { opacity: 0.3; } }
+
+        /* Moving Ticker - High Visibility Fix */
         .ticker-wrap {
-            width: 100%; overflow: hidden; background: rgba(240, 180, 41, 0.05);
-            border-bottom: 1px solid rgba(240, 180, 41, 0.2); padding: 8px 0;
+            width: 100%; overflow: hidden; background: rgba(240, 180, 41, 0.1);
+            border-bottom: 2px solid var(--accent); padding: 12px 0;
         }
         .ticker {
             display: inline-block; white-space: nowrap; font-family: 'Orbitron', sans-serif;
-            font-size: 13px; animation: march 25s linear infinite; color: var(--accent);
+            font-size: 14px; font-weight: bold; color: var(--accent);
+            animation: move-ticker 30s linear infinite;
         }
-        @keyframes march { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
+        @keyframes move-ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
 
-        /* Navigation */
+        /* Navigation Tabs */
         .nav-tabs { display: flex; background: #000; padding: 10px 40px 0; gap: 5px; }
         .nav-link { 
             padding: 12px 25px; background: #1e293b; color: white; text-decoration: none; 
-            border-radius: 5px 5px 0 0; font-weight: bold; transition: 0.3s;
+            border-radius: 5px 5px 0 0; font-weight: bold; font-size: 13px; transition: 0.3s;
         }
         .nav-link.active { background: var(--accent); color: #000; }
 
-        /* Full Screen Grid Layout */
+        /* KPI Grid - Zero Space Build */
         .container { 
             display: grid; grid-template-columns: repeat(3, 1fr); 
             gap: 20px; padding: 30px 40px; box-sizing: border-box;
         }
         .card { 
-            background: #0f172a; border-radius: 4px; border-left: 4px solid var(--accent);
+            background: #0f172a; border-radius: 4px; border-left: 5px solid var(--accent);
             padding: 25px; border-top: 1px solid #1e293b; border-right: 1px solid #1e293b;
-            border-bottom: 1px solid #1e293b;
+            border-bottom: 1px solid #1e293b; height: 100%;
         }
         
         .label { color: #94a3b8; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
-        .value { font-family: 'Orbitron', sans-serif; font-size: 38px; display: block; margin: 15px 0; color: #fff; }
+        .value { font-family: 'Orbitron', sans-serif; font-size: 40px; display: block; margin: 15px 0; color: #fff; }
         .status-pill { 
-            display: inline-flex; align-items: center; padding: 4px 12px; 
-            border-radius: 4px; font-size: 11px; font-weight: bold;
+            display: inline-flex; align-items: center; padding: 5px 12px; 
+            border-radius: 4px; font-size: 11px; font-weight: bold; text-transform: uppercase;
         }
-        .pill-green { background: rgba(34, 197, 94, 0.15); color: var(--success); }
-        .pill-gold { background: rgba(240, 180, 41, 0.15); color: var(--accent); }
+        .pill-green { background: rgba(34, 197, 94, 0.2); color: var(--success); }
+        .pill-gold { background: rgba(240, 180, 41, 0.2); color: var(--accent); }
         
-        .desc { font-size: 14px; color: #94a3b8; margin-top: 15px; line-height: 1.4; }
+        .desc { font-size: 14px; color: #94a3b8; margin-top: 15px; line-height: 1.5; }
 
         @media (max-width: 1024px) { .container { grid-template-columns: 1fr 1fr; } }
-        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } .header { flex-direction: column; text-align: center; } }
+        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -79,12 +87,15 @@
         <h1>EDGAR WAMEYO</h1>
         <p>LSSBB | OPERATIONAL EXCELLENCE LEADER</p>
     </div>
-    <div id="clock">00:00:00</div>
+    <div class="system-time">
+        <span class="live-tag">LIVE SYSTEM</span>
+        <div id="clock">00:00:00</div>
+    </div>
 </div>
 
 <div class="ticker-wrap">
     <div class="ticker">
-        SYSTEM STATUS: ACTIVE | LOCATION: NAIROBI, KENYA | ISO 20022 COMPLIANCE: 100% | ZERO DEFECTS TARGET REACHED | SIGMA LEVEL: 4.82 | ROI: $2.14M UNLOCKED
+        SYSTEM STATUS: ACTIVE | LOCATION: NAIROBI, KENYA | ISO 20022 COMPLIANCE: 100% | ZERO DEFECTS TARGET REACHED | CURRENT SIGMA LEVEL: 4.82 | ROI: $2.14M UNLOCKED | PROCESS FLOW: STABLE
     </div>
 </div>
 
@@ -98,47 +109,47 @@
         <span class="label">Strategic Financial Throughput</span>
         <span class="value" id="roi-val">$2.14M</span>
         <div class="status-pill pill-green">ROI TARGET REACHED</div>
-        <p class="desc">Operational stabilization has successfully unlocked secondary cash flows through process optimization.</p>
+        <p class="desc">Operational stabilization has successfully unlocked secondary cash flows through optimized capital allocation.</p>
     </div>
 
     <div class="card">
         <span class="label">Process Capability (Cpk)</span>
         <span class="value" id="cpk-val">1.67</span>
         <div class="status-pill pill-green">STABLE PROCESS</div>
-        <p class="desc">Process is statistically capable with near-zero rework requirements, exceeding industrial standards.</p>
+        <p class="desc">The "Engine" is statistically capable with near-zero rework requirements, exceeding all industrial benchmarks.</p>
     </div>
 
     <div class="card">
         <span class="label">System Yield (RTY)</span>
         <span class="value" id="yield-val">99.1%</span>
         <div class="status-pill pill-gold">MONITORING FLOW</div>
-        <p class="desc">Identifying bottlenecks in fintech settlement node 4 to maintain 100% throughput velocity.</p>
+        <p class="desc">Identifying bottlenecks in fintech settlement node 4 to maintain 100% throughput velocity across all channels.</p>
     </div>
 
     <div class="card">
         <span class="label">Defect Rate (DPMO)</span>
         <span class="value">3.4</span>
         <div class="status-pill pill-green">SIX SIGMA QUALITY</div>
-        <p class="desc">Current defect rate remains at world-class levels (3.4 defects per million opportunities).</p>
+        <p class="desc">Current defect rate remains at world-class Six Sigma levels (3.4 defects per million opportunities).</p>
     </div>
 
     <div class="card">
         <span class="label">Cycle Time Reduction</span>
         <span class="value">42%</span>
         <div class="status-pill pill-green">LEAN OPTIMIZED</div>
-        <p class="desc">Significant reduction in lead time achieved through Value Stream Mapping and waste elimination.</p>
+        <p class="desc">Aggressive reduction in lead time achieved through Value Stream Mapping and waste (Muda) elimination.</p>
     </div>
 
     <div class="card">
         <span class="label">Cost of Poor Quality (COPQ)</span>
         <span class="value">1.2%</span>
         <div class="status-pill pill-green">MINIMAL WASTE</div>
-        <p class="desc">Internal failure costs and appraisal costs have been minimized via proactive process controls.</p>
+        <p class="desc">Internal and external failure costs have been mitigated via proactive process controls and Poka-Yoke.</p>
     </div>
 </div>
 
 <script>
-    // Live System Clock (Kenyan Time / 24H)
+    // Live 24H System Clock
     function updateClock() {
         const now = new Date();
         const h = String(now.getHours()).padStart(2, '0');
@@ -149,7 +160,7 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // Data Bridge for Live CSV Updates
+    // Data Bridge (Connects to your data.csv)
     async function syncData() {
         try {
             const response = await fetch('data.csv');
@@ -160,7 +171,7 @@
                 if(label && label.trim() === "Sigma Level") document.getElementById('cpk-val').innerText = val;
                 if(label && label.trim() === "Cost Savings") document.getElementById('roi-val').innerText = "$" + val;
             });
-        } catch (e) { /* System standing by */ }
+        } catch (e) { /* CSV Sync standby */ }
     }
     setInterval(syncData, 5000);
     syncData();
