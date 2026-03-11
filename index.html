@@ -6,11 +6,11 @@
     
     <title>Edgar Wameyo | LSSBB Operational Excellence Dashboard</title>
     <meta name="description" content="Official Strategic Command Center of Edgar Wameyo. High-fidelity Operational Excellence and Fintech performance tracking.">
-    <meta name="keywords" content="Edgar Wameyo, LSSBB, Lean Six Sigma Black Belt, Operational Excellence, Fintech Dashboard, Nairobi, Kenya">
+    <meta name="keywords" content="Edgar Wameyo, LSSBB, Lean Six Sigma Black Belt, Operational Excellence, Fintech, Nairobi">
     <meta name="author" content="Edgar Wameyo">
 
     <meta property="og:title" content="Edgar Wameyo | LSSBB Command Center">
-    <meta property="og:description" content="Real-time Operational Excellence & Fintech Dashboard.">
+    <meta property="og:description" content="Operational Excellence & Fintech Dashboard.">
     <meta property="og:url" content="https://ewameyo.github.io/">
     <meta property="og:type" content="website">
 
@@ -25,7 +25,6 @@
             overflow-x: hidden; width: 100vw; min-height: 100vh;
         }
 
-        /* Header Section */
         .header { 
             background: linear-gradient(90deg, #0f172a 0%, #1e293b 100%);
             padding: 20px 40px; border-bottom: 3px solid var(--accent);
@@ -34,7 +33,6 @@
         .identity h1 { font-family: 'Orbitron', sans-serif; margin: 0; letter-spacing: 2px; font-size: 28px; color: #fff; }
         .identity p { color: var(--accent); margin: 5px 0 0; font-weight: bold; letter-spacing: 1.2px; text-transform: uppercase; font-size: 14px; }
 
-        /* Status Block */
         .status-block { display: flex; align-items: center; gap: 20px; }
         .live-indicator {
             font-family: 'Orbitron', sans-serif; font-size: 12px; color: var(--success);
@@ -44,7 +42,6 @@
         @keyframes blinker { 50% { opacity: 0.1; } }
         #clock { font-family: 'Orbitron', sans-serif; font-size: 22px; color: var(--accent); min-width: 120px; text-align: right; }
 
-        /* Ticker */
         .ticker-container {
             width: 100%; background: #f0b429; 
             padding: 10px 0; border-bottom: 2px solid #000; overflow: hidden;
@@ -59,7 +56,6 @@
             100% { transform: translateX(-100%); }
         }
 
-        /* Navigation */
         .nav-tabs { display: flex; background: #000; padding: 10px 40px 0; gap: 5px; }
         .nav-link { 
             padding: 12px 25px; background: #1e293b; color: white; text-decoration: none; 
@@ -67,14 +63,13 @@
         }
         .nav-link.active { background: var(--accent); color: #000; }
 
-        /* KPI Grid */
         .container { 
             display: grid; grid-template-columns: repeat(3, 1fr); 
             gap: 20px; padding: 30px 40px; box-sizing: border-box;
         }
         .card { 
-            background: #0f172a; border-radius: 4px; 
-            padding: 25px; border: 1px solid #1e293b; border-left: 5px solid var(--accent);
+            background: #0f172a; border-radius: 4px; border: 1px solid #1e293b; border-left: 5px solid var(--accent);
+            padding: 25px;
         }
         .label { color: #94a3b8; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
         .value { font-family: 'Orbitron', sans-serif; font-size: 40px; display: block; margin: 15px 0; color: #fff; }
@@ -102,7 +97,7 @@
 
 <div class="ticker-container">
     <div class="ticker-text">
-        SYSTEM STATUS: ACTIVE ● LOCATION: NAIROBI, KENYA ● ISO 20022 COMPLIANCE: 100% ● ZERO DEFECTS TARGET REACHED ● CURRENT SIGMA LEVEL: 4.82 ● ROI: $2.14M UNLOCKED ● STRATEGIC FLOW: STABLE ● 
+        SYSTEM STATUS: ACTIVE ● LOCATION: NAIROBI, KENYA ● ISO 20022 COMPLIANCE: 100% ● LSSBB STANDARDS APPLIED ● CURRENT SIGMA LEVEL: 4.82 ● ROI: $2.14M UNLOCKED ● STRATEGIC FLOW: STABLE ● 
     </div>
 </div>
 
@@ -130,7 +125,7 @@
         <span class="label">System Yield (RTY)</span>
         <span class="value" id="yield-val">99.1%</span>
         <div class="status-pill pill-gold">MONITORING FLOW</div>
-        <p class="desc">Identifying bottlenecks in fintech settlement node 4 to maintain 100% throughput velocity across all channels.</p>
+        <p class="desc">Identifying bottlenecks in fintech settlement nodes to maintain 100% throughput velocity.</p>
     </div>
 
     <div class="card">
@@ -151,7 +146,7 @@
         <span class="label">Cost of Poor Quality (COPQ)</span>
         <span class="value">1.2%</span>
         <div class="status-pill pill-green">MINIMAL WASTE</div>
-        <p class="desc">Internal and external failure costs have been mitigated via proactive process controls and Poka-Yoke.</p>
+        <p class="desc">Internal and external failure costs mitigated via proactive process controls and Poka-Yoke.</p>
     </div>
 </div>
 
@@ -169,7 +164,7 @@
     async function syncData() {
         try {
             const response = await fetch('data.csv');
-            if (!response.ok) throw new Error('No local data');
+            if (!response.ok) throw new Error();
             const data = await response.text();
             const lines = data.split('\n');
             lines.forEach(line => {
@@ -177,7 +172,7 @@
                 if(label && label.trim() === "Sigma Level") document.getElementById('cpk-val').innerText = val;
                 if(label && label.trim() === "Cost Savings") document.getElementById('roi-val').innerText = "$" + val;
             });
-        } catch (e) { console.log("System running on hardcoded defaults."); }
+        } catch (e) { }
     }
     setInterval(syncData, 5000);
     syncData();
