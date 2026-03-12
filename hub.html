@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edgar Wameyo | 360° Transformation Hub</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
+    <style>
+        body { background: #0f172a; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card { background: #1e293b; padding: 40px; border-radius: 15px; border-bottom: 5px solid #eab308; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); width: 400px; }
+        .ksh { font-size: 3.5rem; color: #22c55e; margin: 20px 0; font-weight: bold; }
+        .status { font-size: 12px; padding: 6px 15px; border-radius: 20px; background: #ef4444; font-weight: bold; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h2>360° Hub</h2>
+    <p>Real-Time Taguchi Loss (Y Output)</p>
+    <div id="display" class="ksh">KSh 0.00</div>
+    <span id="stat" class="status">CONNECTING...</span>
+</div>
+<script>
+    const host = "79381553c0d4e5a873a53d7ce59127e.s1.eu.hivemq.cloud";
+    const port = 8884;
+    
+    // REPLACE THESE WITH YOUR HIVEMQ CREDENTIALS
+    const mqtt_user = "YOUR_USERNAME"; 
+    const mqtt_pass = "YOUR_PASSWORD"; 
+
+    const client = new Paho.MQTT.Client(host, port, "EdgarHub_" + Math.random().toString(16).slice(2));
+    client.onMessageArrived = (msg) => {
+        let x = parseFloat(msg.payloadString);
+        if (!isNaN(x)) {
+            let y = x * 1500; 
+            document.getElementById("display").innerText = "KSh " + y.toLocaleString();
+        }
+    };
+    client.connect({
+        useSSL: true,
+        userName: mqtt_user,
+        password: mqtt_pass,
+        onSuccess: () => {
+            document.getElementById("stat").innerText = "SYSTEM LIVE";
+            document.getElementById("stat").style.background = "#22c55e";
+            client.subscribe("#"); 
+        },
+        onFailure: (err) => { document.getElementById("stat").innerText = "AUTH ERROR"; }
+    });
+</script>
+</body>
+</html>
