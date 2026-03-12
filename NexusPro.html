@@ -3,26 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEXUS 360 | SECURE TERMINAL</title>
+    <title>NEXUS 360 | PRO TERMINAL</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
     <style>
         :root { --gold: #eab308; --bg: #020617; --card: #1e293b; }
-        body { background: var(--bg); color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; }
+        body { background: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
         
         /* PIN SCREEN */
-        #login-screen { text-align: center; background: var(--card); padding: 40px; border-radius: 20px; border: 1px solid var(--gold); box-shadow: 0 0 40px rgba(234,179,8,0.2); width: 320px; z-index: 100; }
+        #login-screen { text-align: center; background: var(--card); padding: 40px; border-radius: 20px; border: 1px solid var(--gold); box-shadow: 0 0 40px rgba(234,179,8,0.2); width: 320px; }
         input { background: #0f172a; border: 1px solid #334155; color: var(--gold); padding: 15px; font-size: 28px; text-align: center; border-radius: 8px; width: 80%; margin-bottom: 20px; letter-spacing: 8px; outline: none; }
         
         /* DASHBOARD */
         .hidden { display: none !important; }
-        #main-dashboard { width: 95%; max-width: 450px; background: var(--card); padding: 25px; border-radius: 24px; text-align: center; border: 1px solid #334155; position: relative; }
-        .status-bar { display: flex; justify-content: space-between; align-items: center; font-size: 12px; margin-bottom: 20px; color: #94a3b8; }
-        .dot { height: 10px; width: 10px; background: #ef4444; border-radius: 50%; display: inline-block; margin-right: 5px; }
-        .online { background: #22c55e; box-shadow: 0 0 10px #22c55e; }
+        #main-dashboard { width: 95%; max-width: 450px; background: var(--card); padding: 25px; border-radius: 24px; text-align: center; border: 1px solid #334155; }
         
-        /* CONTROLS */
-        .btn { padding: 18px; border-radius: 12px; cursor: pointer; color: white; font-weight: bold; width: 100%; margin: 8px 0; border: none; font-size: 16px; text-transform: uppercase; letter-spacing: 1px; transition: 0.2s; }
-        .btn:active { transform: scale(0.98); }
+        /* BLINKING EFFECT */
+        .dot { height: 12px; width: 12px; background: #ef4444; border-radius: 50%; display: inline-block; margin-right: 8px; }
+        .online-pulse { 
+            background: #22c55e !important; 
+            box-shadow: 0 0 10px #22c55e;
+            animation: blink 1.5s infinite; 
+        }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+
+        /* CLOCK & UI */
+        .top-row { display: flex; justify-content: space-between; font-size: 12px; color: #94a3b8; margin-bottom: 15px; font-family: monospace; }
+        .btn { padding: 18px; border-radius: 12px; cursor: pointer; color: white; font-weight: bold; width: 100%; margin: 8px 0; border: none; font-size: 16px; text-transform: uppercase; }
         .log-box { background: #0f172a; border-radius: 10px; padding: 10px; margin-top: 20px; height: 60px; font-size: 11px; color: #64748b; overflow-y: auto; text-align: left; border-left: 3px solid var(--gold); }
     </style>
 </head>
@@ -30,85 +36,73 @@
 
     <div id="login-screen">
         <div style="font-size: 45px; margin-bottom: 10px;">🛡️</div>
-        <h2 style="color: var(--gold); margin: 0; letter-spacing: 2px;">SECURE GATE</h2>
-        <p style="color: #94a3b8; font-size: 11px; margin-bottom: 25px;">IIOT PROTOCOL v3.6</p>
-        <input type="password" id="pinInput" maxlength="4" placeholder="••••" onkeypress="if(event.key==='Enter') verifyAccess()">
+        <h2 style="color: var(--gold); margin: 0;">NEXUS SECURE</h2>
+        <input type="password" id="pinInput" maxlength="4" placeholder="••••">
         <button class="btn" style="background: var(--gold); color: black;" onclick="verifyAccess()">AUTHORIZE</button>
     </div>
 
     <div id="main-dashboard" class="hidden">
-        <div class="status-bar">
-            <span>TERMINAL: <b>NEXUS-ALPHA</b></span>
+        <div class="top-row">
+            <div id="digital-clock">00:00:00</div>
             <div><span class="dot" id="dot"></span><span id="stat-text">OFFLINE</span></div>
         </div>
         
-        <div style="background: #0f172a; padding: 25px; border-radius: 18px; margin-bottom: 20px; border: 1px solid #1e293b;">
-            <div style="font-size: 11px; color: #64748b; margin-bottom: 5px;">LIVE PLANT EFFICIENCY</div>
+        <div style="background: #0f172a; padding: 25px; border-radius: 18px; margin-bottom: 20px;">
+            <div style="font-size: 11px; color: #64748b;">SYSTEM EFFICIENCY</div>
             <div style="font-size: 42px; font-weight: 900; color: var(--gold);">98.4%</div>
         </div>
 
-        <button class="btn" style="background: #b91c1c; box-shadow: 0 4px 0 #7f1d1d;" onclick="publish('ARM')">ARM SYSTEM</button>
-        <button class="btn" style="background: #15803d; box-shadow: 0 4px 0 #14532d;" onclick="publish('DISARM')">DISARM HUB</button>
+        <button class="btn" style="background: #b91c1c;" onclick="publish('ARM')">ARM SYSTEM</button>
+        <button class="btn" style="background: #15803d;" onclick="publish('DISARM')">DISARM HUB</button>
         
-        <div class="log-box" id="event-log">
-            [SYSTEM] Waiting for authorization...<br>
-        </div>
+        <div class="log-box" id="event-log"></div>
     </div>
 
     <script>
-        const SECRET_PIN = "1187"; // YOUR CUSTOM PIN
+        const SECRET_PIN = "1187";
         let client;
 
-        function addLog(msg) {
-            const log = document.getElementById('event-log');
-            const now = new Date().toLocaleTimeString();
-            log.innerHTML += `[${now}] ${msg}<br>`;
-            log.scrollTop = log.scrollHeight;
+        // THE CLOCK LOGIC
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('digital-clock').innerText = now.toLocaleTimeString();
         }
+        setInterval(updateClock, 1000);
 
         function verifyAccess() {
-            const input = document.getElementById('pinInput').value;
-            if (input === SECRET_PIN) {
+            if (document.getElementById('pinInput').value === SECRET_PIN) {
                 document.getElementById('login-screen').classList.add('hidden');
                 document.getElementById('main-dashboard').classList.remove('hidden');
-                addLog("Access Granted. Initializing MQTT...");
                 initiateConnection();
             } else {
-                alert("INVALID PIN");
-                document.getElementById('pinInput').value = "";
+                alert("ACCESS DENIED");
             }
         }
 
         function initiateConnection() {
             client = new Paho.MQTT.Client("0d7ada916da04546a3a7b3482fd76615.s1.eu.hivemq.cloud", 8884, "Nexus_" + Math.random().toString(16).slice(2, 5));
-            
-            const options = {
-                useSSL: true,
-                userName: "admin",
-                password: "Nexus360!",
+            client.connect({
+                useSSL: true, userName: "admin", password: "Nexus360!",
                 onSuccess: () => {
-                    document.getElementById('dot').classList.add('online');
+                    document.getElementById('dot').classList.add('online-pulse');
                     document.getElementById('stat-text').innerText = "ONLINE";
-                    addLog("Connection Successful. Ready for Command.");
-                    client.subscribe("nexus/control");
-                },
-                onFailure: (err) => { 
-                    addLog("Connection Error.");
-                    alert("Cloud unreachable: " + err.errorMessage); 
+                    addLog("System Synced Successfully.");
                 }
-            };
-            client.connect(options);
+            });
+        }
+
+        function addLog(msg) {
+            const log = document.getElementById('event-log');
+            log.innerHTML += `> ${msg}<br>`;
+            log.scrollTop = log.scrollHeight;
         }
 
         function publish(val) {
-            if(!client || !client.connected) {
-                addLog("Error: System Offline");
-                return;
-            }
+            if(!client || !client.connected) return;
             const msg = new Paho.MQTT.Message(val);
             msg.destinationName = "nexus/control";
             client.send(msg);
-            addLog(`Command Sent: ${val}`);
+            addLog(`Command: ${val} sent.`);
         }
     </script>
 </body>
