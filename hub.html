@@ -8,7 +8,7 @@
         body { background: #0f172a; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
         .card { background: #1e293b; padding: 40px; border-radius: 15px; border-bottom: 5px solid #eab308; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); width: 400px; }
         .ksh { font-size: 3.5rem; color: #22c55e; margin: 20px 0; font-weight: bold; }
-        .status { font-size: 12px; padding: 6px 15px; border-radius: 20px; background: #ef4444; font-weight: bold; }
+        .status { font-size: 12px; padding: 6px 15px; border-radius: 20px; background: #ef4444; font-weight: bold; transition: 0.3s; }
     </style>
 </head>
 <body>
@@ -24,7 +24,7 @@
     const host = "79381553c0d4e5a873a53d7ce59127e.s1.eu.hivemq.cloud";
     const port = 8884;
     
-    // FINAL VERIFIED CREDENTIALS
+    // THE COMPLETED CREDENTIALS
     const mqtt_user = "Edgar_360"; 
     const mqtt_pass = "Nexus360Pass!"; 
 
@@ -49,7 +49,6 @@
         },
         onFailure: (err) => {
             document.getElementById("stat").innerText = "AUTH ERROR";
-            console.log(err);
         }
     });
 
