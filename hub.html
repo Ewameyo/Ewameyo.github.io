@@ -12,21 +12,24 @@
     </style>
 </head>
 <body>
+
 <div class="card">
     <h2>360° Hub</h2>
     <p>Real-Time Taguchi Loss (Y Output)</p>
     <div id="display" class="ksh">KSh 0.00</div>
     <span id="stat" class="status">CONNECTING...</span>
 </div>
+
 <script>
     const host = "79381553c0d4e5a873a53d7ce59127e.s1.eu.hivemq.cloud";
     const port = 8884;
     
-    // REPLACE THESE WITH YOUR HIVEMQ CREDENTIALS
-    const mqtt_user = "YOUR_USERNAME"; 
-    const mqtt_pass = "YOUR_PASSWORD"; 
+    // FINAL VERIFIED CREDENTIALS
+    const mqtt_user = "Edgar_360"; 
+    const mqtt_pass = "Nexus360Pass!"; 
 
     const client = new Paho.MQTT.Client(host, port, "EdgarHub_" + Math.random().toString(16).slice(2));
+
     client.onMessageArrived = (msg) => {
         let x = parseFloat(msg.payloadString);
         if (!isNaN(x)) {
@@ -34,6 +37,7 @@
             document.getElementById("display").innerText = "KSh " + y.toLocaleString();
         }
     };
+
     client.connect({
         useSSL: true,
         userName: mqtt_user,
@@ -43,8 +47,16 @@
             document.getElementById("stat").style.background = "#22c55e";
             client.subscribe("#"); 
         },
-        onFailure: (err) => { document.getElementById("stat").innerText = "AUTH ERROR"; }
+        onFailure: (err) => {
+            document.getElementById("stat").innerText = "AUTH ERROR";
+            console.log(err);
+        }
     });
+
+    client.onConnectionLost = () => {
+        document.getElementById("stat").innerText = "DISCONNECTED";
+        document.getElementById("stat").style.background = "#ef4444";
+    };
 </script>
 </body>
 </html>
