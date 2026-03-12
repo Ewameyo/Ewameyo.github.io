@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus 360 | Executive Command</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
+    <style>
+        :root { --gold: #eab308; --bg: #0f172a; --panel: #1e293b; --green: #22c55e; --red: #ef4444; }
+        body { background: var(--bg); color: #f8fafc; font-family: 'Inter', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; transition: 0.5s; }
+        .container { background: var(--panel); width: 450px; padding: 30px; border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); border: 1px solid #334155; text-align: center; }
+        .header h1 { color: var(--gold); margin: 0; font-size: 26px; letter-spacing: 2px; }
+        #clock { font-family: monospace; color: #64748b; font-size: 14px; margin-bottom: 20px; }
+        
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .stat-card { background: rgba(15, 23, 42, 0.5); padding: 10px; border-radius: 8px; border: 1px solid #334155; }
+        .stat-val { color: var(--gold); font-weight: 800; font-size: 14px; }
+        .stat-lbl { font-size: 9px; color: #64748b; text-transform: uppercase; }
+
+        .status-box { background: rgba(15, 23, 42, 0.5); padding: 15px; border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; }
+        .led { width: 10px; height: 10px; border-radius: 50%; background: var(--red); margin-right: 10px; }
+        .online { background: var(--green); box-shadow: 0 0 15px var(--green); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .btn { padding: 15px; border: none; border-radius: 8px; font-weight: 800; cursor: pointer; transition: 0.3s; color: white; }
+        .btn-arm { background: var(--red); }
+        .btn-disarm { background: var(--green); }
+        
+        #log { height: 80px; overflow-y: auto; font-family: monospace; font-size: 11px; color: var(--green); text-align: left; background: #0b1120; padding: 10px; border-radius: 8px; border: 1px solid #1e293b; }
+    </style>
+</head>
+<body id="main-body">
+
+<div class="container">
+    <div class="header">
+        <h1>NEXUS 360</h1>
+        <div id="clock">--:--:--</div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card"><div class="stat-val">98.4%</div><div class="stat-lbl">Efficiency</div></div>
+        <div class="stat-card"><div class="stat-val">SECURE</div><div class="stat-lbl">Risk Level</div></div>
+        <div class="stat-card"><div class="stat-val">ACTIVE</div><div class="stat-lbl">Cloud Sync</div></div>
+    </div>
+
+    <div class="status-box">
+        <div id="led" class="led"></div>
+        <span id="status-text" style="font-size: 11px; font-weight: bold; letter-spacing: 1px;">ENCRYPTING TUNNEL...</span>
+    </div>
+
+    <div class="btn-group">
+        <button class="btn btn-arm" onclick="sendAction('ARM')">ARM SYSTEM</button>
+        <button class="btn btn-disarm" onclick="sendAction('DISARM')">DISARM HUB</button>
+    </div>
+
+    <div id="log"></div>
+</div>
+
+<script>
+    setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }, 1000);
+    const client = new Paho.MQTT.Client("0d7ada916da04546a3a7b3482fd76615.s1.eu.hivemq.cloud", 8884, "NexusExec_" + Math.random().toString(16).slice(2, 5));
+    
+    client.onMessageArrived = (msg) => {
+        const data = msg.payloadString;
+        const log = document.getElementById('log');
+        log.innerHTML += `<div>[${new Date().toLocaleTimeString()}] > ${data}</div>`;
+        log.scrollTop = log.scrollHeight;
+        if(data === "ARM") { document.getElementById('main-body').style.background = "#450a0a"; }
+        if(data === "DISARM") { document.getElementById('main-body').style.background = "#0f172a"; }
+    };
+
+    client.connect({ useSSL: true, userName: "admin", password: "Nexus360!", onSuccess: () => {
+        document.getElementById('led').classList.add('online');
+        document.getElementById('status-text').innerText = "SYSTEM SECURE & OPERATIONAL";
+        client.subscribe("nexus/control");
+    }});
+
+    function sendAction(type) {
+        const message = new Paho.MQTT.Message(type);
+        message.destinationName = "nexus/control";
+        client.send(message);
+    }
+</script>
+</body>
+</html>
