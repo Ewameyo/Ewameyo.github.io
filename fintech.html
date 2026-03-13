@@ -3,27 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FINTECH GOVERNANCE</title>
+    <title>FINTECH GOVERNANCE | EDGAR WAMEYO</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono&display=swap');
-        body { background: #020617; color: #fff; font-family: 'JetBrains Mono', monospace; margin: 0; height: 100vh; display: flex; flex-direction: column; }
-        header { padding: 20px; border-bottom: 2px solid #3b82f6; display: flex; justify-content: space-between; background: #000; }
-        main { flex: 1; padding: 30px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .card { background: rgba(30, 41, 59, 0.5); border: 1px solid #3b82f6; padding: 25px; border-radius: 15px; text-align: center; }
-        .val { font-family: 'Orbitron'; font-size: 2rem; color: #fcc201; margin: 10px 0; }
+        :root { --blue: #3b82f6; --gold: #fcc201; --bg: #020617; }
+        
+        body { 
+            background: var(--bg); 
+            color: #fff; 
+            font-family: 'JetBrains Mono', monospace; 
+            margin: 0; 
+            overflow: hidden; 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+        }
+
+        header { 
+            padding: 20px; 
+            border-bottom: 2px solid var(--blue); 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: rgba(0,0,0,0.8); 
+        }
+
+        .dashboard { 
+            flex: 1; 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 25px; 
+            padding: 40px; 
+            align-items: center;
+        }
+
+        .card { 
+            background: rgba(30, 41, 59, 0.4); 
+            border: 1px solid var(--blue); 
+            border-radius: 20px; 
+            padding: 30px; 
+            text-align: center; 
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.1);
+        }
+
+        .val { font-family: 'Orbitron'; font-size: 2.8rem; color: var(--gold); margin: 15px 0; }
+        .label { color: var(--blue); letter-spacing: 2px; font-weight: bold; font-size: 0.8rem; text-transform: uppercase; }
+        
+        /* LIVE CHART STYLING */
+        .chart-engine {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            height: 100px;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .chart-bar {
+            width: 15px;
+            background: var(--blue);
+            transition: height 0.6s ease;
+            border-radius: 3px 3px 0 0;
+            opacity: 0.7;
+        }
+
+        .chart-bar.active { background: var(--gold); opacity: 1; }
+
+        .back-btn { 
+            color: var(--gold); 
+            text-decoration: none; 
+            border: 1px solid var(--gold); 
+            padding: 10px 20px; 
+            border-radius: 5px; 
+            font-size: 0.75rem; 
+            font-family: 'Orbitron'; 
+            transition: 0.3s;
+        }
+        
+        .back-btn:hover { background: var(--gold); color: #000; }
     </style>
 </head>
 <body>
-<header><div><b style="color:#3b82f6">FINTECH GOVERNANCE</b><br><small>ISO 20022 LIVE</small></div><a href="index.html" style="color:#fcc201; text-decoration:none">BACK</a></header>
-<main>
-    <div class="card"><div>TRANSACTION VELOCITY</div><div id="tps" class="val">1240 TPS</div></div>
-    <div class="card"><div>LIQUIDITY RATIO</div><div id="liq" class="val">1.84</div></div>
-</main>
-<script>
-    setInterval(() => {
-        document.getElementById('tps').innerText = (1200 + Math.floor(Math.random()*200)) + " TPS";
-        document.getElementById('liq').innerText = (1.80 + Math.random()*0.1).toFixed(2);
-    }, 2000);
-</script>
+    <header>
+        <div>
+            <h2 style="font-family:'Orbitron'; color:var(--blue); margin:0; letter-spacing: 2px;">FINTECH NODE</h2>
+            <small style="color: #64748b;">VELOCITY & LIQUIDITY GOVERNANCE</small>
+        </div>
+        <a href="index.html" class="back-btn">RETURN TO HUB</a>
+    </header>
+
+    <main class="dashboard">
+        <div class="card">
+            <div class="label">Transaction Velocity</div>
+            <div id="tps-val" class="val">0 TPS</div>
+            <div class="chart-engine" id="tps-chart">
+                </div>
+            <p style="font-size: 0.7rem; color: #64748b; margin-top: 15px;">ISO 20022 REAL-TIME DATA</p>
+        </div>
+
+        <div class="card">
+            <div class="label">Liquidity Ratio</div>
+            <div id="liq-val" class="val">0.00</div>
+            <div class="chart-engine" id="liq-chart">
+                </div>
+            <p style="font-size: 0.7rem; color: #64748b; margin-top: 15px;">BASEL III COMPLIANCE STATUS</p>
+        </div>
+    </main>
+
+    <script>
+        // Initialize Chart Bars
+        function createBars(containerId) {
+            const container = document.getElementById(containerId);
+            for(let i=0; i<12; i++) {
+                let bar = document.createElement('div');
+                bar.className = 'chart-bar';
+                container.appendChild(bar);
+            }
+        }
+
+        createBars('tps-chart');
+        createBars('liq-chart');
+
+        function updateFintech() {
+            // Update Numbers
+            let tps = (1200 + Math.floor(Math.random() * 450));
+            let liq = (1.80 + Math.random() * 0.15).toFixed(2);
+            
+            document.getElementById('tps-val').innerText = tps.toLocaleString() + " TPS";
+            document.getElementById('liq-val').innerText = liq;
+
+            // Update Chart Bars
+            updateBars('tps-chart');
+            updateBars('liq-chart');
+        }
+
+        function updateBars(containerId) {
+            const bars = document.querySelectorAll(`#${containerId} .chart-bar`);
+            bars.forEach(bar => {
+                let height = 20 + Math.floor(Math.random() * 80);
+                bar.style.height = height + "%";
+                if(height > 85) bar.classList.add('active');
+                else bar.classList.remove('active');
+            });
+        }
+
+        setInterval(updateFintech, 1800);
+        updateFintech(); // Initial call
+    </script>
 </body>
 </html>
