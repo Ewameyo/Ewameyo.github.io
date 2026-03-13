@@ -6,7 +6,7 @@
     <title>SERVICE GOVERNANCE | EDGAR WAMEYO</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@500;800&display=swap');
-        :root { --purple: #a855f7; --gold: #fcc201; --bg: #020617; --green: #22c55e; --blue: #3b82f6; }
+        :root { --purple: #a855f7; --gold: #fcc201; --bg: #020617; --green: #22c55e; }
         
         body, html { width: 100%; height: 100%; margin: 0; background: var(--bg); color: #fff; font-family: 'JetBrains Mono', monospace; overflow: hidden; }
         #bg-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; }
@@ -27,20 +27,17 @@
         .card { 
             background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(168, 85, 247, 0.4); 
             border-radius: 12px; padding: 15px; display: flex; flex-direction: column;
-            box-shadow: 0 0 30px rgba(168, 85, 247, 0.1);
         }
 
         .card-title { color: var(--purple); font-family: 'Orbitron'; font-size: 0.75rem; font-weight: 900; margin-bottom: 10px; display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding-bottom: 5px; }
 
-        .log-container { flex: 1; overflow-y: auto; background: rgba(0,0,0,0.8); padding: 12px; border-radius: 5px; font-size: 0.75rem; border: 1px solid #222; scrollbar-width: none; }
-        .log-entry { margin-bottom: 12px; border-left: 3px solid var(--purple); padding-left: 15px; animation: slideIn 0.4s ease-out; line-height: 1.5; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px; }
-        .phase { color: var(--gold); font-weight: 800; margin-right: 10px; font-size: 0.65rem; border: 1px solid var(--gold); padding: 2px 6px; border-radius: 3px; background: rgba(252, 194, 1, 0.1); }
-        .status-tag { float: right; font-weight: 800; font-size: 0.6rem; padding: 2px 6px; border-radius: 10px; border: 1px solid; }
-        .status-done { color: var(--green); border-color: var(--green); background: rgba(34, 197, 94, 0.1); }
+        .log-container { flex: 1; overflow-y: auto; background: rgba(0,0,0,0.6); padding: 10px; border-radius: 5px; font-size: 0.75rem; border: 1px solid #222; scrollbar-width: none; }
+        .log-entry { margin-bottom: 10px; border-left: 3px solid var(--purple); padding-left: 12px; animation: slideIn 0.5s ease forwards; }
+        .phase { color: var(--gold); font-weight: 800; margin-right: 8px; font-size: 0.65rem; border: 1px solid var(--gold); padding: 1px 4px; border-radius: 3px; }
+        .success-tag { color: var(--green); float: right; font-weight: 800; font-size: 0.6rem; }
 
         .metrics-val { font-family: 'Orbitron'; font-size: 2.2rem; color: var(--gold); text-align: center; margin: 5px 0; }
         .back-btn { color: var(--gold); text-decoration: none; border: 1px solid var(--gold); padding: 5px 15px; border-radius: 4px; font-family: 'Orbitron'; font-size: 0.65rem; transition: 0.3s; }
-        .back-btn:hover { background: var(--gold); color: #000; }
 
         .signature-footer { 
             position: fixed; bottom: 0; width: 100%; background: #ff0000; color: #fff; 
@@ -48,7 +45,7 @@
             border-top: 2px solid #fff;
         }
 
-        @keyframes slideIn { from { opacity: 0; transform: translateX(-15px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -58,7 +55,7 @@
 <header>
     <div>
         <h2 style="font-family:'Orbitron'; color:var(--purple); margin:0;">SERVICE GOVERNANCE</h2>
-        <small style="color: #94a3b8;">LEAD SYSTEMS ARCHITECT | LSSBB ADVANCED SYSTEMS THEORY</small>
+        <small style="color: #94a3b8;">LEAD SYSTEMS ARCHITECT | GLOBAL BRANDING MODE</small>
     </div>
     <div id="clock" class="clock-display">00:00:00</div>
     <a href="index.html" class="back-btn">RETURN TO HUB</a>
@@ -66,26 +63,23 @@
 
 <main class="main-grid">
     <div class="card">
-        <div class="card-title">360° ENTERPRISE ORCHESTRATION <span>STATUS: ACTIVE</span></div>
-        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
-            <div style="font-size:0.7rem; color:var(--purple); letter-spacing:2px; margin-bottom:10px;">GLOBAL SYSTEMS SYNC</div>
-            <div style="width:80%; height:4px; background:#111; border-radius:2px; overflow:hidden;">
-                <div id="progress-bar" style="width:0%; height:100%; background:var(--gold); transition:0.5s;"></div>
+        <div class="card-title">MISSION CONTROL <span>DEPLOYMENT STATUS</span></div>
+        <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <div id="mission-status" style="font-size: 1rem; color: var(--gold); font-family: 'Orbitron';">INITIALIZING LAUNCH...</div>
+            <div style="width: 80%; height: 2px; background: #222; margin-top: 15px; position: relative;">
+                <div id="mission-progress" style="width: 0%; height: 100%; background: var(--purple); transition: 1s;"></div>
             </div>
-            <p id="progress-text" style="font-size:0.6rem; margin-top:10px; color:#94a3b8;">CALIBRATING GLOBAL NODES...</p>
         </div>
     </div>
 
     <div class="card" style="grid-row: span 2;">
-        <div class="card-title">ARCHITECTURAL EXECUTION LOG <span>GLOBAL DEPLOYMENT STREAM</span></div>
-        <div id="log-box" class="log-container">
-            <div class="log-entry"><span class="phase">[SYSTEM]</span> INITIALIZING GLOBAL LSSBB GOVERNANCE...</div>
-        </div>
+        <div class="card-title">ARCHITECTURAL DEPLOYMENT LOG <span>STARLINK SEQUENCE</span></div>
+        <div id="log-box" class="log-container"></div>
     </div>
 
     <div class="card">
-        <div class="card-title">PROCESS CAPABILITY (Cpk) <span>STABILITY RATING</span></div>
-        <div class="metrics-val">Cpk 2.14</div>
+        <div class="card-title">SYSTEM YIELD <span>360° ARCHITECTURE</span></div>
+        <div class="metrics-val">5.99σ</div>
         <div style="height: 40px; display: flex; align-items: flex-end; justify-content: center; gap: 4px;">
             <div style="width:15px; background:var(--purple); height:95%;"></div>
             <div style="width:15px; background:var(--gold); height:85%;"></div>
@@ -97,7 +91,7 @@
 
 <div class="signature-footer">
     CONFIDENTIAL & PROPRIETARY | COPYRIGHT © 2026 EDGAR WAMEYO | ALL RIGHTS RESERVED. <br>
-    <span style="font-size: 0.55rem; color: #ffcccc; font-family: 'JetBrains Mono';">LEAD SYSTEMS ARCHITECT: WORLD-CLASS LSSBB INTEGRITY VALIDATED.</span>
+    <span style="font-size: 0.55rem; color: #ffcccc;">LEAD SYSTEMS ARCHITECT: GLOBAL INFRASTRUCTURE DEPLOYMENT COMPLETE.</span>
 </div>
 
 <script>
@@ -111,7 +105,7 @@
     const drops = Array(Math.floor(canvas.width / 15)).fill(1);
     function draw() {
         ctx.fillStyle = "rgba(2, 6, 23, 0.2)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "rgba(168, 85, 247, 0.35)"; ctx.font = "14px monospace";
+        ctx.fillStyle = "rgba(168, 85, 247, 0.3)"; ctx.font = "14px monospace";
         drops.forEach((y, i) => {
             ctx.fillText(Math.floor(Math.random()*2), i*15, y*15);
             if(y*15 > canvas.height && Math.random() > 0.975) drops[i] = 0;
@@ -120,51 +114,46 @@
     }
     setInterval(draw, 50);
 
-    // ADVANCED ARCHITECTURAL WORKFLOW (20+ UNIQUE TASKS)
-    const masterLog = [
-        {p: "MONTE-CARLO", t: "Simulated 10,000 architectural failure modes for uptime probability.", s: "PROCESSED"},
-        {p: "FMEA-ADV", t: "Identified high-RPN failure modes in global transaction nodes.", s: "MITIGATED"},
-        {p: "ANOVA-SYS", t: "Validated latency variance across multi-region server clusters.", s: "STABILIZED"},
-        {p: "DoE-LEVEL", t: "Optimized cloud-native orchestration throughput via Design of Experiments.", s: "OPTIMIZED"},
-        {p: "ISO-20022", t: "Aligned high-level messaging architecture with global compliance.", s: "COMPLIANT"},
-        {p: "SPC-CTRL", t: "Deployed Statistical Process Control charts for real-time telemetry.", s: "ACTIVE"},
-        {p: "REGRESSION", t: "Modeled predictive technical debt reduction for Enterprise scalability.", s: "VALIDATED"},
-        {p: "QFD-BLUE", t: "Translated global stakeholder needs into HLD blueprints.", s: "ARCHITECTED"},
-        {p: "MSA-GAUGE", t: "Audited measurement system integrity for automated data streams.", s: "CERTIFIED"},
-        {p: "HEIJUNKA", t: "Implemented workload leveling across distributed microservices.", s: "BALANCED"},
-        {p: "DFSS-CORE", t: "Applied Design for Six Sigma to new Fintech gateway architecture.", s: "VERIFIED"},
-        {p: "POKA-YOKE", t: "Built fail-safe architectural triggers for automated recovery.", s: "REDUNDANT"},
-        {p: "TOC-LOGIC", t: "Identified and removed architectural throughput constraints.", s: "RESOLVED"},
-        {p: "SMED-TECH", t: "Reduced deployment lead time from 4 hours to 6 minutes.", s: "LEAN"},
-        {p: "5S-DIGITAL", t: "Optimized repository and container registry for peak efficiency.", s: "ORGANIZED"},
-        {p: "KAIZEN-GL", t: "Initiated cross-functional improvement loop for API gateways.", s: "EVOLVING"},
-        {p: "SHAININ", t: "Localized hidden variable causing intermittent packet loss.", s: "FIXED"},
-        {p: "KANO-ANLY", t: "Categorized system attributes for maximum user satisfaction.", s: "MAPPED"},
-        {p: "OEE-SYS", t: "Achieved 99.99% Overall Equipment Effectiveness for data nodes.", s: "WORLD-CLASS"},
-        {p: "LSS-MASTER", t: "Synthesized 360° architectural governance framework.", s: "COMPLETED"}
+    // UNIQUE STARLINK-STYLE DEPLOYMENT SEQUENCE (NO REPETITION)
+    const sequence = [
+        {p: "BOOSTER", t: "Igniting Enterprise Core: Initializing LSSBB Governance Engines."},
+        {p: "STAGE-1", t: "Deploying 360° Architectural Mesh across global financial nodes."},
+        {p: "FAIRING", t: "Jettisoning legacy technical debt (Muda) to optimize throughput."},
+        {p: "ORBIT", t: "Establishing ISO 20022 compliance in low-latency environments."},
+        {p: "MONTE-CARLO", t: "Running 10,000 statistical failure simulations for uptime validation."},
+        {p: "FMEA", t: "Permanent mitigation of high-risk process failure modes detected."},
+        {p: "ANOVA", t: "Validating cross-regional variance for sub-millisecond liquidity flow."},
+        {p: "DEPLOY", t: "Final Deployment of Zero-Defect Governance Blueprints."},
+        {p: "MESH", t: "Global Architectural Mesh Active. System Integrity: 5.99 Sigma."}
     ];
 
-    let logIndex = 0;
-    function logTask() {
-        const box = document.getElementById('log-box');
-        const entry = document.createElement('div');
-        entry.className = 'log-entry';
-        
-        const job = masterLog[logIndex % masterLog.length];
-        entry.innerHTML = `<span class="status-tag status-done">${job.s}</span> <span class="phase">[${job.p}]</span> ${job.t}`;
-        
-        box.prepend(entry);
-        logIndex++;
+    let currentStep = 0;
+    function runSequence() {
+        if (currentStep < sequence.length) {
+            const box = document.getElementById('log-box');
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            const step = sequence[currentStep];
+            
+            entry.innerHTML = `<span class="success-tag">✓</span><span class="phase">[${step.p}]</span> ${step.t}`;
+            box.appendChild(entry);
+            
+            // Auto-scroll to bottom
+            box.scrollTop = box.scrollHeight;
 
-        // Update Progress Bar
-        const prog = (logIndex % masterLog.length + 1) * (100 / masterLog.length);
-        document.getElementById('progress-bar').style.width = prog + "%";
-        document.getElementById('progress-text').innerText = `GLOBAL PROTOCOL: ${job.p} IN PROGRESS...`;
+            // Update Mission Status
+            document.getElementById('mission-status').innerText = `STEP ${currentStep + 1}: ${step.p} COMPLETE`;
+            document.getElementById('mission-progress').style.width = ((currentStep + 1) / sequence.length * 100) + "%";
 
-        if(box.childNodes.length > 30) box.removeChild(box.lastChild);
+            currentStep++;
+            setTimeout(runSequence, 2500); // Deploy each step every 2.5 seconds
+        } else {
+            document.getElementById('mission-status').innerText = "GLOBAL DEPLOYMENT SUCCESSFUL";
+            document.getElementById('mission-status').style.color = "var(--green)";
+        }
     }
-    setInterval(logTask, 3000);
-    logTask(); // Initial call
+    
+    window.onload = runSequence;
 </script>
 </body>
 </html>
