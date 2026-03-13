@@ -18,31 +18,34 @@
         }
 
         .dashboard { 
-            display: grid; grid-template-columns: 1fr 1fr; gap: 20px; 
-            padding: 30px; height: calc(100vh - 160px); 
+            display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 20px; 
+            padding: 30px; height: calc(100vh - 180px); 
         }
 
         .card { 
             background: rgba(15, 23, 42, 0.9); border: 1px solid var(--purple); 
             border-radius: 15px; padding: 20px; display: flex; flex-direction: column;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.1);
         }
 
-        /* JOB EXECUTION LOG */
-        .log-container { flex: 1; overflow-y: auto; background: #000; padding: 15px; border-radius: 8px; font-size: 0.75rem; border: 1px solid #333; }
-        .log-entry { margin-bottom: 8px; border-left: 2px solid var(--purple); padding-left: 10px; }
+        .log-container { flex: 1; overflow-y: auto; background: rgba(0,0,0,0.8); padding: 15px; border-radius: 8px; font-size: 0.75rem; border: 1px solid #333; }
+        .log-entry { margin-bottom: 8px; border-left: 2px solid var(--purple); padding-left: 10px; animation: fadeIn 0.5s ease; }
         .timestamp { color: var(--purple); font-weight: bold; }
-        .status-ok { color: var(--green); }
+        .status-ok { color: var(--green); font-weight: bold; }
 
         .val { font-family: 'Orbitron'; font-size: 2.2rem; color: var(--gold); text-align: center; margin: 10px 0; }
-        .chart-engine { display: flex; align-items: flex-end; justify-content: center; height: 60px; gap: 5px; }
-        .bar { width: 8px; background: var(--purple); transition: height 0.3s; }
+        .chart-engine { display: flex; align-items: flex-end; justify-content: center; height: 80px; gap: 5px; margin-top: 10px; }
+        .bar { width: 10px; background: var(--purple); transition: height 0.3s; border-radius: 2px 2px 0 0; opacity: 0.7; }
 
-        .back-btn { color: var(--gold); text-decoration: none; border: 1px solid var(--gold); padding: 8px 15px; border-radius: 5px; font-family: 'Orbitron'; font-size: 0.7rem; }
+        .back-btn { color: var(--gold); text-decoration: none; border: 1px solid var(--gold); padding: 8px 15px; border-radius: 5px; font-family: 'Orbitron'; font-size: 0.7rem; transition: 0.3s; }
+        .back-btn:hover { background: var(--gold); color: #000; }
         
         .signature-footer { 
             position: fixed; bottom: 0; width: 100%; background: #ff0000; color: #fff; 
-            padding: 10px 0; text-align: center; font-family: 'Orbitron'; font-weight: 900; font-size: 0.7rem; z-index: 1000;
+            padding: 12px 0; text-align: center; font-family: 'Orbitron'; font-weight: 900; font-size: 0.7rem; z-index: 1000;
+            border-top: 2px solid #fff;
         }
+        @keyframes fadeIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
     </style>
 </head>
 <body>
@@ -51,29 +54,28 @@
 
 <header>
     <div>
-        <h2 style="font-family:'Orbitron'; color:var(--purple); margin:0;">SERVICE GOVERNANCE</h2>
-        <small style="color: #94a3b8;">LSSBB EXECUTION PROTOCOLS</small>
+        <h2 style="font-family:'Orbitron'; color:var(--purple); margin:0; letter-spacing: 2px;">SERVICE GOVERNANCE</h2>
+        <small style="color: #94a3b8;">LSSBB | 360° OPERATIONAL LOGS</small>
     </div>
     <a href="index.html" class="back-btn">RETURN TO HUB</a>
 </header>
 
 <main class="dashboard">
     <div class="card">
-        <div style="color:var(--purple); font-weight:bold; margin-bottom:10px;">LIVE JOB EXECUTION LOG</div>
+        <div style="color:var(--purple); font-weight:bold; margin-bottom:10px; font-family:'Orbitron'; font-size: 0.8rem;">JOBS EXECUTED | REAL-TIME LOG</div>
         <div id="log" class="log-container">
-            <div class="log-entry"><span class="timestamp">[08:45:12]</span> INITIALIZING GOVERNANCE ENGINE... <span class="status-ok">READY</span></div>
+            <div class="log-entry"><span class="timestamp">[SYS_START]</span> INITIALIZING GOVERNANCE ENGINE... <span class="status-ok">READY</span></div>
         </div>
     </div>
 
     <div class="card" style="justify-content: space-around;">
         <div>
-            <div style="color:var(--purple); text-align:center; font-size:0.8rem;">SLA COMPLIANCE</div>
+            <div style="color:var(--purple); text-align:center; font-size:0.75rem; font-weight:bold;">SLA UPTIME</div>
             <div id="sla-val" class="val">99.98%</div>
             <div class="chart-engine" id="sla-chart"></div>
         </div>
-        <hr style="border:0; border-top:1px solid #333; margin:15px 0;">
-        <div>
-            <div style="color:var(--purple); text-align:center; font-size:0.8rem;">PROCESS SIGMA</div>
+        <div style="margin-top: 20px;">
+            <div style="color:var(--purple); text-align:center; font-size:0.75rem; font-weight:bold;">PROCESS SIGMA</div>
             <div id="sig-val" class="val">5.82σ</div>
             <div class="chart-engine" id="sig-chart"></div>
         </div>
@@ -82,51 +84,56 @@
 
 <div class="signature-footer">
     CONFIDENTIAL & PROPRIETARY | COPYRIGHT © 2026 EDGAR WAMEYO | ALL RIGHTS RESERVED. <br>
-    <span style="font-size: 0.55rem; color: #ffcccc;">UNAUTHORIZED REPLICATION IS STRICTLY PROHIBITED.</span>
+    <span style="font-size: 0.55rem; color: #ffcccc; font-family: 'JetBrains Mono';">UNAUTHORIZED REPLICATION OR DECOMPILATION IS STRICTLY PROHIBITED.</span>
 </div>
 
 <script>
-    // MATRIX BG
+    // MATRIX BACKGROUND
     const canvas = document.getElementById('bg-canvas');
     const ctx = canvas.getContext('2d');
     function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
     window.addEventListener('resize', resize); resize();
     const characters = "01";
-    const drops = Array(Math.floor(canvas.width / 14)).fill(1);
+    const drops = Array(Math.floor(canvas.width / 15)).fill(1);
     function draw() {
-        ctx.fillStyle = "rgba(2, 6, 23, 0.15)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "#a855f7"; ctx.font = "14px monospace";
+        ctx.fillStyle = "rgba(2, 6, 23, 0.2)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "rgba(168, 85, 247, 0.35)"; ctx.font = "15px monospace";
         drops.forEach((y, i) => {
-            ctx.fillText(characters.charAt(Math.floor(Math.random()*2)), i*14, y*14);
-            if(y*14 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+            ctx.fillText(characters.charAt(Math.floor(Math.random()*2)), i*15, y*15);
+            if(y*15 > canvas.height && Math.random() > 0.975) drops[i] = 0;
             drops[i]++;
         });
     }
     setInterval(draw, 50);
 
-    // LOG ENGINE
-    const jobs = ["OPTIMIZING DATABASE ARCHITECTURE", "VERIFYING ISO 20022 PAYLOAD", "CALIBRATING LSSBB YIELD", "EXECUTING ASSET REALIGNMENT", "SYNCING GLOBAL GOVERNANCE", "CLEANING PROCESS WASTE (MUDA)"];
+    // LIVE LOG GENERATOR
+    const jobTypes = ["OPTIMIZING ARCHITECTURE", "VALIDATING ISO 20022", "CALIBRATING YIELD", "REALIGNING ASSETS", "SYNCING GOVERNANCE", "REMOVING MUDA", "AUDITING SIGMA LEVELS"];
     function addLog() {
         const log = document.getElementById('log');
         const entry = document.createElement('div');
         entry.className = 'log-entry';
         const time = new Date().toLocaleTimeString();
-        entry.innerHTML = `<span class="timestamp">[${time}]</span> ${jobs[Math.floor(Math.random()*jobs.length)]}... <span class="status-ok">SUCCESS</span>`;
+        entry.innerHTML = `<span class="timestamp">[${time}]</span> ${jobTypes[Math.floor(Math.random()*jobTypes.length)]}... <span class="status-ok">SUCCESS</span>`;
         log.prepend(entry);
-        if(log.childNodes.length > 15) log.removeChild(log.lastChild);
+        if(log.childNodes.length > 20) log.removeChild(log.lastChild);
     }
-    setInterval(addLog, 3000);
+    setInterval(addLog, 2500);
 
-    // CHART ENGINE
-    function makeBars(id) {
-        const el = document.getElementById(id);
-        for(let i=0; i<15; i++) { let b = document.createElement('div'); b.className = 'bar'; el.appendChild(b); }
+    // DYNAMIC CHARTS
+    function createBars(id) {
+        const container = document.getElementById(id);
+        for(let i=0; i<12; i++) {
+            let b = document.createElement('div'); b.className = 'bar';
+            container.appendChild(b);
+        }
     }
-    makeBars('sla-chart'); makeBars('sig-chart');
-    function updateCharts() {
-        document.querySelectorAll('.bar').forEach(b => b.style.height = (20 + Math.random()*80) + "%");
+    createBars('sla-chart'); createBars('sig-chart');
+    function animateBars() {
+        document.querySelectorAll('.bar').forEach(b => {
+            b.style.height = (30 + Math.random()*70) + "%";
+        });
     }
-    setInterval(updateCharts, 2000);
+    setInterval(animateBars, 1500);
 </script>
 </body>
 </html>
