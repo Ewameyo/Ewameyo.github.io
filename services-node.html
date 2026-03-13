@@ -31,15 +31,15 @@
 
         .card-title { color: var(--purple); font-family: 'Orbitron'; font-size: 0.75rem; font-weight: 900; margin-bottom: 10px; display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding-bottom: 5px; }
 
-        /* VSM FLOW DISPLAY */
+        /* 360° ARCHITECTURAL FLOW */
         .vsm-flow { display: flex; justify-content: space-around; align-items: center; flex: 1; padding: 10px 0; }
-        .vsm-node { border: 1px solid var(--gold); padding: 8px; font-size: 0.6rem; border-radius: 4px; text-align: center; width: 80px; }
-        .vsm-arrow { color: var(--purple); font-size: 1.2rem; animation: flow 1.5s infinite; }
+        .vsm-node { border: 1px solid var(--gold); padding: 8px; font-size: 0.55rem; border-radius: 4px; text-align: center; width: 90px; background: rgba(252, 194, 1, 0.05); }
+        .vsm-arrow { color: var(--purple); font-size: 1rem; animation: flow 1.5s infinite; }
 
-        /* DMAIC LOGS - Marketing Your Core Tasks */
-        .log-container { flex: 1; overflow-y: auto; background: rgba(0,0,0,0.6); padding: 10px; border-radius: 5px; font-size: 0.7rem; border: 1px solid #222; }
-        .log-entry { margin-bottom: 6px; border-left: 2px solid var(--green); padding-left: 10px; animation: slideIn 0.3s ease; }
-        .phase { color: var(--gold); font-weight: 800; margin-right: 5px; }
+        /* LEADERSHIP JOB LOG */
+        .log-container { flex: 1; overflow-y: auto; background: rgba(0,0,0,0.6); padding: 10px; border-radius: 5px; font-size: 0.7rem; border: 1px solid #222; scrollbar-width: none; }
+        .log-entry { margin-bottom: 8px; border-left: 2px solid var(--purple); padding-left: 10px; animation: slideIn 0.3s ease; }
+        .phase { color: var(--gold); font-weight: 800; margin-right: 5px; font-size: 0.65rem; }
 
         .metrics-val { font-family: 'Orbitron'; font-size: 2.2rem; color: var(--gold); text-align: center; margin: 5px 0; }
         .back-btn { color: var(--gold); text-decoration: none; border: 1px solid var(--gold); padding: 5px 15px; border-radius: 4px; font-family: 'Orbitron'; font-size: 0.65rem; transition: 0.3s; }
@@ -51,7 +51,7 @@
             border-top: 2px solid #fff;
         }
 
-        @keyframes flow { 0% { opacity: 0.2; transform: translateX(-5px); } 100% { opacity: 1; transform: translateX(5px); } }
+        @keyframes flow { 0% { opacity: 0.2; transform: translateX(-3px); } 100% { opacity: 1; transform: translateX(3px); } }
         @keyframes slideIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
@@ -62,7 +62,7 @@
 <header>
     <div>
         <h2 style="font-family:'Orbitron'; color:var(--purple); margin:0;">SERVICE GOVERNANCE</h2>
-        <small style="color: #94a3b8;">SYSTEMS ARCHITECT | DMAIC | VSM PROTOCOLS</small>
+        <small style="color: #94a3b8;">LEAD SYSTEMS ARCHITECT | LSSBB MASTER BLACK BELT LEVEL</small>
     </div>
     <div id="clock" class="clock-display">00:00:00</div>
     <a href="index.html" class="back-btn">RETURN TO HUB</a>
@@ -70,47 +70,45 @@
 
 <main class="main-grid">
     <div class="card">
-        <div class="card-title">VALUE STREAM MAPPING (VSM) <span>DYNAMIC ANALYTICS</span></div>
+        <div class="card-title">360° OPERATIONAL CONTROL <span>ARCHITECTURE FLOW</span></div>
         <div class="vsm-flow">
-            <div class="vsm-node">IDENTIFY WASTE</div>
+            <div class="vsm-node">STRATEGIC ALIGNMENT</div>
             <div class="vsm-arrow">➔</div>
-            <div class="vsm-node" style="border-color:var(--purple)">MAP FLOW</div>
+            <div class="vsm-node" style="border-color:var(--purple)">ECOSYSTEM DESIGN</div>
             <div class="vsm-arrow">➔</div>
-            <div class="vsm-node">OPTIMIZE VALUE</div>
+            <div class="vsm-node">GOVERNANCE AUDIT</div>
         </div>
-        <p style="font-size: 0.6rem; color: #94a3b8; text-align: center;">Active VSM Protocol: Eliminating non-value added steps across systems.</p>
+        <p style="font-size: 0.6rem; color: #94a3b8; text-align: center; letter-spacing: 1px;">Status: Orchestrating cross-functional system nodes for maximum stability.</p>
     </div>
 
     <div class="card" style="grid-row: span 2;">
-        <div class="card-title">DMAIC EXECUTION ENGINE <span>LIVE JOB LOG</span></div>
+        <div class="card-title">ARCHITECTURAL EXECUTION LOG <span>LEADER MODE</span></div>
         <div id="log-box" class="log-container">
-            <div class="log-entry"><span class="phase">[START]</span> SYSTEM GOVERNANCE INITIALIZED.</div>
+            <div class="log-entry"><span class="phase">[INIT]</span> ARCHITECTURAL GOVERNANCE ACTIVE.</div>
         </div>
     </div>
 
     <div class="card">
-        <div class="card-title">ARCHITECTURAL YIELD <span>SIGMA RATING</span></div>
-        <div class="metrics-val">5.98σ</div>
+        <div class="card-title">SYSTEM INTEGRITY <span>360° YIELD</span></div>
+        <div class="metrics-val">5.99σ</div>
         <div style="height: 40px; display: flex; align-items: flex-end; justify-content: center; gap: 4px;">
-            <div style="width:15px; background:var(--purple); height:80%;"></div>
-            <div style="width:15px; background:var(--purple); height:60%;"></div>
+            <div style="width:15px; background:var(--purple); height:95%;"></div>
+            <div style="width:15px; background:var(--gold); height:85%;"></div>
             <div style="width:15px; background:var(--purple); height:90%;"></div>
-            <div style="width:15px; background:var(--purple); height:75%;"></div>
+            <div style="width:15px; background:var(--gold); height:88%;"></div>
         </div>
     </div>
 </main>
 
 <div class="signature-footer">
     CONFIDENTIAL & PROPRIETARY | COPYRIGHT © 2026 EDGAR WAMEYO | ALL RIGHTS RESERVED. <br>
-    <span style="font-size: 0.55rem; color: #ffcccc;">UNAUTHORIZED REPLICATION OR DECOMPILATION IS STRICTLY PROHIBITED.</span>
+    <span style="font-size: 0.55rem; color: #ffcccc;">UNAUTHORIZED REPLICATION IS STERNLY PROHIBITED.</span>
 </div>
 
 <script>
-    // SYNCED CLOCK
     function updateClock() { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }
     setInterval(updateClock, 1000); updateClock();
 
-    // MATRIX BG EFFECT (PURPLE THEME)
     const canvas = document.getElementById('bg-canvas');
     const ctx = canvas.getContext('2d');
     function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
@@ -118,7 +116,7 @@
     const drops = Array(Math.floor(canvas.width / 15)).fill(1);
     function draw() {
         ctx.fillStyle = "rgba(2, 6, 23, 0.2)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "rgba(168, 85, 247, 0.35)"; ctx.font = "14px monospace";
+        ctx.fillStyle = "rgba(168, 85, 247, 0.3)"; ctx.font = "14px monospace";
         drops.forEach((y, i) => {
             ctx.fillText(Math.floor(Math.random()*2), i*15, y*15);
             if(y*15 > canvas.height && Math.random() > 0.975) drops[i] = 0;
@@ -127,14 +125,16 @@
     }
     setInterval(draw, 50);
 
-    // MARKETING TASK LOG (DMAIC & ARCHITECTURE)
+    // LEADERSHIP LEVEL TASKS
     const tasks = [
-        {p: "DEFINE", t: "Architectural scope for Fintech Node integration."},
-        {p: "MEASURE", t: "Baseline latency across ISO 20022 messaging."},
-        {p: "ANALYZE", t: "VSM Gap Analysis identified process bottlenecks."},
-        {p: "IMPROVE", t: "Redesigning data-flow topology for 5.9σ yield."},
-        {p: "CONTROL", t: "Implemented automated governance monitoring."},
-        {p: "SYSTEMS", t: "Cross-functional architecture audit successful."}
+        {p: "ARCHITECT", t: "Designing 360° high-level system topology for enterprise scalability."},
+        {p: "DMAIC-A", t: "Analyzing architectural friction to reduce systemic process variance."},
+        {p: "LEADERSHIP", t: "Orchestrating VSM workshops to align IT infrastructure with business value."},
+        {p: "GOVERNANCE", t: "Implementing real-time LSSBB compliance monitors across fintech nodes."},
+        {p: "STRATEGY", t: "Mapping ecosystem dependencies to eliminate technical debt (Muda)."},
+        {p: "INTEGRATION", t: "Verifying ISO 20022 architectural alignment for global liquidity flow."},
+        {p: "SIPOC-L", t: "Reviewing Supplier-Input-Process-Output-Customer flow for ecosystem health."},
+        {p: "DESIGN", t: "Authoring architectural blueprints for Zero-Defect system execution."}
     ];
 
     function logTask() {
@@ -146,7 +146,7 @@
         box.prepend(entry);
         if(box.childNodes.length > 20) box.removeChild(box.lastChild);
     }
-    setInterval(logTask, 3000);
+    setInterval(logTask, 3500);
 </script>
 </body>
 </html>
