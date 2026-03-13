@@ -5,129 +5,149 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EDGAR WAMEYO | LEAD SYSTEMS ARCHITECT</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono:wght@300;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@500;800&display=swap');
         
-        :root { --gold: #fcc201; --bg: #030712; --cyan: #00f2ff; --glass: rgba(15, 23, 42, 0.9); }
+        :root { --gold: #fcc201; --bg: #020617; --cyan: #00f2ff; --green: #22c55e; }
         
         body { 
             background: var(--bg); color: #ffffff; font-family: 'JetBrains Mono', monospace; 
-            margin: 0; overflow-x: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh;
+            margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh;
         }
 
-        #bg-canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.15; }
+        #bg-canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.1; }
 
         .terminal-frame {
-            width: 90%; max-width: 550px; background: var(--glass);
-            backdrop-filter: blur(20px); border: 2px solid rgba(252, 194, 1, 0.4);
-            border-radius: 20px; padding: 40px 25px; box-shadow: 0 0 60px rgba(0,0,0,1);
-            margin-bottom: 80px; /* Space for the persistent footer */
+            width: 92%; max-width: 500px; background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px); border: 1px solid rgba(252, 194, 1, 0.3);
+            border-radius: 16px; padding: 30px 20px; box-shadow: 0 0 40px rgba(0,0,0,1);
+            margin-bottom: 70px;
         }
 
-        .top-meta { display: flex; justify-content: space-between; font-family: 'Orbitron', sans-serif; font-size: 0.7rem; color: var(--gold); margin-bottom: 25px; }
-        .pulse { width: 10px; height: 10px; background: #22c55e; border-radius: 50%; display: inline-block; box-shadow: 0 0 12px #22c55e; animation: blink 1.5s infinite; vertical-align: middle; margin-right: 5px; }
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+        /* BIG CLOCK & ACTIVE STATUS */
+        .header-status { 
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(0,0,0,0.5); padding: 15px; border-radius: 10px;
+            border-bottom: 2px solid var(--gold); margin-bottom: 25px;
+        }
+        
+        .active-label { 
+            color: var(--green); font-family: 'Orbitron'; font-size: 0.8rem; 
+            font-weight: 900; letter-spacing: 1px; display: flex; align-items: center;
+        }
+        
+        .pulse { 
+            width: 12px; height: 12px; background: var(--green); border-radius: 50%; 
+            margin-right: 10px; box-shadow: 0 0 15px var(--green); animation: blink 1s infinite;
+        }
 
-        .brand h1 { font-family: 'Orbitron', sans-serif; font-size: 2rem; margin: 0; letter-spacing: 3px; text-align: center; color: #fff; }
+        #clock { 
+            font-size: 1.6rem; font-weight: 800; color: #fff; 
+            text-shadow: 0 0 10px var(--gold);
+        }
 
-        .news-ticker { background: rgba(0, 242, 255, 0.08); border-y: 1px solid var(--cyan); padding: 10px 0; margin: 25px -25px; overflow: hidden; white-space: nowrap; }
-        .ticker-text { display: inline-block; animation: scroll 18s linear infinite; font-size: 0.75rem; color: var(--cyan); font-weight: bold; }
-        @keyframes scroll { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
+        /* BRANDING */
+        .brand { text-align: center; margin-bottom: 20px; }
+        .brand h1 { font-family: 'Orbitron'; font-size: 1.8rem; margin: 0; letter-spacing: 2px; }
+        .title-sub { color: var(--gold); font-size: 0.75rem; font-weight: 700; margin-top: 5px; }
 
-        .node-list { display: flex; flex-direction: column; gap: 15px; }
+        /* TICKER */
+        .ticker { background: rgba(0, 242, 255, 0.1); padding: 8px 0; margin: 20px -20px; overflow: hidden; white-space: nowrap; border-y: 1px solid var(--cyan); }
+        .ticker-text { display: inline-block; animation: scroll 15s linear infinite; font-size: 0.7rem; color: var(--cyan); font-weight: bold; }
+
+        /* NODES */
+        .node-list { display: flex; flex-direction: column; gap: 12px; }
         .node {
-            background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 22px; border-radius: 12px; text-decoration: none; color: white;
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 18px; border-radius: 10px; text-decoration: none; color: white;
             display: flex; justify-content: space-between; align-items: center; transition: 0.3s;
         }
-        .node:hover { border-color: var(--gold); background: rgba(252, 194, 1, 0.1); transform: translateX(5px); }
-        .node b { display: block; font-family: 'Orbitron', sans-serif; font-size: 1.1rem; color: #fff; }
-        .node span { font-size: 0.75rem; color: #94a3b8; }
+        .node:hover { background: rgba(252, 194, 1, 0.05); border-color: var(--gold); }
+        .node b { display: block; font-family: 'Orbitron'; font-size: 1rem; color: #fff; }
+        .node span { font-size: 0.7rem; color: #64748b; }
 
-        /* HIGH VISIBILITY SIGNATURE FOOTER */
-        .signature-bar {
-            position: fixed; bottom: 0; width: 100%;
-            background: var(--gold); color: #000;
-            padding: 15px 0; text-align: center;
-            font-family: 'Orbitron', sans-serif; font-weight: 800;
-            letter-spacing: 2px; font-size: 0.85rem;
-            box-shadow: 0 -10px 30px rgba(252, 194, 1, 0.3);
-            z-index: 100;
+        /* SIGNATURE FOOTER - THE MOST VISIBLE PART */
+        .signature-footer {
+            position: fixed; bottom: 0; width: 100%; background: var(--gold); 
+            color: #000; padding: 15px 0; text-align: center;
+            font-family: 'Orbitron'; font-weight: 900; font-size: 0.85rem; letter-spacing: 1px;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.5); z-index: 1000;
         }
+
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        @keyframes scroll { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
     </style>
 </head>
 <body>
 
-    <canvas id="bg-canvas"></canvas>
+<canvas id="bg-canvas"></canvas>
 
-    <div class="terminal-frame">
-        <div class="top-meta">
-            <div><span class="pulse"></span> SYSTEM: ACTIVE</div>
-            <div id="clock">00:00:00</div>
-        </div>
+<div class="terminal-frame">
+    <div class="header-status">
+        <div class="active-label"><span class="pulse"></span> SYSTEM: ACTIVE</div>
+        <div id="clock">00:00:00</div>
+    </div>
 
-        <div class="brand">
-            <h1>EDGAR WAMEYO</h1>
-            <center><div style="color: var(--gold); font-size: 0.75rem; margin-top: 5px; font-weight: bold;">LEAD SYSTEMS ARCHITECT | LSSBB</div></center>
-        </div>
+    <div class="brand">
+        <h1>EDGAR WAMEYO</h1>
+        <div class="title-sub">LEAD SYSTEMS ARCHITECT | LSSBB</div>
+    </div>
 
-        <div class="news-ticker">
-            <div class="ticker-text">
-                RTY: 99.1% • PREDICTIVE CPK GOVERNANCE • ISO 20022 STANDARDS • ZERO-REWORK LOGIC • IOT CORE SYNCED • 
-            </div>
-        </div>
-
-        <div class="node-list">
-            <a href="industrial-node.html" class="node">
-                <div><b>ASSET NODE</b><span>Predictive Analytics Hub</span></div>
-                <div style="color:var(--gold)">▶</div>
-            </a>
-            
-            <a href="fintech.html" class="node">
-                <div><b>FINTECH NODE</b><span>Velocity Governance</span></div>
-                <div style="color:var(--gold)">▶</div>
-            </a>
-
-            <a href="services.html" class="node">
-                <div><b>360° OPEX ARCHITECT</b><span>Solutions & Audits</span></div>
-                <div style="color:var(--gold)">▶</div>
-            </a>
-
-            <div class="node" onclick="unlock()" style="cursor:pointer;">
-                <div><b>MANUFACTURING HUB</b><span>Secure Hardware Node</span></div>
-                <div style="opacity: 0.5;">🔒</div>
-            </div>
+    <div class="ticker">
+        <div class="ticker-text">
+            • BY GOD'S GRACE • PREDICTIVE CPK ENABLED • ISO 20022 STANDARDS • ZERO-REWORK LOGIC • IOT CORE SYNCED •
         </div>
     </div>
 
-    <div class="signature-bar">
-        ENGINEERED BY EDGAR WAMEYO, LSSBB
+    <div class="node-list">
+        <a href="industrial-node.html" class="node">
+            <div><b>ASSET NODE</b><span>Predictive Analytics Hub</span></div>
+            <div style="color:var(--gold)">▶</div>
+        </a>
+        <a href="fintech.html" class="node">
+            <div><b>FINTECH NODE</b><span>Velocity Governance</span></div>
+            <div style="color:var(--gold)">▶</div>
+        </a>
+        <a href="services.html" class="node">
+            <div><b>360° OPEX ARCHITECT</b><span>Solutions & Audits</span></div>
+            <div style="color:var(--gold)">▶</div>
+        </a>
+        <div class="node" onclick="unlock()" style="cursor:pointer;">
+            <div><b>MANUFACTURING HUB</b><span>Secure Hardware Node</span></div>
+            <div style="opacity: 0.5;">🔒</div>
+        </div>
     </div>
+</div>
 
-    <script>
-        setInterval(() => {
-            document.getElementById('clock').innerText = new Date().toLocaleTimeString();
-        }, 1000);
+<div class="signature-footer">
+    ENGINEERED BY EDGAR WAMEYO, LSSBB
+</div>
 
-        function unlock() {
-            let pin = prompt("SECURE ACCESS REQUIRED. ENTER PIN:");
-            if(pin === "2285") { window.location.href = "NexusPro.html"; }
-            else { alert("INVALID AUTHORIZATION."); }
+<script>
+    setInterval(() => {
+        document.getElementById('clock').innerText = new Date().toLocaleTimeString();
+    }, 1000);
+
+    function unlock() {
+        let pin = prompt("SECURE ACCESS REQUIRED. ENTER PIN:");
+        if(pin === "2285") { window.location.href = "NexusPro.html"; }
+        else { alert("INVALID AUTHORIZATION."); }
+    }
+
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    function draw() {
+        ctx.fillStyle = 'rgba(2, 6, 23, 0.1)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#fcc201';
+        ctx.font = '10px monospace';
+        for(let i=0; i<15; i++) {
+            ctx.fillText(Math.random() > 0.5 ? "1" : "0", Math.random()*canvas.width, Math.random()*canvas.height);
         }
+    }
+    setInterval(draw, 50);
+</script>
 
-        const canvas = document.getElementById('bg-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        function draw() {
-            ctx.fillStyle = 'rgba(3, 7, 18, 0.1)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#fcc201';
-            ctx.font = '10px monospace';
-            for(let i=0; i<20; i++) {
-                ctx.fillText(Math.random() > 0.5 ? "1" : "0", Math.random()*canvas.width, Math.random()*canvas.height);
-            }
-        }
-        setInterval(draw, 50);
-    </script>
 </body>
 </html>
