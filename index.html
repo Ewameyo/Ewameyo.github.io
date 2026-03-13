@@ -3,100 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexus 360 | Edgar Wameyo, LSSBB</title>
+    <title>EDGAR WAMEYO | LEAD SYSTEMS ARCHITECT</title>
     <style>
-        :root { --gold: #eab308; --bg: #020617; --card: #1e293b; --text: #f8fafc; }
-        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; align-items: center; justify-content: center; }
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono:wght@300;500&display=swap');
         
-        .container { max-width: 500px; width: 90%; text-align: center; padding: 40px 20px; }
+        :root { --gold: #fcc201; --bg: #030712; --cyan: #00f2ff; --glass: rgba(15, 23, 42, 0.8); }
         
-        .architect-profile { margin-bottom: 40px; }
-        .architect-name { font-size: 1.8rem; font-weight: 800; letter-spacing: -1px; margin: 0; color: white; }
-        .title-badge { display: inline-block; background: var(--gold); color: black; font-size: 0.75rem; font-weight: 900; padding: 2px 10px; border-radius: 4px; margin-top: 5px; }
-        
-        .hub-label { font-size: 0.8rem; text-transform: uppercase; color: #64748b; letter-spacing: 2px; margin-bottom: 20px; display: block; }
-        
-        .node-grid { display: flex; flex-direction: column; gap: 15px; }
-        
-        .node-card {
-            background: var(--card); border: 1px solid #334155; padding: 20px;
-            border-radius: 16px; text-decoration: none; color: white;
-            transition: all 0.3s ease; display: flex; align-items: center; justify-content: space-between;
+        body { 
+            background: var(--bg); color: #ffffff; font-family: 'JetBrains Mono', monospace; 
+            margin: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; min-height: 100vh;
         }
-        .node-card:hover { border-color: var(--gold); transform: scale(1.02); background: #334155; }
-        
-        .node-info { text-align: left; }
-        .node-title { font-size: 1.1rem; font-weight: 600; display: block; }
-        .node-sub { font-size: 0.8rem; color: #94a3b8; }
-        
-        .status-pulse { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 8px #22c55e; }
 
-        .secure-footer { margin-top: 50px; font-size: 0.75rem; color: #475569; }
-        
-        /* PIN Overlay */
-        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; }
-        .pin-input { background: transparent; border: none; border-bottom: 2px solid var(--gold); color: var(--gold); font-size: 2rem; text-align: center; width: 150px; outline: none; margin-bottom: 20px; letter-spacing: 5px; }
+        /* Live Matrix Background */
+        #matrix-canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.1; }
+
+        .terminal-frame {
+            width: 95%; max-width: 550px; background: var(--glass);
+            backdrop-filter: blur(20px); border: 1px solid rgba(252, 194, 1, 0.3);
+            border-radius: 30px; padding: 40px 25px; box-shadow: 0 0 80px rgba(0,0,0,0.8);
+            position: relative; overflow: hidden;
+        }
+
+        /* Top Bar: Clock & System Pulse */
+        .top-meta { display: flex; justify-content: space-between; font-family: 'Orbitron', sans-serif; font-size: 0.65rem; color: var(--gold); margin-bottom: 30px; letter-spacing: 1.5px; }
+        .system-pulse { display: flex; align-items: center; gap: 8px; }
+        .dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 12px #22c55e; animation: blink 1.2s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.3; transform: scale(0.8); } }
+
+        /* Branding */
+        .identity { text-align: center; margin-bottom: 25px; }
+        .identity h1 { font-family: 'Orbitron', sans-serif; font-size: 2rem; margin: 0; letter-spacing: 3px; background: linear-gradient(to bottom, #fff, var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .title-tag { color: var(--gold); font-weight: bold; font-size: 0.8rem; border: 1px solid var(--gold); padding: 4px 12px; border-radius: 4px; display: inline-block; margin-top: 12px; }
+
+        /* Moving Ticker (Marquee) */
+        .news-ticker { background: rgba(0, 242, 255, 0.05); border-top: 1px solid rgba(0, 242, 255, 0.1); border-bottom: 1px solid rgba(0, 242, 255, 0.1); padding: 8px 0; margin: 25px -25px; overflow: hidden; white-space: nowrap; }
+        .ticker-text { display: inline-block; animation: scroll 20s linear infinite; font-size: 0.75rem; color: var(--cyan); text-transform: uppercase; letter-spacing: 2px; }
+        @keyframes scroll { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
+
+        /* Functional Nodes */
+        .nodes { display: grid; gap: 15px; }
+        .node-btn {
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 22px; border-radius: 15px; text-decoration: none; color: white;
+            display: flex; justify-content: space-between; align-items: center; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .node-btn:hover { background: rgba(252, 194, 1, 0.08); border-color: var(--gold); transform: scale(1.02); box-shadow: 0 0 20px rgba(252, 194, 1, 0.1); }
+        .node-btn b { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; display: block; }
+        .node-btn span { font-size: 0.75rem; color: #64748b; }
+        .arrow { color: var(--gold); font-size: 1.2rem; }
+
+        footer { text-align: center; margin-top: 35px; font-size: 0.6rem; color: #334155; letter-spacing: 3px; }
     </style>
 </head>
 <body>
 
-    <div id="overlay">
-        <h2 style="font-size: 1rem; color: #64748b;">NEXUS 360 AUTHENTICATION</h2>
-        <input type="password" id="pinField" class="pin-input" maxlength="4" placeholder="••••">
-        <button onclick="checkPin()" style="background: var(--gold); border: none; padding: 10px 30px; border-radius: 5px; font-weight: bold; cursor: pointer;">ACCESS HUB</button>
-        <p id="error" style="color: #ef4444; margin-top: 10px; font-size: 0.8rem; display: none;">INVALID CREDENTIALS</p>
-    </div>
+    <canvas id="matrix-canvas"></canvas>
 
-    <div class="container" id="mainContent" style="display:none;">
-        <div class="architect-profile">
-            <h1 class="architect-name">EDGAR WAMEYO</h1>
-            <span class="title-badge">LEAD SYSTEMS ARCHITECT | LSSBB</span>
+    <div class="terminal-frame">
+        <div class="top-meta">
+            <div class="system-pulse"><div class="dot"></div> STATUS: ACTIVE</div>
+            <div id="clock-display">00:00:00</div>
         </div>
 
-        <span class="hub-label">Active Industrial Nodes</span>
-
-        <div class="node-grid">
-            <a href="kanku.html" class="node-card">
-                <div class="node-info">
-                    <span class="node-title">Industrial Lab</span>
-                    <span class="node-sub">Kanku Dosing & Cpk Tracking</span>
-                </div>
-                <div class="status-pulse"></div>
-            </a>
-
-            <a href="fintech.html" class="node-card">
-                <div class="node-info">
-                    <span class="node-title">Fintech Node 04</span>
-                    <span class="node-sub">Transaction Velocity Management</span>
-                </div>
-                <div class="status-pulse"></div>
-            </a>
-
-            <a href="NexusPro.html" class="node-card">
-                <div class="node-info">
-                    <span class="node-title">Manufacturing Hub</span>
-                    <span class="node-sub">OEE & Remote Machine Control</span>
-                </div>
-                <div class="status-pulse"></div>
-            </a>
+        <div class="identity">
+            <h1>EDGAR WAMEYO</h1>
+            <div class="title-tag">LEAD SYSTEMS ARCHITECT | LSSBB</div>
         </div>
 
-        <div class="secure-footer">
-            &copy; 2026 NEXUS OPERATIONAL GOVERNANCE | WORLDWIDE DEPLOYMENT
+        <div class="news-ticker">
+            <div class="ticker-text">
+                RTY: 99.1% • ZERO-REWORK LOGIC ACTIVE • PREDICTIVE CPK GOVERNANCE • IOT NODE SYNC: 100% • GLOBAL OPERATIONS SCALED • 
+            </div>
         </div>
+
+        <div class="nodes">
+            <a href="industrial-node.html" class="node-btn">
+                <div><b>ASSET NODE</b><span>Predictive Analytics Hub</span></div>
+                <div class="arrow">▶</div>
+            </a>
+            <a href="fintech.html" class="node-btn">
+                <div><b>FINTECH NODE</b><span>Velocity Governance</span></div>
+                <div class="arrow">▶</div>
+            </a>
+            <div class="node-btn" onclick="secureEntry()" style="cursor: pointer;">
+                <div><b>MANUFACTURING</b><span>ESP32 Hardware Hub</span></div>
+                <div style="opacity: 0.4;">🔒</div>
+            </div>
+        </div>
+
+        <footer>&copy; 2026 NEXUS OPERATIONAL GOVERNANCE</footer>
     </div>
 
     <script>
-        function checkPin() {
-            const pin = document.getElementById('pinField').value;
-            if (pin === "2285") {
-                document.getElementById('overlay').style.display = 'none';
-                document.getElementById('mainContent').style.display = 'block';
-            } else {
-                document.getElementById('error').style.display = 'block';
-                document.getElementById('pinField').value = '';
+        // Real-Time Clock
+        function updateClock() {
+            document.getElementById('clock-display').innerText = new Date().toLocaleTimeString();
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Secure PIN 2285
+        function secureEntry() {
+            let pin = prompt("AUTHORIZED PERSONNEL ONLY. ENTER ACCESS PIN:");
+            if(pin === "2285") { window.location.href = "NexusPro.html"; }
+            else { alert("ACCESS DENIED: LOGGING ATTEMPT"); }
+        }
+
+        // Matrix Background Animation
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const letters = "010101 NEXUS 360 LSSBB";
+        const fontSize = 12;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(3, 7, 18, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#fcc201";
+            ctx.font = fontSize + "px monospace";
+            for(let i = 0; i < drops.length; i++) {
+                const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
             }
         }
+        setInterval(drawMatrix, 50);
     </script>
 </body>
 </html>
