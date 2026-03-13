@@ -3,105 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexus 360 | Industrial Command Center</title>
+    <title>Nexus 360 | Edgar Wameyo, LSSBB</title>
     <style>
-        :root {
-            --primary: #1e293b; --gold: #eab308; --danger: #ef4444; --success: #22c55e;
-        }
-        body { background: #0f172a; color: white; font-family: sans-serif; text-align: center; margin: 0; padding: 20px; }
+        :root { --gold: #eab308; --bg: #020617; --card: #1e293b; --text: #f8fafc; }
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; align-items: center; justify-content: center; }
         
-        /* Executive Insight Box */
-        .insight-card {
-            background: rgba(30, 41, 59, 0.8); border: 2px solid var(--gold);
-            padding: 20px; border-radius: 12px; margin-bottom: 20px;
+        .container { max-width: 500px; width: 90%; text-align: center; padding: 40px 20px; }
+        
+        .architect-profile { margin-bottom: 40px; }
+        .architect-name { font-size: 1.8rem; font-weight: 800; letter-spacing: -1px; margin: 0; color: white; }
+        .title-badge { display: inline-block; background: var(--gold); color: black; font-size: 0.75rem; font-weight: 900; padding: 2px 10px; border-radius: 4px; margin-top: 5px; }
+        
+        .hub-label { font-size: 0.8rem; text-transform: uppercase; color: #64748b; letter-spacing: 2px; margin-bottom: 20px; display: block; }
+        
+        .node-grid { display: flex; flex-direction: column; gap: 15px; }
+        
+        .node-card {
+            background: var(--card); border: 1px solid #334155; padding: 20px;
+            border-radius: 16px; text-decoration: none; color: white;
+            transition: all 0.3s ease; display: flex; align-items: center; justify-content: space-between;
         }
-        .executive-status { font-size: 1.5rem; font-weight: bold; margin-bottom: 5px; }
-        .action-text { font-size: 1rem; color: #cbd5e1; }
+        .node-card:hover { border-color: var(--gold); transform: scale(1.02); background: #334155; }
+        
+        .node-info { text-align: left; }
+        .node-title { font-size: 1.1rem; font-weight: 600; display: block; }
+        .node-sub { font-size: 0.8rem; color: #94a3b8; }
+        
+        .status-pulse { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 8px #22c55e; }
 
-        /* Main Dashboard Elements */
-        .header { margin-bottom: 30px; }
-        .logo-placeholder { height: 60px; margin-bottom: 10px; border: 1px dashed var(--gold); line-height: 60px; }
-        .clock { font-size: 2rem; color: var(--gold); margin: 10px 0; }
+        .secure-footer { margin-top: 50px; font-size: 0.75rem; color: #475569; }
         
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; max-width: 500px; margin: auto; }
-        .stat-box { background: #1e293b; padding: 15px; border-radius: 8px; border-bottom: 3px solid var(--gold); }
-        
-        .btn { 
-            background: var(--gold); color: black; border: none; padding: 15px 40px; 
-            font-size: 1.2rem; font-weight: bold; border-radius: 50px; cursor: pointer; margin-top: 30px;
-        }
-        .blink { animation: blinker 1.5s linear infinite; }
-        @keyframes blinker { 50% { opacity: 0; } }
+        /* PIN Overlay */
+        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; }
+        .pin-input { background: transparent; border: none; border-bottom: 2px solid var(--gold); color: var(--gold); font-size: 2rem; text-align: center; width: 150px; outline: none; margin-bottom: 20px; letter-spacing: 5px; }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <div class="logo-placeholder">[ MANUFACTURING CO. LOGO HERE ]</div>
-        <h1>NEXUS 360 COMMAND</h1>
-        <div id="clock" class="clock">00:00:00</div>
+    <div id="overlay">
+        <h2 style="font-size: 1rem; color: #64748b;">NEXUS 360 AUTHENTICATION</h2>
+        <input type="password" id="pinField" class="pin-input" maxlength="4" placeholder="••••">
+        <button onclick="checkPin()" style="background: var(--gold); border: none; padding: 10px 30px; border-radius: 5px; font-weight: bold; cursor: pointer;">ACCESS HUB</button>
+        <p id="error" style="color: #ef4444; margin-top: 10px; font-size: 0.8rem; display: none;">INVALID CREDENTIALS</p>
     </div>
 
-    <div class="insight-card">
-        <div id="executive-status" class="executive-status">ANALYZING LINE...</div>
-        <div id="action-text" class="action-text">Please wait for secure data sync.</div>
-    </div>
-
-    <div class="grid">
-        <div class="stat-box">
-            <small>EFFICIENCY (OEE)</small>
-            <div id="oee-val" style="font-size: 1.8rem; color: var(--success);">94.2%</div>
+    <div class="container" id="mainContent" style="display:none;">
+        <div class="architect-profile">
+            <h1 class="architect-name">EDGAR WAMEYO</h1>
+            <span class="title-badge">LEAD SYSTEMS ARCHITECT | LSSBB</span>
         </div>
-        <div class="stat-box">
-            <small>Cpk (CAPABILITY)</small>
-            <div id="cpk-val" style="font-size: 1.8rem;">1.42</div>
+
+        <span class="hub-label">Active Industrial Nodes</span>
+
+        <div class="node-grid">
+            <a href="kanku.html" class="node-card">
+                <div class="node-info">
+                    <span class="node-title">Industrial Lab</span>
+                    <span class="node-sub">Kanku Dosing & Cpk Tracking</span>
+                </div>
+                <div class="status-pulse"></div>
+            </a>
+
+            <a href="fintech.html" class="node-card">
+                <div class="node-info">
+                    <span class="node-title">Fintech Node 04</span>
+                    <span class="node-sub">Transaction Velocity Management</span>
+                </div>
+                <div class="status-pulse"></div>
+            </a>
+
+            <a href="NexusPro.html" class="node-card">
+                <div class="node-info">
+                    <span class="node-title">Manufacturing Hub</span>
+                    <span class="node-sub">OEE & Remote Machine Control</span>
+                </div>
+                <div class="status-pulse"></div>
+            </a>
+        </div>
+
+        <div class="secure-footer">
+            &copy; 2026 NEXUS OPERATIONAL GOVERNANCE | WORLDWIDE DEPLOYMENT
         </div>
     </div>
-
-    <button class="btn" onclick="triggerCommand()">ENTER PIN 1187</button>
 
     <script>
-        // Update Clock
-        setInterval(() => {
-            document.getElementById('clock').innerText = new Date().toLocaleTimeString();
-        }, 1000);
-
-        // THE ARCHITECT'S LOGIC (Runs every 5 seconds)
-        function updatePlatform() {
-            // Simulated Data from Factory Line
-            let currentCpk = (Math.random() * (1.8 - 1.1) + 1.1).toFixed(2);
-            document.getElementById('cpk-val').innerText = currentCpk;
-
-            const status = document.getElementById('executive-status');
-            const action = document.getElementById('action-text');
-
-            // EXECUTIVE INSIGHT LOGIC
-            if (currentCpk >= 1.67) {
-                status.innerText = "💎 PROCESS ELITE";
-                status.style.color = "#22c55e";
-                action.innerText = "Status: Maximum Profitability. No intervention required.";
-            } else if (currentCpk >= 1.33) {
-                status.innerText = "✅ PROCESS STABLE";
-                status.style.color = "#eab308";
-                action.innerText = "Status: Monitoring minor variance. System within limits.";
+        function checkPin() {
+            const pin = document.getElementById('pinField').value;
+            if (pin === "2285") {
+                document.getElementById('overlay').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
             } else {
-                status.innerText = "🚨 PREDICTIVE ALERT: RISK";
-                status.style.color = "#ef4444";
-                status.classList.add('blink');
-                action.innerText = "URGENT: Capability Erosion. Potential financial leak in Line 4.";
+                document.getElementById('error').style.display = 'block';
+                document.getElementById('pinField').value = '';
             }
         }
-
-        function triggerCommand() {
-            let pin = prompt("Enter Secure Command PIN:");
-            if (pin === "1187") {
-                alert("SYSTEM ARMED: Control Signal Sent to ESP32.");
-            } else {
-                alert("ACCESS DENIED: Unauthorized Attempt Logged.");
-            }
-        }
-
-        setInterval(updatePlatform, 5000);
     </script>
 </body>
 </html>
