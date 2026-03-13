@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SERVICE GOVERNANCE | EDGAR WAMEYO</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono&display=swap');
+        :root { --purple: #a855f7; --gold: #fcc201; --bg: #020617; }
+        
+        body { 
+            background: var(--bg); 
+            color: #fff; 
+            font-family: 'JetBrains Mono', monospace; 
+            margin: 0; 
+            overflow: hidden; 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+        }
+
+        header { 
+            padding: 20px; 
+            border-bottom: 2px solid var(--purple); 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: rgba(0,0,0,0.8); 
+        }
+
+        .dashboard { 
+            flex: 1; 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+            gap: 25px; 
+            padding: 40px; 
+            align-items: center;
+        }
+
+        .card { 
+            background: rgba(30, 41, 59, 0.4); 
+            border: 1px solid var(--purple); 
+            border-radius: 20px; 
+            padding: 30px; 
+            text-align: center; 
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.1);
+        }
+
+        .val { font-family: 'Orbitron'; font-size: 2.8rem; color: var(--gold); margin: 15px 0; }
+        .label { color: var(--purple); letter-spacing: 2px; font-weight: bold; font-size: 0.8rem; text-transform: uppercase; }
+        
+        /* LIVE BAR CHART STYLING */
+        .chart-engine {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            height: 100px;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .chart-bar {
+            width: 15px;
+            background: var(--purple);
+            transition: height 0.6s ease;
+            border-radius: 3px 3px 0 0;
+            opacity: 0.7;
+        }
+
+        .back-btn { 
+            color: var(--gold); 
+            text-decoration: none; 
+            border: 1px solid var(--gold); 
+            padding: 10px 20px; 
+            border-radius: 5px; 
+            font-size: 0.75rem; 
+            font-family: 'Orbitron'; 
+            transition: 0.3s;
+        }
+        
+        .back-btn:hover { background: var(--gold); color: #000; }
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <h2 style="font-family:'Orbitron'; color:var(--purple); margin:0; letter-spacing: 2px;">SERVICE GOVERNANCE</h2>
+            <small style="color: #64748b;">360° OPERATIONAL CONTROL | LSSBB</small>
+        </div>
+        <a href="index.html" class="back-btn">RETURN TO HUB</a>
+    </header>
+
+    <main class="dashboard">
+        <div class="card">
+            <div class="label">SLA Uptime</div>
+            <div id="sla-val" class="val">99.9%</div>
+            <div class="chart-engine" id="sla-chart"></div>
+            <p style="font-size: 0.7rem; color: #64748b; margin-top: 15px;">REAL-TIME AVAILABILITY MONITOR</p>
+        </div>
+
+        <div class="card">
+            <div class="label">Process Sigma</div>
+            <div id="sig-val" class="val">5.8σ</div>
+            <div class="chart-engine" id="sig-chart"></div>
+            <p style="font-size: 0.7rem; color: #64748b; margin-top: 15px;">SIX SIGMA QUALITY YIELD</p>
+        </div>
+    </main>
+
+    <script>
+        // Create Chart Bars
+        function createBars(containerId) {
+            const container = document.getElementById(containerId);
+            for(let i=0; i<12; i++) {
+                let bar = document.createElement('div');
+                bar.className = 'chart-bar';
+                container.appendChild(bar);
+            }
+        }
+
+        createBars('sla-chart');
+        createBars('sig-chart');
+
+        function updateServiceStats() {
+            // Update Numbers
+            let sla = (99.90 + Math.random() * 0.09).toFixed(2);
+            let sig = (5.80 + Math.random() * 0.15).toFixed(2);
+            
+            document.getElementById('sla-val').innerText = sla + "%";
+            document.getElementById('sig-val').innerText = sig + "σ";
+
+            // Update Bars
+            document.querySelectorAll('.chart-bar').forEach(bar => {
+                let h = 30 + Math.floor(Math.random() * 70);
+                bar.style.height = h + "%";
+            });
+        }
+
+        setInterval(updateServiceStats, 2000);
+        updateServiceStats();
+    </script>
+</body>
+</html>
