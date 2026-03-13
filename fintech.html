@@ -7,148 +7,51 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono&display=swap');
         :root { --blue: #3b82f6; --gold: #fcc201; --bg: #020617; }
-        
-        body { 
-            background: var(--bg); 
-            color: #fff; 
-            font-family: 'JetBrains Mono', monospace; 
-            margin: 0; 
-            overflow: hidden; 
-            height: 100vh; 
-            display: flex; 
-            flex-direction: column; 
-        }
-
-        header { 
-            padding: 20px; 
-            border-bottom: 2px solid var(--blue); 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            background: rgba(0,0,0,0.8); 
-        }
-
-        .dashboard { 
-            flex: 1; 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-            gap: 25px; 
-            padding: 40px; 
-            align-items: center;
-        }
-
-        .card { 
-            background: rgba(30, 41, 59, 0.4); 
-            border: 1px solid var(--blue); 
-            border-radius: 20px; 
-            padding: 30px; 
-            text-align: center; 
-            box-shadow: 0 0 30px rgba(59, 130, 246, 0.1);
-        }
-
+        body { background: var(--bg); color: #fff; font-family: 'JetBrains Mono', monospace; margin: 0; overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
+        header { padding: 20px; border-bottom: 2px solid var(--blue); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.8); }
+        .dashboard { flex: 1; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; padding: 40px; align-items: center; }
+        .card { background: rgba(30, 41, 59, 0.4); border: 1px solid var(--blue); border-radius: 20px; padding: 30px; text-align: center; box-shadow: 0 0 30px rgba(59, 130, 246, 0.1); }
         .val { font-family: 'Orbitron'; font-size: 2.8rem; color: var(--gold); margin: 15px 0; }
-        .label { color: var(--blue); letter-spacing: 2px; font-weight: bold; font-size: 0.8rem; text-transform: uppercase; }
-        
-        /* LIVE CHART STYLING */
-        .chart-engine {
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            height: 100px;
-            gap: 8px;
-            margin-top: 20px;
-        }
-
-        .chart-bar {
-            width: 15px;
-            background: var(--blue);
-            transition: height 0.6s ease;
-            border-radius: 3px 3px 0 0;
-            opacity: 0.7;
-        }
-
-        .chart-bar.active { background: var(--gold); opacity: 1; }
-
-        .back-btn { 
-            color: var(--gold); 
-            text-decoration: none; 
-            border: 1px solid var(--gold); 
-            padding: 10px 20px; 
-            border-radius: 5px; 
-            font-size: 0.75rem; 
-            font-family: 'Orbitron'; 
-            transition: 0.3s;
-        }
-        
-        .back-btn:hover { background: var(--gold); color: #000; }
+        .chart-engine { display: flex; align-items: flex-end; justify-content: center; height: 100px; gap: 8px; margin-top: 20px; }
+        .chart-bar { width: 15px; background: var(--blue); transition: height 0.6s ease; border-radius: 3px 3px 0 0; }
+        .back-btn { color: var(--gold); text-decoration: none; border: 1px solid var(--gold); padding: 10px 20px; border-radius: 5px; font-family: 'Orbitron'; font-size: 0.75rem; }
     </style>
 </head>
 <body>
     <header>
-        <div>
-            <h2 style="font-family:'Orbitron'; color:var(--blue); margin:0; letter-spacing: 2px;">FINTECH NODE</h2>
-            <small style="color: #64748b;">VELOCITY & LIQUIDITY GOVERNANCE</small>
-        </div>
+        <div><h2 style="font-family:'Orbitron'; color:var(--blue); margin:0;">FINTECH NODE</h2><small>VELOCITY & LIQUIDITY</small></div>
         <a href="index.html" class="back-btn">RETURN TO HUB</a>
     </header>
-
     <main class="dashboard">
         <div class="card">
-            <div class="label">Transaction Velocity</div>
-            <div id="tps-val" class="val">0 TPS</div>
-            <div class="chart-engine" id="tps-chart">
-                </div>
-            <p style="font-size: 0.7rem; color: #64748b; margin-top: 15px;">ISO 20022 REAL-TIME DATA</p>
+            <div style="color:var(--blue); font-weight:bold;">TRANSACTION VELOCITY</div>
+            <div id="tps-val" class="val">1,240 TPS</div>
+            <div class="chart-engine" id="tps-chart"></div>
         </div>
-
         <div class="card">
-            <div class="label">Liquidity Ratio</div>
-            <div id="liq-val" class="val">0.00</div>
-            <div class="chart-engine" id="liq-chart">
-                </div>
-            <p style="font-size: 0.7rem; color: #64748b; margin-top: 15px;">BASEL III COMPLIANCE STATUS</p>
+            <div style="color:var(--blue); font-weight:bold;">LIQUIDITY RATIO</div>
+            <div id="liq-val" class="val">1.84</div>
+            <div class="chart-engine" id="liq-chart"></div>
         </div>
     </main>
-
     <script>
-        // Initialize Chart Bars
-        function createBars(containerId) {
-            const container = document.getElementById(containerId);
-            for(let i=0; i<12; i++) {
+        function createBars(id) {
+            const container = document.getElementById(id);
+            for(let i=0; i<10; i++) {
                 let bar = document.createElement('div');
                 bar.className = 'chart-bar';
                 container.appendChild(bar);
             }
         }
-
-        createBars('tps-chart');
-        createBars('liq-chart');
-
-        function updateFintech() {
-            // Update Numbers
-            let tps = (1200 + Math.floor(Math.random() * 450));
+        createBars('tps-chart'); createBars('liq-chart');
+        function update() {
+            let tps = (1200 + Math.floor(Math.random() * 400));
             let liq = (1.80 + Math.random() * 0.15).toFixed(2);
-            
             document.getElementById('tps-val').innerText = tps.toLocaleString() + " TPS";
             document.getElementById('liq-val').innerText = liq;
-
-            // Update Chart Bars
-            updateBars('tps-chart');
-            updateBars('liq-chart');
+            document.querySelectorAll('.chart-bar').forEach(b => b.style.height = (20 + Math.random()*80) + "%");
         }
-
-        function updateBars(containerId) {
-            const bars = document.querySelectorAll(`#${containerId} .chart-bar`);
-            bars.forEach(bar => {
-                let height = 20 + Math.floor(Math.random() * 80);
-                bar.style.height = height + "%";
-                if(height > 85) bar.classList.add('active');
-                else bar.classList.remove('active');
-            });
-        }
-
-        setInterval(updateFintech, 1800);
-        updateFintech(); // Initial call
+        setInterval(update, 1800); update();
     </script>
 </body>
 </html>
