@@ -6,7 +6,7 @@
     <title>FINTECH GOVERNANCE | NEXUS 360</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono:wght@400;700&display=swap');
-        :root { --gold: #fcc201; --bg: #020617; --blue: #3b82f6; }
+        :root { --gold: #fcc201; --bg: #020617; --blue: #3b82f6; --green: #22c55e; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             background: var(--bg); color: #fff; font-family: 'JetBrains Mono', monospace;
@@ -24,11 +24,11 @@
             background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(59, 130, 246, 0.3);
             border-radius: 15px; padding: 25px; transition: 0.4s;
         }
-        .fin-card:hover { border-color: var(--gold); background: rgba(30, 41, 59, 0.8); transform: scale(1.02); }
         .stat-label { color: #94a3b8; font-size: 0.7rem; letter-spacing: 1px; }
         .stat-value { font-family: 'Orbitron'; font-size: 1.8rem; color: var(--gold); margin: 10px 0; }
         .iso-tag { background: var(--blue); color: #fff; font-size: 0.6rem; padding: 3px 8px; border-radius: 4px; display: inline-block; }
         footer { background: var(--blue); color: #fff; padding: 12px; text-align: center; font-family: 'Orbitron'; font-weight: 900; font-size: 0.7rem; }
+        .trend-up { color: var(--green); font-size: 0.7rem; }
     </style>
 </head>
 <body>
@@ -44,32 +44,31 @@
 <main>
     <div class="fin-card">
         <div class="stat-label">TRANSACTION VELOCITY</div>
-        <div class="stat-value">1,240 TPS</div>
-        <div class="iso-tag">REAL-TIME SYNC</div>
+        <div id="tps-val" class="stat-value">1,240 TPS</div>
+        <div class="trend-up">▲ LIVE FEED ACTIVE</div>
     </div>
-
-    <div class="fin-card">
-        <div class="stat-label">GOVERNANCE DRIFT</div>
-        <div class="stat-value">0.004%</div>
-        <div class="iso-tag">LSSBB OPTIMIZED</div>
-    </div>
-
     <div class="fin-card">
         <div class="stat-label">LIQUIDITY RATIO</div>
-        <div class="stat-value">1.84</div>
+        <div id="liq-val" class="stat-value">1.84</div>
         <div class="iso-tag">STABLE</div>
     </div>
-
     <div class="fin-card">
-        <div class="stat-label">ENCRYPTION PROTOCOL</div>
-        <div class="stat-value">AES-256</div>
-        <div class="iso-tag">ACTIVE</div>
+        <div class="stat-label">ENCRYPTION LOAD</div>
+        <div id="load-val" class="stat-value">14%</div>
+        <div class="iso-tag">AES-256</div>
     </div>
 </main>
 
-<footer>
-    FINTECH NODE | ARCHITECTED BY EDGAR WAMEYO | BY GOD'S GRACE
-</footer>
+<footer>FINTECH NODE | ARCHITECTED BY EDGAR WAMEYO | BY GOD'S GRACE</footer>
 
+<script>
+    // LIVE DATA SIMULATOR
+    function updateFintech() {
+        document.getElementById('tps-val').innerText = (1200 + Math.floor(Math.random() * 100)) + " TPS";
+        document.getElementById('liq-val').innerText = (1.80 + (Math.random() * 0.1)).toFixed(2);
+        document.getElementById('load-val').innerText = (10 + Math.floor(Math.random() * 15)) + "%";
+    }
+    setInterval(updateFintech, 2000);
+</script>
 </body>
 </html>
