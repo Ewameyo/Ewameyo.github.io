@@ -9,64 +9,53 @@
         
         :root { --gold: #fcc201; --bg: #020617; --green: #22c55e; }
 
-        /* FIX: FULL SCREEN VIEWPORT */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body, html { 
-            width: 100%; 
-            height: 100%; 
-            overflow: hidden; 
-            background: var(--bg);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            width: 100%; height: 100%; overflow: hidden; 
+            background: var(--bg); display: flex;
+            justify-content: center; align-items: center;
         }
 
-        #bg-canvas { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100vw; 
-            height: 100vh; 
-            z-index: -1; 
-            display: block;
-        }
+        #bg-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; }
 
         .terminal-frame { 
-            width: 95%; 
-            max-width: 600px; 
-            background: rgba(15, 23, 42, 0.9); 
-            border: 1px solid rgba(252, 194, 1, 0.4); 
-            border-radius: 20px; 
-            padding: 40px 30px; 
-            box-shadow: 0 0 70px rgba(0,0,0,1);
-            backdrop-filter: blur(15px);
-            z-index: 10;
+            width: 95%; max-width: 550px; background: rgba(15, 23, 42, 0.95); 
+            border: 1px solid rgba(252, 194, 1, 0.4); border-radius: 20px; 
+            padding: 35px; box-shadow: 0 0 80px rgba(0,0,0,1);
+            backdrop-filter: blur(15px); z-index: 10;
         }
 
         .header-status { 
             display: flex; justify-content: space-between; align-items: center; 
-            background: rgba(0,0,0,0.6); padding: 20px; border-bottom: 2px solid var(--gold); 
-            border-radius: 12px; margin-bottom: 30px; 
+            background: rgba(0,0,0,0.6); padding: 15px 20px; border-bottom: 2px solid var(--gold); 
+            border-radius: 12px; margin-bottom: 25px; 
         }
 
-        #clock { font-size: 1.8rem; font-weight: 800; color: #fff; text-shadow: 0 0 15px var(--gold); }
-        .pulse { width: 14px; height: 14px; background: var(--green); border-radius: 50%; display: inline-block; margin-right: 12px; animation: blink 1.2s infinite; box-shadow: 0 0 20px var(--green); }
+        #clock { font-size: 1.6rem; font-weight: 800; color: #fff; text-shadow: 0 0 15px var(--gold); }
+        .pulse { width: 12px; height: 12px; background: var(--green); border-radius: 50%; display: inline-block; margin-right: 10px; animation: blink 1.2s infinite; box-shadow: 0 0 20px var(--green); }
+
+        /* VISIBILITY FIX: BRIGHT WHITE NAME */
+        .name-header {
+            font-family: 'Orbitron'; font-size: 2.2rem; margin: 0; 
+            color: #ffffff; 
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+            letter-spacing: 2px;
+        }
 
         .node { 
-            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); 
-            padding: 22px; border-radius: 12px; text-decoration: none; color: white; 
+            background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); 
+            padding: 18px; border-radius: 12px; text-decoration: none; color: white; 
             display: flex; justify-content: space-between; align-items: center; 
-            margin-bottom: 15px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            margin-bottom: 12px; transition: 0.3s ease; 
         }
         
-        .node:hover { border-color: var(--gold); background: rgba(252, 194, 1, 0.1); transform: scale(1.03); }
+        .node:hover { border-color: var(--gold); background: rgba(252, 194, 1, 0.1); transform: translateX(5px); }
 
         .signature-footer { 
             position: fixed; bottom: 0; width: 100%; background: var(--gold); 
-            color: #000; padding: 18px 0; text-align: center; 
-            font-family: 'Orbitron'; font-weight: 900; font-size: 0.9rem; z-index: 1000; 
-            letter-spacing: 1px;
+            color: #000; padding: 15px 0; text-align: center; 
+            font-family: 'Orbitron'; font-weight: 900; font-size: 0.85rem; z-index: 1000; 
         }
 
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
@@ -78,28 +67,32 @@
 
 <div class="terminal-frame">
     <div class="header-status">
-        <div style="font-family:'Orbitron'; font-size: 0.9rem; font-weight: 900; color: var(--green);">
+        <div style="font-family:'Orbitron'; font-size: 0.8rem; font-weight: 900; color: var(--green);">
             <span class="pulse"></span> SYSTEM: ACTIVE
         </div>
         <div id="clock">00:00:00</div>
     </div>
 
-    <div style="text-align:center; margin-bottom: 30px;">
-        <h1 style="font-family:'Orbitron'; font-size: 2.2rem; margin:0; letter-spacing: 3px;">EDGAR WAMEYO</h1>
-        <div style="color:var(--gold); font-size: 0.85rem; font-weight:700; margin-top: 8px;">LEAD SYSTEMS ARCHITECT | LSSBB</div>
+    <div style="text-align:center; margin-bottom: 25px;">
+        <h1 class="name-header">EDGAR WAMEYO</h1>
+        <div style="color:var(--gold); font-size: 0.8rem; font-weight:700; margin-top: 5px;">LEAD SYSTEMS ARCHITECT | LSSBB</div>
     </div>
 
     <div class="node-list">
-        <a href="services-node.html" class="node">
-            <div><b>SERVICE NODE</b><br><span style="font-size:0.75rem; color:#94a3b8;">360° Operational Governance</span></div>
+        <a href="industrial-node.html" class="node">
+            <div><b>ASSET NODE</b><br><span style="font-size:0.7rem; color:#94a3b8;">Predictive Analytics</span></div>
             <span style="color:var(--gold)">▶</span>
         </a>
         <a href="fintech.html" class="node">
-            <div><b>FINTECH NODE</b><br><span style="font-size:0.75rem; color:#94a3b8;">Velocity & Liquidity Hub</span></div>
+            <div><b>FINTECH NODE</b><br><span style="font-size:0.7rem; color:#94a3b8;">Velocity & Liquidity Hub</span></div>
+            <span style="color:var(--gold)">▶</span>
+        </a>
+        <a href="services-node.html" class="node">
+            <div><b>SERVICE NODE</b><br><span style="font-size:0.7rem; color:#94a3b8;">360° Operational Governance</span></div>
             <span style="color:var(--gold)">▶</span>
         </a>
         <div class="node" onclick="unlock()" style="cursor:pointer;">
-            <div><b>MANUFACTURING HUB</b><br><span style="font-size:0.75rem; color:#94a3b8;">Secured Hardware Node (v2.0)</span></div>
+            <div><b>MANUFACTURING HUB</b><br><span style="font-size:0.7rem; color:#94a3b8;">Secured Hardware Node (v2.0)</span></div>
             <span id="lock-icon">🔒</span>
         </div>
     </div>
@@ -108,58 +101,44 @@
 <div class="signature-footer">ENGINEERED BY EDGAR WAMEYO, LSSBB | BY GOD'S GRACE</div>
 
 <script>
-    // 1. CLOCK LOGIC
-    setInterval(() => { 
-        document.getElementById('clock').innerText = new Date().toLocaleTimeString(); 
-    }, 1000);
+    // CLOCK
+    setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }, 1000);
 
-    // 2. SECURITY ROTATION (PIN: 5591)
+    // SECURE OBFUSCATED PIN (5591)
     function unlock() {
-        let pin = prompt("NEW AUTHORIZATION REQUIRED. ENTER ROTATED PIN:");
-        let vault = "NTU5MQ=="; 
-        if(btoa(pin) === vault) {
-            alert("NEW ACCESS GRANTED. UPDATING HARDWARE SYNC...");
+        let pin = prompt("ENTER AUTHORIZATION PIN:");
+        // Base64 for 5591 is NTU5MQ==
+        if(btoa(pin) === "NTU5MQ==") {
+            alert("ACCESS GRANTED. INITIALIZING NEXUS...");
             document.getElementById('lock-icon').innerText = "🔓";
             window.location.href = "NexusPro.html";
-        } else {
-            alert("ACCESS DENIED. CREDENTIALS EXPIRED.");
-        }
+        } else { alert("ACCESS DENIED. SECURE LOG GENERATED."); }
     }
 
-    // 3. RESTORED & FIXED: FULL SCREEN MATRIX EFFECT
+    // FULL SCREEN MATRIX EFFECT
     const canvas = document.getElementById('bg-canvas');
     const ctx = canvas.getContext('2d');
+    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    window.addEventListener('resize', resize); resize();
 
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    const characters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    const characters = "010101";
     const fontSize = 14;
     const columns = canvas.width / fontSize;
     const drops = Array(Math.floor(columns)).fill(1);
 
-    function drawMatrix() {
-        ctx.fillStyle = "rgba(2, 6, 23, 0.1)";
+    function draw() {
+        ctx.fillStyle = "rgba(2, 6, 23, 0.15)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
         ctx.fillStyle = "#fcc201"; 
         ctx.font = fontSize + "px monospace";
-
         for (let i = 0; i < drops.length; i++) {
             const text = characters.charAt(Math.floor(Math.random() * characters.length));
             ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                drops[i] = 0;
-            }
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
             drops[i]++;
         }
     }
-    setInterval(drawMatrix, 50);
+    setInterval(draw, 50);
 </script>
 </body>
 </html>
