@@ -2,119 +2,74 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fintech Velocity | Edgar Wameyo, LSSBB</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FINTECH GOVERNANCE | NEXUS 360</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono:wght@300;500&display=swap');
-        
-        :root { --cyan: #00f2ff; --bg: #010409; --panel: rgba(13, 17, 23, 0.95); --gold: #fcc201; --red: #ff4d4d; }
-        
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono:wght@400;700&display=swap');
+        :root { --gold: #fcc201; --bg: #020617; --blue: #3b82f6; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
-            background: var(--bg); color: #e6edf3; font-family: 'JetBrains Mono', monospace; 
-            margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh;
+            background: var(--bg); color: #fff; font-family: 'JetBrains Mono', monospace;
+            height: 100vh; width: 100vw; overflow: hidden; display: flex; flex-direction: column;
         }
-
-        .container { width: 100%; max-width: 600px; position: relative; }
-
-        /* Navigation */
-        .nav-header { width: 100%; display: flex; justify-content: space-between; margin-bottom: 30px; border-bottom: 1px solid rgba(0, 242, 255, 0.2); padding-bottom: 10px; }
-        .back-btn { color: var(--cyan); text-decoration: none; font-family: 'Orbitron'; font-size: 0.75rem; letter-spacing: 1px; }
-
-        /* Main Dashboard Card */
-        .fintech-card {
-            background: var(--panel); border: 1px solid rgba(0, 242, 255, 0.2);
-            padding: 30px; border-radius: 24px; position: relative;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8), inset 0 0 20px rgba(0, 242, 255, 0.05);
+        header {
+            background: rgba(0,0,0,0.9); border-bottom: 2px solid var(--blue);
+            padding: 20px; display: flex; justify-content: space-between; align-items: center;
         }
-
-        .node-label { font-family: 'Orbitron'; font-size: 1rem; color: var(--cyan); letter-spacing: 3px; display: block; margin-bottom: 20px; }
-        
-        /* Velocity Display */
-        .velocity-display { 
-            background: rgba(0, 0, 0, 0.4); border-radius: 15px; padding: 30px; 
-            text-align: center; border: 1px dashed rgba(0, 242, 255, 0.3); margin-bottom: 25px;
+        main {
+            flex: 1; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px; padding: 25px; overflow-y: auto;
         }
-        .velocity-value { font-size: 3.2rem; font-weight: bold; font-family: 'Orbitron'; color: #fff; text-shadow: 0 0 15px var(--cyan); }
-        .tps-unit { font-size: 0.8rem; color: var(--cyan); margin-top: 5px; letter-spacing: 2px; }
-
-        /* Scanning/Live Log */
-        .monitor-window { background: #000; border-radius: 10px; padding: 15px; height: 120px; overflow: hidden; font-size: 0.7rem; border: 1px solid #161b22; }
-        .log-entry { margin-bottom: 5px; display: flex; justify-content: space-between; }
-        .log-entry .status { color: #22c55e; }
-        .log-entry .timestamp { color: #484f58; }
-
-        /* Governance Insights */
-        .insight-panel {
-            margin-top: 25px; background: rgba(252, 194, 1, 0.05); 
-            border: 1px solid var(--gold); padding: 20px; border-radius: 15px;
+        .fin-card {
+            background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 15px; padding: 25px; transition: 0.4s;
         }
-        .insight-panel b { color: var(--gold); font-family: 'Orbitron'; font-size: 0.8rem; display: block; margin-bottom: 8px; }
-        .insight-panel p { font-size: 0.85rem; margin: 0; line-height: 1.5; color: #d1d5db; }
-
-        footer { text-align: center; margin-top: 50px; font-size: 0.65rem; color: #484f58; letter-spacing: 2px; line-height: 2; }
+        .fin-card:hover { border-color: var(--gold); background: rgba(30, 41, 59, 0.8); transform: scale(1.02); }
+        .stat-label { color: #94a3b8; font-size: 0.7rem; letter-spacing: 1px; }
+        .stat-value { font-family: 'Orbitron'; font-size: 1.8rem; color: var(--gold); margin: 10px 0; }
+        .iso-tag { background: var(--blue); color: #fff; font-size: 0.6rem; padding: 3px 8px; border-radius: 4px; display: inline-block; }
+        footer { background: var(--blue); color: #fff; padding: 12px; text-align: center; font-family: 'Orbitron'; font-weight: 900; font-size: 0.7rem; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="nav-header">
-            <a href="index.html" class="back-btn">◀ TERMINAL_EXIT</a>
-            <div id="live-time" style="font-size: 0.75rem; color: var(--cyan);">00:00:00</div>
-        </div>
+<header>
+    <div>
+        <h2 style="font-family: 'Orbitron'; font-size: 1.1rem; color: var(--blue);">FINTECH GOVERNANCE</h2>
+        <p style="font-size: 0.6rem; color: #94a3b8;">ISO 20022 COMPLIANT LAYER</p>
+    </div>
+    <div style="font-family:'Orbitron'; font-size: 0.7rem; color: var(--gold);">LINK: SECURE</div>
+</header>
 
-        <div class="fintech-card">
-            <span class="node-label">FINTECH_VELOCITY_CORE</span>
-            
-            <div class="velocity-display">
-                <div class="velocity-value" id="tps-val">1,240.00</div>
-                <div class="tps-unit">TRANSACTIONS / SECOND</div>
-            </div>
-
-            <div class="monitor-window" id="log-container">
-                </div>
-        </div>
-
-        <div class="insight-panel">
-            <b>GOVERNANCE PROTOCOL ACTIVE</b>
-            <p>System stability: 99.998%. Latency optimized via <b>Lean Velocity Logic</b>. Transaction rework rate: 0.001%. Engineered for high-frequency institutional settlement.</p>
-        </div>
-
-        <footer>
-            DESIGNED FOR GLOBAL FINANCIAL ARCHITECTURE<br>
-            <strong>ENGINEERED BY EDGAR WAMEYO, LSSBB</strong>
-        </footer>
+<main>
+    <div class="fin-card">
+        <div class="stat-label">TRANSACTION VELOCITY</div>
+        <div class="stat-value">1,240 TPS</div>
+        <div class="iso-tag">REAL-TIME SYNC</div>
     </div>
 
-    <script>
-        // Update Clock
-        function updateClock() {
-            document.getElementById('live-time').innerText = new Date().toLocaleTimeString();
-        }
-        setInterval(updateClock, 1000);
+    <div class="fin-card">
+        <div class="stat-label">GOVERNANCE DRIFT</div>
+        <div class="stat-value">0.004%</div>
+        <div class="iso-tag">LSSBB OPTIMIZED</div>
+    </div>
 
-        // Update TPS and Log
-        const logContainer = document.getElementById('log-container');
-        
-        function updateFintechData() {
-            // Update TPS Value
-            let tps = (1240 + Math.random() * 60).toFixed(2);
-            document.getElementById('tps-val').innerText = tps.toLocaleString();
+    <div class="fin-card">
+        <div class="stat-label">LIQUIDITY RATIO</div>
+        <div class="stat-value">1.84</div>
+        <div class="iso-tag">STABLE</div>
+    </div>
 
-            // Create Log Entry
-            const entry = document.createElement('div');
-            entry.className = 'log-entry';
-            const txId = Math.random().toString(36).substring(7).toUpperCase();
-            entry.innerHTML = `
-                <span>TX_ID: ${txId}</span>
-                <span class="status">VERIFIED</span>
-                <span class="timestamp">${new Date().getMilliseconds()}ms</span>
-            `;
-            
-            logContainer.prepend(entry);
-            if(logContainer.children.length > 5) logContainer.lastChild.remove();
-        }
+    <div class="fin-card">
+        <div class="stat-label">ENCRYPTION PROTOCOL</div>
+        <div class="stat-value">AES-256</div>
+        <div class="iso-tag">ACTIVE</div>
+    </div>
+</main>
 
-        setInterval(updateFintechData, 800);
-    </script>
+<footer>
+    FINTECH NODE | ARCHITECTED BY EDGAR WAMEYO | BY GOD'S GRACE
+</footer>
+
 </body>
 </html>
