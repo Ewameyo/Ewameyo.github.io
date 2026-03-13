@@ -27,6 +27,7 @@
         .card { 
             background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(168, 85, 247, 0.4); 
             border-radius: 12px; padding: 15px; display: flex; flex-direction: column;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.1);
         }
 
         .card-title { color: var(--purple); font-family: 'Orbitron'; font-size: 0.75rem; font-weight: 900; margin-bottom: 10px; display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding-bottom: 5px; }
@@ -38,6 +39,7 @@
 
         .metrics-val { font-family: 'Orbitron'; font-size: 2.2rem; color: var(--gold); text-align: center; margin: 5px 0; }
         .back-btn { color: var(--gold); text-decoration: none; border: 1px solid var(--gold); padding: 5px 15px; border-radius: 4px; font-family: 'Orbitron'; font-size: 0.65rem; transition: 0.3s; }
+        .back-btn:hover { background: var(--gold); color: #000; }
 
         .signature-footer { 
             position: fixed; bottom: 0; width: 100%; background: #ff0000; color: #fff; 
@@ -55,7 +57,7 @@
 <header>
     <div>
         <h2 style="font-family:'Orbitron'; color:var(--purple); margin:0;">SERVICE GOVERNANCE</h2>
-        <small style="color: #94a3b8;">LEAD SYSTEMS ARCHITECT | GLOBAL BRANDING MODE</small>
+        <small style="color: #94a3b8;">LEAD SYSTEMS ARCHITECT | LSSBB CERTIFIED</small>
     </div>
     <div id="clock" class="clock-display">00:00:00</div>
     <a href="index.html" class="back-btn">RETURN TO HUB</a>
@@ -63,22 +65,22 @@
 
 <main class="main-grid">
     <div class="card">
-        <div class="card-title">MISSION CONTROL <span>DEPLOYMENT STATUS</span></div>
+        <div class="card-title">MISSION CONTROL <span>SYSTEM DEPLOYMENT</span></div>
         <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-            <div id="mission-status" style="font-size: 1rem; color: var(--gold); font-family: 'Orbitron';">INITIALIZING LAUNCH...</div>
-            <div style="width: 80%; height: 2px; background: #222; margin-top: 15px; position: relative;">
-                <div id="mission-progress" style="width: 0%; height: 100%; background: var(--purple); transition: 1s;"></div>
+            <div id="mission-status" style="font-size: 1rem; color: var(--gold); font-family: 'Orbitron';">IGNITING CORE...</div>
+            <div style="width: 80%; height: 3px; background: #111; margin-top: 15px; position: relative; border-radius: 2px;">
+                <div id="mission-progress" style="width: 0%; height: 100%; background: var(--purple); transition: 1s; box-shadow: 0 0 10px var(--purple);"></div>
             </div>
         </div>
     </div>
 
     <div class="card" style="grid-row: span 2;">
-        <div class="card-title">ARCHITECTURAL DEPLOYMENT LOG <span>STARLINK SEQUENCE</span></div>
+        <div class="card-title">ARCHITECTURAL DEPLOYMENT <span>EXECUTION SEQUENCE</span></div>
         <div id="log-box" class="log-container"></div>
     </div>
 
     <div class="card">
-        <div class="card-title">SYSTEM YIELD <span>360° ARCHITECTURE</span></div>
+        <div class="card-title">OPERATIONAL INTEGRITY <span>360° ARCHITECTURE</span></div>
         <div class="metrics-val">5.99σ</div>
         <div style="height: 40px; display: flex; align-items: flex-end; justify-content: center; gap: 4px;">
             <div style="width:15px; background:var(--purple); height:95%;"></div>
@@ -91,7 +93,7 @@
 
 <div class="signature-footer">
     CONFIDENTIAL & PROPRIETARY | COPYRIGHT © 2026 EDGAR WAMEYO | ALL RIGHTS RESERVED. <br>
-    <span style="font-size: 0.55rem; color: #ffcccc;">LEAD SYSTEMS ARCHITECT: GLOBAL INFRASTRUCTURE DEPLOYMENT COMPLETE.</span>
+    <span style="font-size: 0.55rem; color: #ffcccc; font-family: 'JetBrains Mono';">LEAD SYSTEMS ARCHITECT: GLOBAL INFRASTRUCTURE DEPLOYMENT VALIDATED.</span>
 </div>
 
 <script>
@@ -114,16 +116,16 @@
     }
     setInterval(draw, 50);
 
-    // UNIQUE STARLINK-STYLE DEPLOYMENT SEQUENCE (NO REPETITION)
+    // STARLINK-STYLE DEPLOYMENT SEQUENCE (NO REPETITION)
     const sequence = [
-        {p: "BOOSTER", t: "Igniting Enterprise Core: Initializing LSSBB Governance Engines."},
-        {p: "STAGE-1", t: "Deploying 360° Architectural Mesh across global financial nodes."},
-        {p: "FAIRING", t: "Jettisoning legacy technical debt (Muda) to optimize throughput."},
+        {p: "BOOSTER", t: "Initializing LSSBB Governance Engines: Core architecture online."},
+        {p: "STAGE-1", t: "Deploying 360° Architectural Mesh across global fintech nodes."},
+        {p: "FAIRING", t: "Jettisoning legacy technical debt to optimize transaction throughput."},
         {p: "ORBIT", t: "Establishing ISO 20022 compliance in low-latency environments."},
-        {p: "MONTE-CARLO", t: "Running 10,000 statistical failure simulations for uptime validation."},
-        {p: "FMEA", t: "Permanent mitigation of high-risk process failure modes detected."},
-        {p: "ANOVA", t: "Validating cross-regional variance for sub-millisecond liquidity flow."},
-        {p: "DEPLOY", t: "Final Deployment of Zero-Defect Governance Blueprints."},
+        {p: "ANALYSIS", t: "Running 10,000 Monte-Carlo simulations for uptime validation."},
+        {p: "FMEA", t: "Mitigating high-risk process failure modes in real-time."},
+        {p: "ANOVA", t: "Validating cross-regional variance for sub-millisecond liquidity."},
+        {p: "DEPLOY", t: "Finalizing Zero-Defect Governance Blueprints for global rollout."},
         {p: "MESH", t: "Global Architectural Mesh Active. System Integrity: 5.99 Sigma."}
     ];
 
@@ -135,18 +137,16 @@
             entry.className = 'log-entry';
             const step = sequence[currentStep];
             
-            entry.innerHTML = `<span class="success-tag">✓</span><span class="phase">[${step.p}]</span> ${step.t}`;
+            entry.innerHTML = `<span class="success-tag">✓ VERIFIED</span><span class="phase">[${step.p}]</span> ${step.t}`;
             box.appendChild(entry);
             
-            // Auto-scroll to bottom
             box.scrollTop = box.scrollHeight;
 
-            // Update Mission Status
-            document.getElementById('mission-status').innerText = `STEP ${currentStep + 1}: ${step.p} COMPLETE`;
+            document.getElementById('mission-status').innerText = `${step.p} COMPLETE`;
             document.getElementById('mission-progress').style.width = ((currentStep + 1) / sequence.length * 100) + "%";
 
             currentStep++;
-            setTimeout(runSequence, 2500); // Deploy each step every 2.5 seconds
+            setTimeout(runSequence, 2800); 
         } else {
             document.getElementById('mission-status').innerText = "GLOBAL DEPLOYMENT SUCCESSFUL";
             document.getElementById('mission-status').style.color = "var(--green)";
