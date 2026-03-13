@@ -1,24 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASSET GOVERNANCE | NEXUS 360</title>
     <style>
-        body { background: #020617; color: #fff; font-family: sans-serif; padding: 50px; text-align: center; }
-        .bar-container { width: 300px; height: 30px; background: #1e293b; margin: 20px auto; border-radius: 15px; overflow: hidden; border: 1px solid #fcc201; }
-        .bar-fill { height: 100%; background: #fcc201; width: 50%; transition: 0.8s ease-in-out; }
-        h1 { font-family: 'Orbitron', sans-serif; color: #fcc201; }
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono&display=swap');
+        :root { --gold: #fcc201; --bg: #020617; }
+        body { background: var(--bg); color: #fff; font-family: 'JetBrains Mono', monospace; margin: 0; overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
+        .ticker-wrap { background: rgba(0,0,0,0.9); border-bottom: 1px solid var(--gold); overflow: hidden; }
+        .ticker { display: inline-block; white-space: nowrap; animation: ticker 20s linear infinite; color: var(--gold); font-size: 0.8rem; padding: 10px 0; }
+        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        header { padding: 20px; border-bottom: 2px solid var(--gold); display: flex; justify-content: space-between; align-items: center; }
+        main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+        .card { width: 90%; max-width: 600px; background: rgba(30, 41, 59, 0.4); border: 1px solid var(--gold); border-radius: 20px; padding: 40px; text-align: center; }
+        .chart-container { display: flex; align-items: flex-end; justify-content: space-around; height: 150px; margin: 30px 0; gap: 10px; }
+        .bar { width: 40px; background: var(--gold); transition: height 0.5s ease; border-radius: 5px 5px 0 0; }
+        .val { font-family: 'Orbitron'; font-size: 3rem; color: #fff; }
+        .back-btn { color: var(--gold); text-decoration: none; border: 1px solid var(--gold); padding: 10px 20px; border-radius: 5px; font-family: 'Orbitron'; font-size: 0.8rem; }
     </style>
 </head>
 <body>
-    <h1>ASSET LIVE LOAD</h1>
-    <div class="bar-container"><div id="fill" class="bar-fill"></div></div>
-    <h2 id="num">50%</h2>
-    <a href="index.html" style="color:#fcc201">BACK TO HUB</a>
+    <div class="ticker-wrap"><div class="ticker">ASSET LOAD: OPTIMAL | PREDICTIVE MAINTENANCE: ACTIVE | SENSOR ARRAY 04: CONNECTED | EFFICIENCY: +14%</div></div>
+    <header>
+        <h2 style="font-family:'Orbitron'; color:var(--gold); margin:0;">ASSET GOVERNANCE</h2>
+        <a href="index.html" class="back-btn">RETURN</a>
+    </header>
+    <main>
+        <div class="card">
+            <div style="color:var(--gold); letter-spacing:2px;">INDUSTRIAL UTILIZATION</div>
+            <div id="big-num" class="val">54%</div>
+            <div class="chart-container" id="chart">
+                <div class="bar" style="height: 40%"></div>
+                <div class="bar" style="height: 70%"></div>
+                <div class="bar" style="height: 50%"></div>
+                <div class="bar" style="height: 90%"></div>
+                <div class="bar" style="height: 60%"></div>
+            </div>
+        </div>
+    </main>
     <script>
         setInterval(() => {
-            let val = 40 + Math.floor(Math.random() * 40);
-            document.getElementById('fill').style.width = val + "%";
-            document.getElementById('num').innerText = val + "%";
-        }, 2000);
+            const bars = document.querySelectorAll('.bar');
+            let last;
+            bars.forEach(b => {
+                let h = 20 + Math.floor(Math.random()*75);
+                b.style.height = h + "%";
+                last = h;
+            });
+            document.getElementById('big-num').innerText = last + "%";
+        }, 1500);
     </script>
 </body>
 </html>
