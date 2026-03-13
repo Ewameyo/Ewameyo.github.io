@@ -12,40 +12,47 @@
         #bg-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; }
 
         header { 
-            padding: 20px; border-bottom: 2px solid var(--purple); 
+            padding: 15px 30px; border-bottom: 2px solid var(--purple); 
             display: flex; justify-content: space-between; align-items: center; 
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
+            background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); z-index: 100;
         }
 
-        .dashboard { 
-            display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 20px; 
-            padding: 30px; height: calc(100vh - 180px); 
+        .clock-display { font-family: 'Orbitron'; font-size: 1.4rem; color: var(--gold); text-shadow: 0 0 10px var(--gold); }
+
+        .main-grid { 
+            display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1.2fr;
+            gap: 20px; padding: 25px; height: calc(100vh - 160px); 
         }
 
         .card { 
-            background: rgba(15, 23, 42, 0.9); border: 1px solid var(--purple); 
-            border-radius: 15px; padding: 20px; display: flex; flex-direction: column;
-            box-shadow: 0 0 30px rgba(168, 85, 247, 0.1);
+            background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(168, 85, 247, 0.4); 
+            border-radius: 12px; padding: 15px; display: flex; flex-direction: column;
         }
 
-        .log-container { flex: 1; overflow-y: auto; background: rgba(0,0,0,0.8); padding: 15px; border-radius: 8px; font-size: 0.75rem; border: 1px solid #333; }
-        .log-entry { margin-bottom: 8px; border-left: 2px solid var(--purple); padding-left: 10px; animation: fadeIn 0.5s ease; }
-        .timestamp { color: var(--purple); font-weight: bold; }
-        .status-ok { color: var(--green); font-weight: bold; }
+        .card-title { color: var(--purple); font-family: 'Orbitron'; font-size: 0.75rem; font-weight: 900; margin-bottom: 10px; display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding-bottom: 5px; }
 
-        .val { font-family: 'Orbitron'; font-size: 2.2rem; color: var(--gold); text-align: center; margin: 10px 0; }
-        .chart-engine { display: flex; align-items: flex-end; justify-content: center; height: 80px; gap: 5px; margin-top: 10px; }
-        .bar { width: 10px; background: var(--purple); transition: height 0.3s; border-radius: 2px 2px 0 0; opacity: 0.7; }
+        /* VSM FLOW DISPLAY */
+        .vsm-flow { display: flex; justify-content: space-around; align-items: center; flex: 1; padding: 10px 0; }
+        .vsm-node { border: 1px solid var(--gold); padding: 8px; font-size: 0.6rem; border-radius: 4px; text-align: center; width: 80px; }
+        .vsm-arrow { color: var(--purple); font-size: 1.2rem; animation: flow 1.5s infinite; }
 
-        .back-btn { color: var(--gold); text-decoration: none; border: 1px solid var(--gold); padding: 8px 15px; border-radius: 5px; font-family: 'Orbitron'; font-size: 0.7rem; transition: 0.3s; }
+        /* DMAIC LOGS - Marketing Your Core Tasks */
+        .log-container { flex: 1; overflow-y: auto; background: rgba(0,0,0,0.6); padding: 10px; border-radius: 5px; font-size: 0.7rem; border: 1px solid #222; }
+        .log-entry { margin-bottom: 6px; border-left: 2px solid var(--green); padding-left: 10px; animation: slideIn 0.3s ease; }
+        .phase { color: var(--gold); font-weight: 800; margin-right: 5px; }
+
+        .metrics-val { font-family: 'Orbitron'; font-size: 2.2rem; color: var(--gold); text-align: center; margin: 5px 0; }
+        .back-btn { color: var(--gold); text-decoration: none; border: 1px solid var(--gold); padding: 5px 15px; border-radius: 4px; font-family: 'Orbitron'; font-size: 0.65rem; transition: 0.3s; }
         .back-btn:hover { background: var(--gold); color: #000; }
-        
+
         .signature-footer { 
             position: fixed; bottom: 0; width: 100%; background: #ff0000; color: #fff; 
-            padding: 12px 0; text-align: center; font-family: 'Orbitron'; font-weight: 900; font-size: 0.7rem; z-index: 1000;
+            padding: 10px 0; text-align: center; font-family: 'Orbitron'; font-weight: 900; font-size: 0.7rem; z-index: 1000;
             border-top: 2px solid #fff;
         }
-        @keyframes fadeIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+
+        @keyframes flow { 0% { opacity: 0.2; transform: translateX(-5px); } 100% { opacity: 1; transform: translateX(5px); } }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -54,86 +61,92 @@
 
 <header>
     <div>
-        <h2 style="font-family:'Orbitron'; color:var(--purple); margin:0; letter-spacing: 2px;">SERVICE GOVERNANCE</h2>
-        <small style="color: #94a3b8;">LSSBB | 360° OPERATIONAL LOGS</small>
+        <h2 style="font-family:'Orbitron'; color:var(--purple); margin:0;">SERVICE GOVERNANCE</h2>
+        <small style="color: #94a3b8;">SYSTEMS ARCHITECT | DMAIC | VSM PROTOCOLS</small>
     </div>
+    <div id="clock" class="clock-display">00:00:00</div>
     <a href="index.html" class="back-btn">RETURN TO HUB</a>
 </header>
 
-<main class="dashboard">
+<main class="main-grid">
     <div class="card">
-        <div style="color:var(--purple); font-weight:bold; margin-bottom:10px; font-family:'Orbitron'; font-size: 0.8rem;">JOBS EXECUTED | REAL-TIME LOG</div>
-        <div id="log" class="log-container">
-            <div class="log-entry"><span class="timestamp">[SYS_START]</span> INITIALIZING GOVERNANCE ENGINE... <span class="status-ok">READY</span></div>
+        <div class="card-title">VALUE STREAM MAPPING (VSM) <span>DYNAMIC ANALYTICS</span></div>
+        <div class="vsm-flow">
+            <div class="vsm-node">IDENTIFY WASTE</div>
+            <div class="vsm-arrow">➔</div>
+            <div class="vsm-node" style="border-color:var(--purple)">MAP FLOW</div>
+            <div class="vsm-arrow">➔</div>
+            <div class="vsm-node">OPTIMIZE VALUE</div>
+        </div>
+        <p style="font-size: 0.6rem; color: #94a3b8; text-align: center;">Active VSM Protocol: Eliminating non-value added steps across systems.</p>
+    </div>
+
+    <div class="card" style="grid-row: span 2;">
+        <div class="card-title">DMAIC EXECUTION ENGINE <span>LIVE JOB LOG</span></div>
+        <div id="log-box" class="log-container">
+            <div class="log-entry"><span class="phase">[START]</span> SYSTEM GOVERNANCE INITIALIZED.</div>
         </div>
     </div>
 
-    <div class="card" style="justify-content: space-around;">
-        <div>
-            <div style="color:var(--purple); text-align:center; font-size:0.75rem; font-weight:bold;">SLA UPTIME</div>
-            <div id="sla-val" class="val">99.98%</div>
-            <div class="chart-engine" id="sla-chart"></div>
-        </div>
-        <div style="margin-top: 20px;">
-            <div style="color:var(--purple); text-align:center; font-size:0.75rem; font-weight:bold;">PROCESS SIGMA</div>
-            <div id="sig-val" class="val">5.82σ</div>
-            <div class="chart-engine" id="sig-chart"></div>
+    <div class="card">
+        <div class="card-title">ARCHITECTURAL YIELD <span>SIGMA RATING</span></div>
+        <div class="metrics-val">5.98σ</div>
+        <div style="height: 40px; display: flex; align-items: flex-end; justify-content: center; gap: 4px;">
+            <div style="width:15px; background:var(--purple); height:80%;"></div>
+            <div style="width:15px; background:var(--purple); height:60%;"></div>
+            <div style="width:15px; background:var(--purple); height:90%;"></div>
+            <div style="width:15px; background:var(--purple); height:75%;"></div>
         </div>
     </div>
 </main>
 
 <div class="signature-footer">
     CONFIDENTIAL & PROPRIETARY | COPYRIGHT © 2026 EDGAR WAMEYO | ALL RIGHTS RESERVED. <br>
-    <span style="font-size: 0.55rem; color: #ffcccc; font-family: 'JetBrains Mono';">UNAUTHORIZED REPLICATION OR DECOMPILATION IS STRICTLY PROHIBITED.</span>
+    <span style="font-size: 0.55rem; color: #ffcccc;">UNAUTHORIZED REPLICATION OR DECOMPILATION IS STRICTLY PROHIBITED.</span>
 </div>
 
 <script>
-    // MATRIX BACKGROUND
+    // SYNCED CLOCK
+    function updateClock() { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }
+    setInterval(updateClock, 1000); updateClock();
+
+    // MATRIX BG EFFECT (PURPLE THEME)
     const canvas = document.getElementById('bg-canvas');
     const ctx = canvas.getContext('2d');
     function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
     window.addEventListener('resize', resize); resize();
-    const characters = "01";
     const drops = Array(Math.floor(canvas.width / 15)).fill(1);
     function draw() {
         ctx.fillStyle = "rgba(2, 6, 23, 0.2)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "rgba(168, 85, 247, 0.35)"; ctx.font = "15px monospace";
+        ctx.fillStyle = "rgba(168, 85, 247, 0.35)"; ctx.font = "14px monospace";
         drops.forEach((y, i) => {
-            ctx.fillText(characters.charAt(Math.floor(Math.random()*2)), i*15, y*15);
+            ctx.fillText(Math.floor(Math.random()*2), i*15, y*15);
             if(y*15 > canvas.height && Math.random() > 0.975) drops[i] = 0;
             drops[i]++;
         });
     }
     setInterval(draw, 50);
 
-    // LIVE LOG GENERATOR
-    const jobTypes = ["OPTIMIZING ARCHITECTURE", "VALIDATING ISO 20022", "CALIBRATING YIELD", "REALIGNING ASSETS", "SYNCING GOVERNANCE", "REMOVING MUDA", "AUDITING SIGMA LEVELS"];
-    function addLog() {
-        const log = document.getElementById('log');
+    // MARKETING TASK LOG (DMAIC & ARCHITECTURE)
+    const tasks = [
+        {p: "DEFINE", t: "Architectural scope for Fintech Node integration."},
+        {p: "MEASURE", t: "Baseline latency across ISO 20022 messaging."},
+        {p: "ANALYZE", t: "VSM Gap Analysis identified process bottlenecks."},
+        {p: "IMPROVE", t: "Redesigning data-flow topology for 5.9σ yield."},
+        {p: "CONTROL", t: "Implemented automated governance monitoring."},
+        {p: "SYSTEMS", t: "Cross-functional architecture audit successful."}
+    ];
+
+    function logTask() {
+        const box = document.getElementById('log-box');
         const entry = document.createElement('div');
         entry.className = 'log-entry';
-        const time = new Date().toLocaleTimeString();
-        entry.innerHTML = `<span class="timestamp">[${time}]</span> ${jobTypes[Math.floor(Math.random()*jobTypes.length)]}... <span class="status-ok">SUCCESS</span>`;
-        log.prepend(entry);
-        if(log.childNodes.length > 20) log.removeChild(log.lastChild);
+        const job = tasks[Math.floor(Math.random() * tasks.length)];
+        entry.innerHTML = `<span class="phase">[${job.p}]</span> ${job.t}`;
+        box.prepend(entry);
+        if(box.childNodes.length > 20) box.removeChild(box.lastChild);
     }
-    setInterval(addLog, 2500);
-
-    // DYNAMIC CHARTS
-    function createBars(id) {
-        const container = document.getElementById(id);
-        for(let i=0; i<12; i++) {
-            let b = document.createElement('div'); b.className = 'bar';
-            container.appendChild(b);
-        }
-    }
-    createBars('sla-chart'); createBars('sig-chart');
-    function animateBars() {
-        document.querySelectorAll('.bar').forEach(b => {
-            b.style.height = (30 + Math.random()*70) + "%";
-        });
-    }
-    setInterval(animateBars, 1500);
+    setInterval(logTask, 3000);
 </script>
 </body>
 </html>
