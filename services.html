@@ -3,27 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SERVICE GOVERNANCE</title>
+    <title>SERVICES | EDGAR WAMEYO</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono&display=swap');
-        body { background: #020617; color: #fff; font-family: 'JetBrains Mono', monospace; margin: 0; height: 100vh; display: flex; flex-direction: column; }
-        header { padding: 20px; border-bottom: 2px solid #a855f7; display: flex; justify-content: space-between; background: #000; }
-        main { flex: 1; padding: 30px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .card { background: rgba(30, 41, 59, 0.5); border: 1px solid #a855f7; padding: 25px; border-radius: 15px; text-align: center; }
-        .val { font-family: 'Orbitron'; font-size: 2rem; color: #fcc201; margin: 10px 0; }
+        :root { --accent: #a855f7; --gold: #fcc201; --bg: #020617; }
+        body { background: var(--bg); color: #fff; font-family: 'JetBrains Mono', monospace; margin: 0; overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
+        header { padding: 20px; border-bottom: 2px solid var(--accent); display: flex; justify-content: space-between; align-items: center; }
+        .dashboard { flex: 1; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 40px; }
+        .card { background: rgba(30, 41, 59, 0.4); border: 1px solid var(--accent); border-radius: 20px; padding: 30px; text-align: center; }
+        .val { font-family: 'Orbitron'; font-size: 2.5rem; color: var(--gold); margin: 20px 0; }
+        .progress-bg { width: 100%; height: 10px; background: #1e293b; border-radius: 5px; overflow: hidden; margin-top: 15px; }
+        .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: 1s ease; }
     </style>
 </head>
 <body>
-<header><div><b style="color:#a855f7">SERVICE GOVERNANCE</b><br><small>LSSBB OPTIMIZED</small></div><a href="index.html" style="color:#fcc201; text-decoration:none">BACK</a></header>
-<main>
-    <div class="card"><div>LIVE SLA</div><div id="sla" class="val">99.98%</div></div>
-    <div class="card"><div>PROCESS SIGMA</div><div id="sig" class="val">5.82σ</div></div>
-</main>
-<script>
-    setInterval(() => {
-        document.getElementById('sla').innerText = (99.90 + Math.random()*0.09).toFixed(2) + "%";
-        document.getElementById('sig').innerText = (5.80 + Math.random()*0.1).toFixed(2) + "σ";
-    }, 3000);
-</script>
+    <header>
+        <h2 style="font-family:'Orbitron'; color:var(--accent); margin:0;">SERVICE GOVERNANCE</h2>
+        <a href="index.html" style="color:var(--gold); text-decoration:none; border:1px solid var(--gold); padding:8px 15px; border-radius:5px; font-size:0.7rem;">HUB</a>
+    </header>
+    <main class="dashboard">
+        <div class="card">
+            <div>SLA UPTIME</div>
+            <div id="sla-val" class="val">99.98%</div>
+            <div class="progress-bg"><div id="sla-bar" class="progress-fill"></div></div>
+        </div>
+        <div class="card">
+            <div>PROCESS SIGMA (LSSBB)</div>
+            <div id="sig-val" class="val">5.82σ</div>
+            <div class="progress-bg"><div id="sig-bar" class="progress-fill" style="background:var(--gold)"></div></div>
+        </div>
+    </main>
+    <script>
+        function live() {
+            let sla = (99.90 + Math.random()*0.09).toFixed(2);
+            let sig = (5.80 + Math.random()*0.15).toFixed(2);
+            document.getElementById('sla-val').innerText = sla + "%";
+            document.getElementById('sla-bar').style.width = (sla - 10) + "%";
+            document.getElementById('sig-val').innerText = sig + "σ";
+            document.getElementById('sig-bar').style.width = (sig * 15) + "%";
+        }
+        setInterval(live, 2500); live();
+    </script>
 </body>
 </html>
