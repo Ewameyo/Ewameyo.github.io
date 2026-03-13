@@ -27,6 +27,7 @@
         .card { 
             background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(168, 85, 247, 0.4); 
             border-radius: 12px; padding: 15px; display: flex; flex-direction: column;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.1);
         }
 
         .card-title { color: var(--purple); font-family: 'Orbitron'; font-size: 0.75rem; font-weight: 900; margin-bottom: 10px; display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding-bottom: 5px; }
@@ -102,7 +103,7 @@
 
 <div class="signature-footer">
     CONFIDENTIAL & PROPRIETARY | COPYRIGHT © 2026 EDGAR WAMEYO | ALL RIGHTS RESERVED. <br>
-    <span style="font-size: 0.55rem; color: #ffcccc;">UNAUTHORIZED REPLICATION IS STERNLY PROHIBITED.</span>
+    <span style="font-size: 0.55rem; color: #ffcccc; font-family: 'JetBrains Mono';">UNAUTHORIZED REPLICATION OR DECOMPILATION IS STRICTLY PROHIBITED BY LAW.</span>
 </div>
 
 <script>
@@ -116,7 +117,7 @@
     const drops = Array(Math.floor(canvas.width / 15)).fill(1);
     function draw() {
         ctx.fillStyle = "rgba(2, 6, 23, 0.2)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "rgba(168, 85, 247, 0.3)"; ctx.font = "14px monospace";
+        ctx.fillStyle = "rgba(168, 85, 247, 0.35)"; ctx.font = "14px monospace";
         drops.forEach((y, i) => {
             ctx.fillText(Math.floor(Math.random()*2), i*15, y*15);
             if(y*15 > canvas.height && Math.random() > 0.975) drops[i] = 0;
@@ -125,6 +126,7 @@
     }
     setInterval(draw, 50);
 
+    // DEEP ARCHITECTURAL LEADERSHIP TASKS
     const tasks = [
         {p: "ARCHITECT", t: "Designing 360° high-level system topology for enterprise scalability."},
         {p: "DMAIC-A", t: "Analyzing architectural friction to reduce systemic process variance."},
@@ -143,9 +145,9 @@
         const job = tasks[Math.floor(Math.random() * tasks.length)];
         entry.innerHTML = `<span class="phase">[${job.p}]</span> ${job.t}`;
         box.prepend(entry);
-        if(box.childNodes.length > 20) box.removeChild(box.lastChild);
+        if(box.childNodes.length > 25) box.removeChild(box.lastChild);
     }
-    setInterval(logTask, 3500);
+    setInterval(logTask, 3000);
 </script>
 </body>
 </html>
