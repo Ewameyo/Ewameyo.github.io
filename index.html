@@ -3,150 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EDGAR WAMEYO | LSSBB COMMAND CENTER</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>Nexus 360 | Industrial Command Center</title>
     <style>
         :root {
-            --primary: #0f172a; --accent: #f0b429; --success: #22c55e;
-            --warning: #f59e0b; --danger: #ef4444; --text: #f8fafc;
+            --primary: #1e293b; --gold: #eab308; --danger: #ef4444; --success: #22c55e;
         }
-        body { 
-            font-family: 'Rajdhani', sans-serif; margin: 0; background: #020617; color: var(--text);
-            overflow-x: hidden; width: 100vw; min-height: 100vh;
+        body { background: #0f172a; color: white; font-family: sans-serif; text-align: center; margin: 0; padding: 20px; }
+        
+        /* Executive Insight Box */
+        .insight-card {
+            background: rgba(30, 41, 59, 0.8); border: 2px solid var(--gold);
+            padding: 20px; border-radius: 12px; margin-bottom: 20px;
         }
+        .executive-status { font-size: 1.5rem; font-weight: bold; margin-bottom: 5px; }
+        .action-text { font-size: 1rem; color: #cbd5e1; }
 
-        .header { 
-            background: linear-gradient(90deg, #0f172a 0%, #1e293b 100%);
-            padding: 20px 40px; border-bottom: 3px solid var(--accent);
-            display: flex; justify-content: space-between; align-items: center;
+        /* Main Dashboard Elements */
+        .header { margin-bottom: 30px; }
+        .logo-placeholder { height: 60px; margin-bottom: 10px; border: 1px dashed var(--gold); line-height: 60px; }
+        .clock { font-size: 2rem; color: var(--gold); margin: 10px 0; }
+        
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; max-width: 500px; margin: auto; }
+        .stat-box { background: #1e293b; padding: 15px; border-radius: 8px; border-bottom: 3px solid var(--gold); }
+        
+        .btn { 
+            background: var(--gold); color: black; border: none; padding: 15px 40px; 
+            font-size: 1.2rem; font-weight: bold; border-radius: 50px; cursor: pointer; margin-top: 30px;
         }
-        .identity h1 { font-family: 'Orbitron', sans-serif; margin: 0; letter-spacing: 2px; font-size: 28px; color: #fff; }
-        .identity p { color: var(--accent); margin: 5px 0 0; font-weight: bold; letter-spacing: 1.2px; text-transform: uppercase; font-size: 14px; }
-
-        .status-block { display: flex; align-items: center; gap: 20px; }
-        .live-indicator {
-            font-family: 'Orbitron', sans-serif; font-size: 12px; color: var(--success);
-            border: 1px solid var(--success); padding: 4px 10px; border-radius: 4px;
-            animation: blinker 1.5s linear infinite;
-        }
-        @keyframes blinker { 50% { opacity: 0.1; } }
-        #clock { font-family: 'Orbitron', sans-serif; font-size: 22px; color: var(--accent); min-width: 120px; text-align: right; }
-
-        .ticker-container {
-            width: 100%; background: #f0b429; padding: 10px 0; border-bottom: 2px solid #000; overflow: hidden;
-        }
-        .ticker-text {
-            display: inline-block; white-space: nowrap; font-family: 'Orbitron', sans-serif;
-            font-size: 14px; font-weight: 800; color: #000;
-            animation: slide-text 40s linear infinite;
-        }
-        @keyframes slide-text { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-
-        .nav-tabs { display: flex; background: #000; padding: 10px 40px 0; gap: 5px; }
-        .nav-link { 
-            padding: 12px 25px; background: #1e293b; color: white; text-decoration: none; 
-            border-radius: 5px 5px 0 0; font-weight: bold; font-size: 13px;
-        }
-        .nav-link.active { background: var(--accent); color: #000; }
-
-        .container { 
-            display: grid; grid-template-columns: repeat(3, 1fr); 
-            gap: 20px; padding: 30px 40px; box-sizing: border-box;
-        }
-        .card { 
-            background: #0f172a; border-radius: 4px; border: 1px solid #1e293b; border-left: 5px solid var(--accent);
-            padding: 25px;
-        }
-        .label { color: #94a3b8; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
-        .value { font-family: 'Orbitron', sans-serif; font-size: 40px; display: block; margin: 15px 0; color: #fff; }
-        .status-pill { display: inline-flex; align-items: center; padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: bold; }
-        .pill-green { background: rgba(34, 197, 94, 0.2); color: var(--success); }
-        .pill-gold { background: rgba(240, 180, 41, 0.2); color: var(--accent); }
-        .desc { font-size: 14px; color: #94a3b8; margin-top: 15px; line-height: 1.5; }
-
-        @media (max-width: 1024px) { .container { grid-template-columns: 1fr 1fr; } }
-        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } }
+        .blink { animation: blinker 1.5s linear infinite; }
+        @keyframes blinker { 50% { opacity: 0; } }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <div class="identity">
-        <h1>EDGAR WAMEYO</h1>
-        <p>LSSBB | OPERATIONAL EXCELLENCE LEADER</p>
-    </div>
-    <div class="status-block">
-        <div class="live-indicator">SYSTEM ACTIVE</div>
-        <div id="clock">00:00:00</div>
-    </div>
-</div>
-
-<div class="ticker-container">
-    <div class="ticker-text">
-        SYSTEM STATUS: ACTIVE ● LOCATION: NAIROBI, KENYA ● ISO 20022 COMPLIANCE: 100% ● ZERO DEFECTS TARGET REACHED ● CURRENT SIGMA LEVEL: 4.82 ● ROI: $2.14M UNLOCKED ● 
-    </div>
-</div>
-
-<nav class="nav-tabs">
-    <a href="index.html" class="nav-link active">MAIN COMMAND</a>
-    <a href="fintech.html" class="nav-link">FINTECH OPERATIONS</a>
-</nav>
-
-<div class="container">
-    <div class="card">
-        <span class="label">Strategic Financial Throughput</span>
-        <span class="value">$2.14M</span>
-        <div class="status-pill pill-green">ROI TARGET REACHED</div>
-        <p class="desc">Operational stabilization has successfully unlocked secondary cash flows through optimized capital allocation.</p>
+    <div class="header">
+        <div class="logo-placeholder">[ MANUFACTURING CO. LOGO HERE ]</div>
+        <h1>NEXUS 360 COMMAND</h1>
+        <div id="clock" class="clock">00:00:00</div>
     </div>
 
-    <div class="card">
-        <span class="label">Process Capability (Cpk)</span>
-        <span class="value">1.67</span>
-        <div class="status-pill pill-green">STABLE PROCESS</div>
-        <p class="desc">The "Engine" is statistically capable with near-zero rework requirements, exceeding all industrial benchmarks.</p>
+    <div class="insight-card">
+        <div id="executive-status" class="executive-status">ANALYZING LINE...</div>
+        <div id="action-text" class="action-text">Please wait for secure data sync.</div>
     </div>
 
-    <div class="card">
-        <span class="label">System Yield (RTY)</span>
-        <span class="value">99.1%</span>
-        <div class="status-pill pill-gold">MONITORING FLOW</div>
-        <p class="desc">Identifying bottlenecks in fintech settlement node 4 to maintain 100% throughput velocity across all channels.</p>
+    <div class="grid">
+        <div class="stat-box">
+            <small>EFFICIENCY (OEE)</small>
+            <div id="oee-val" style="font-size: 1.8rem; color: var(--success);">94.2%</div>
+        </div>
+        <div class="stat-box">
+            <small>Cpk (CAPABILITY)</small>
+            <div id="cpk-val" style="font-size: 1.8rem;">1.42</div>
+        </div>
     </div>
 
-    <div class="card">
-        <span class="label">Defect Rate (DPMO)</span>
-        <span class="value">3.4</span>
-        <div class="status-pill pill-green">SIX SIGMA QUALITY</div>
-        <p class="desc">Current defect rate remains at world-class Six Sigma levels (3.4 defects per million opportunities).</p>
-    </div>
+    <button class="btn" onclick="triggerCommand()">ENTER PIN 1187</button>
 
-    <div class="card">
-        <span class="label">Cycle Time Reduction</span>
-        <span class="value">42%</span>
-        <div class="status-pill pill-green">LEAN OPTIMIZED</div>
-        <p class="desc">Aggressive reduction in lead time achieved through Value Stream Mapping and waste (Muda) elimination.</p>
-    </div>
+    <script>
+        // Update Clock
+        setInterval(() => {
+            document.getElementById('clock').innerText = new Date().toLocaleTimeString();
+        }, 1000);
 
-    <div class="card">
-        <span class="label">Cost of Poor Quality (COPQ)</span>
-        <span class="value">1.2%</span>
-        <div class="status-pill pill-green">MINIMAL WASTE</div>
-        <p class="desc">Internal and external failure costs have been mitigated via proactive process controls and Poka-Yoke.</p>
-    </div>
-</div>
+        // THE ARCHITECT'S LOGIC (Runs every 5 seconds)
+        function updatePlatform() {
+            // Simulated Data from Factory Line
+            let currentCpk = (Math.random() * (1.8 - 1.1) + 1.1).toFixed(2);
+            document.getElementById('cpk-val').innerText = currentCpk;
 
-<script>
-    function updateClock() {
-        const now = new Date();
-        const h = String(now.getHours()).padStart(2, '0');
-        const m = String(now.getMinutes()).padStart(2, '0');
-        const s = String(now.getSeconds()).padStart(2, '0');
-        document.getElementById('clock').innerText = `${h}:${m}:${s}`;
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
-</script>
+            const status = document.getElementById('executive-status');
+            const action = document.getElementById('action-text');
 
+            // EXECUTIVE INSIGHT LOGIC
+            if (currentCpk >= 1.67) {
+                status.innerText = "💎 PROCESS ELITE";
+                status.style.color = "#22c55e";
+                action.innerText = "Status: Maximum Profitability. No intervention required.";
+            } else if (currentCpk >= 1.33) {
+                status.innerText = "✅ PROCESS STABLE";
+                status.style.color = "#eab308";
+                action.innerText = "Status: Monitoring minor variance. System within limits.";
+            } else {
+                status.innerText = "🚨 PREDICTIVE ALERT: RISK";
+                status.style.color = "#ef4444";
+                status.classList.add('blink');
+                action.innerText = "URGENT: Capability Erosion. Potential financial leak in Line 4.";
+            }
+        }
+
+        function triggerCommand() {
+            let pin = prompt("Enter Secure Command PIN:");
+            if (pin === "1187") {
+                alert("SYSTEM ARMED: Control Signal Sent to ESP32.");
+            } else {
+                alert("ACCESS DENIED: Unauthorized Attempt Logged.");
+            }
+        }
+
+        setInterval(updatePlatform, 5000);
+    </script>
 </body>
 </html>
