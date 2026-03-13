@@ -3,106 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>360° OPEX ARCHITECT | EDGAR WAMEYO</title>
+    <title>360° OPEX ARCHITECT | EDGAR WAMEYO, LSSBB</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #0f172a; --accent: #f0b429; --success: #22c55e; --text: #f8fafc; }
+        :root { --primary: #0f172a; --accent: #fcc201; --success: #22c55e; --text: #f8fafc; --panel: rgba(30, 41, 59, 0.7); }
         body { font-family: 'Rajdhani', sans-serif; margin: 0; background: #020617; color: var(--text); overflow-x: hidden; }
         
-        /* Header & Nav - Locked to Main Command Style */
-        .header { background: linear-gradient(90deg, #0f172a 0%, #1e293b 100%); padding: 20px 40px; border-bottom: 3px solid var(--accent); display: flex; justify-content: space-between; align-items: center; }
-        .identity h1 { font-family: 'Orbitron', sans-serif; margin: 0; font-size: 28px; letter-spacing: 2px; }
+        /* Header & Nav */
+        .header { background: #0f172a; padding: 20px 40px; border-bottom: 2px solid var(--accent); display: flex; justify-content: space-between; align-items: center; }
+        .identity h1 { font-family: 'Orbitron', sans-serif; margin: 0; font-size: 24px; letter-spacing: 2px; color: #fff; }
         .nav-tabs { display: flex; background: #000; padding: 10px 40px 0; gap: 5px; }
-        .nav-link { padding: 12px 25px; background: #1e293b; color: white; text-decoration: none; border-radius: 5px 5px 0 0; font-weight: bold; font-size: 13px; }
+        .nav-link { padding: 12px 25px; background: #1e293b; color: #94a3b8; text-decoration: none; border-radius: 5px 5px 0 0; font-weight: bold; font-size: 12px; transition: 0.3s; }
+        .nav-link:hover { color: #fff; }
         .nav-link.active { background: var(--accent); color: #000; }
 
-        .hero-section { text-align: center; padding: 60px 20px; background: radial-gradient(circle at center, #1e293b 0%, #020617 100%); }
-        .hero-section h2 { font-family: 'Orbitron', sans-serif; font-size: 32px; color: var(--accent); margin: 0; }
-        .hero-section p { font-size: 18px; color: #94a3b8; max-width: 800px; margin: 20px auto; }
+        .hero-section { text-align: center; padding: 80px 20px; background: radial-gradient(circle at center, #1e293b 0%, #020617 100%); border-bottom: 1px solid rgba(252, 194, 1, 0.1); }
+        .hero-section h2 { font-family: 'Orbitron', sans-serif; font-size: 32px; color: var(--accent); margin: 0; letter-spacing: 2px; }
+        .hero-section p { font-size: 18px; color: #94a3b8; max-width: 800px; margin: 20px auto; line-height: 1.6; }
 
-        .services-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; padding: 0 40px 60px; max-width: 1400px; margin: auto; }
-        .service-card { background: #0f172a; border: 1px solid #1e293b; padding: 35px; position: relative; overflow: hidden; border-left: 4px solid var(--accent); }
-        .service-card:hover { border-color: var(--accent); background: #111a2e; }
+        .services-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; padding: 40px; max-width: 1200px; margin: auto; }
+        .service-card { background: var(--panel); border: 1px solid rgba(255,255,255,0.05); padding: 35px; border-radius: 4px; border-left: 4px solid var(--accent); transition: 0.4s; }
+        .service-card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         
-        .architect-label { font-family: 'Orbitron', sans-serif; font-size: 11px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; }
-        .service-name { font-family: 'Orbitron', sans-serif; font-size: 24px; margin: 15px 0; color: #fff; }
-        .service-desc { color: #94a3b8; line-height: 1.6; font-size: 16px; margin-bottom: 20px; }
+        .architect-label { font-family: 'Orbitron', sans-serif; font-size: 10px; color: var(--accent); letter-spacing: 2px; }
+        .service-name { font-family: 'Orbitron', sans-serif; font-size: 20px; margin: 15px 0; color: #fff; }
+        .service-desc { color: #94a3b8; line-height: 1.6; font-size: 15px; margin-bottom: 20px; }
         
         .capability-tags { display: flex; flex-wrap: wrap; gap: 10px; }
-        .tag { background: rgba(240, 180, 41, 0.1); border: 1px solid var(--accent); color: var(--accent); padding: 4px 12px; border-radius: 2px; font-size: 12px; font-weight: bold; }
+        .tag { background: rgba(252, 194, 1, 0.05); border: 1px solid rgba(252, 194, 1, 0.3); color: var(--accent); padding: 4px 12px; border-radius: 2px; font-size: 11px; font-weight: bold; }
 
-        .section-divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, #1e293b, transparent); margin: 40px 0; }
+        /* Call to Action */
+        .cta-box { text-align: center; padding: 60px 20px; }
+        .btn-audit { background: var(--accent); color: #000; padding: 20px 50px; text-decoration: none; font-family: 'Orbitron'; font-weight: bold; border-radius: 4px; display: inline-block; transition: 0.3s; border: 2px solid var(--accent); }
+        .btn-audit:hover { background: transparent; color: var(--accent); }
 
-        @media (max-width: 900px) { .services-container { grid-template-columns: 1fr; } }
+        footer { text-align: center; padding: 40px; border-top: 1px solid #1e293b; color: #475569; font-size: 12px; letter-spacing: 1px; }
+
+        @media (max-width: 900px) { .services-container { grid-template-columns: 1fr; padding: 20px; } }
     </style>
 </head>
 <body>
 
 <div class="header">
     <div class="identity"><h1>EDGAR WAMEYO</h1></div>
-    <div style="font-family: 'Orbitron'; color: var(--accent);">SYSTEM ARCHITECT SOLUTIONS</div>
+    <div style="font-family: 'Orbitron'; color: var(--accent); font-size: 0.7rem; letter-spacing: 1px;">OPEX ARCHITECTURE V3.0</div>
 </div>
 
 <nav class="nav-tabs">
-    <a href="index.html" class="nav-link">MAIN COMMAND</a>
-    <a href="fintech.html" class="nav-link">FINTECH OPS</a>
-    <a href="services.html" class="nav-link active">360° OPEX ARCHITECT</a>
+    <a href="index.html" class="nav-link">MAIN HUB</a>
+    <a href="industrial-node.html" class="nav-link">ASSET NODE</a>
+    <a href="fintech.html" class="nav-link">FINTECH NODE</a>
+    <a href="services.html" class="nav-link active">SERVICES</a>
 </nav>
 
 <div class="hero-section">
-    <h2>360° BUSINESS SYSTEM ARCHITECTURE</h2>
-    <p>Engineering high-frequency, zero-defect business systems by integrating Lean Six Sigma methodology with advanced digital infrastructure and financial logic.</p>
+    <h2>360° OPERATIONAL GOVERNANCE</h2>
+    <p>I architect business systems where Lean Six Sigma meets Digital Infrastructure. I don't just fix processes; I engineer sustainable, high-velocity growth engines.</p>
 </div>
 
 <div class="services-container">
     <div class="service-card">
-        <div class="architect-label">Solution Architecture 01</div>
-        <div class="service-name">LSS 360: Process Velocity Engine</div>
-        <p class="service-desc">Complete diagnostic and re-engineering of the "Business Engine." I eliminate bottlenecks and synchronize the entire Value Stream from supplier to customer.</p>
+        <div class="architect-label">STRATEGY 01</div>
+        <div class="service-name">LSS 360: Velocity Re-Engineering</div>
+        <p class="service-desc">Complete Value Stream transformation. I use DMAIC and Kaizen to eliminate hidden waste and synchronize your entire operational flow.</p>
         <div class="capability-tags">
-            <span class="tag">DMAIC FRAMEWORK</span>
-            <span class="tag">VALUE STREAM MAPPING</span>
-            <span class="tag">WASTE ELIMINATION (MUDA)</span>
+            <span class="tag">DMAIC</span> <span class="tag">VBS</span> <span class="tag">LEAN FLOW</span>
         </div>
     </div>
 
     <div class="service-card">
-        <div class="architect-label">Solution Architecture 02</div>
-        <div class="service-name">Fintech System Compliance & Integrity</div>
-        <p class="service-desc">Architecting financial workflows that meet ISO 20022 standards. I build the digital logic that ensures transaction accuracy and regulatory safety.</p>
+        <div class="architect-label">STRATEGY 02</div>
+        <div class="service-name">Fintech Integrity & ISO Standards</div>
+        <p class="service-desc">Designing transaction workflows that ensure zero-defect regulatory compliance. Accuracy is engineered into the system logic.</p>
         <div class="capability-tags">
-            <span class="tag">ISO 20022</span>
-            <span class="tag">ERROR PROOFING</span>
-            <span class="tag">SYSTEM THROUGHPUT</span>
+            <span class="tag">ISO 20022</span> <span class="tag">POKA-YOKE</span> <span class="tag">FINTECH LOGIC</span>
         </div>
     </div>
 
     <div class="service-card">
-        <div class="architect-label">Solution Architecture 03</div>
-        <div class="service-name">EBITDA & ROI Margin Expansion</div>
-        <p class="service-desc">A 360° audit of the "Cost of Poor Quality." I identify where capital is trapped in defective processes and architect a recovery plan to expand profit margins.</p>
+        <div class="architect-label">STRATEGY 03</div>
+        <div class="service-name">EBITDA & Margin Expansion</div>
+        <p class="service-desc">A deep-dive audit into the "Cost of Poor Quality" (COPQ). I identify trapped capital and convert process failures into bottom-line profit.</p>
         <div class="capability-tags">
-            <span class="tag">COPQ RECOVERY</span>
-            <span class="tag">CAPITAL ALLOCATION</span>
-            <span class="tag">FINANCIAL STABILIZATION</span>
+            <span class="tag">COPQ AUDIT</span> <span class="tag">ROI ANALYSIS</span> <span class="tag">MARGIN GROWTH</span>
         </div>
     </div>
 
     <div class="service-card">
-        <div class="architect-label">Solution Architecture 04</div>
-        <div class="service-name">Operational Excellence Culture (Sustainment)</div>
-        <p class="service-desc">Building the "Human Architecture" required to sustain 360° improvements. I implement Visual Management systems that drive a culture of continuous improvement.</p>
+        <div class="architect-label">STRATEGY 04</div>
+        <div class="service-name">Digital Twin Dashboards</div>
+        <p class="service-desc">Architecting visual governance systems. I build real-time digital twins of your operation for 24/7 executive decision-making.</p>
         <div class="capability-tags">
-            <span class="tag">VISUAL MANAGEMENT</span>
-            <span class="tag">GEMBA ARCHITECTURE</span>
-            <span class="tag">KPI DASHBOARDS</span>
+            <span class="tag">KPI ARCHITECTURE</span> <span class="tag">IOT SYNC</span> <span class="tag">VISUAL MGMT</span>
         </div>
     </div>
 </div>
 
-<div style="text-align: center; padding-bottom: 80px;">
-    <a href="https://www.linkedin.com/in/YOUR-LINKEDIN" style="background: var(--accent); color: #000; padding: 20px 50px; text-decoration: none; font-family: 'Orbitron'; font-weight: bold; border-radius: 4px;">REQUEST ARCHITECTURAL AUDIT</a>
+<div class="cta-box">
+    <a href="mailto:your-email@example.com" class="btn-audit">REQUEST ARCHITECTURAL AUDIT</a>
 </div>
+
+<footer>
+    &copy; 2026 NEXUS OPERATIONAL GOVERNANCE | WORLDWIDE DEPLOYMENT<br>
+    <strong>ENGINEERED BY EDGAR WAMEYO, LSSBB</strong>
+</footer>
 
 </body>
 </html>
