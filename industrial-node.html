@@ -3,108 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asset Node | Predictive Analytics</title>
+    <title>ASSET NODE</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono:wght@300;500&display=swap');
-        
-        :root { --gold: #fcc201; --bg: #030712; --cyan: #00f2ff; --glass: rgba(15, 23, 42, 0.9); }
-        
-        body { 
-            background: var(--bg); color: #ffffff; font-family: 'JetBrains Mono', monospace; 
-            margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center;
-        }
-
-        .container { width: 100%; max-width: 600px; margin-top: 20px; }
-
-        /* Navigation Header */
-        .nav-header { width: 100%; display: flex; justify-content: space-between; margin-bottom: 30px; border-bottom: 1px solid rgba(252, 194, 1, 0.3); padding-bottom: 10px; }
-        .back-btn { color: var(--gold); text-decoration: none; font-family: 'Orbitron'; font-size: 0.8rem; }
-
-        /* Asset Status Card */
-        .asset-card {
-            background: var(--glass); border: 1px solid rgba(255,255,255,0.1);
-            padding: 25px; border-radius: 20px; margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        
-        .asset-title { font-family: 'Orbitron'; font-size: 1.2rem; color: var(--gold); margin-bottom: 15px; display: block; }
-        
-        /* Live Stats Grid */
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .stat-item { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; border-left: 3px solid var(--cyan); }
-        .stat-label { font-size: 0.65rem; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
-        .stat-value { font-size: 1.4rem; font-weight: bold; color: #fff; margin-top: 5px; }
-
-        /* Live Moving Chart Simulation */
-        .chart-box { 
-            height: 100px; width: 100%; background: rgba(0,0,0,0.3); 
-            margin-top: 20px; border-radius: 10px; position: relative; overflow: hidden;
-            display: flex; align-items: flex-end; gap: 4px; padding: 5px;
-        }
-        .bar { width: 10%; background: var(--cyan); border-radius: 2px 2px 0 0; animation: bounce 2s infinite ease-in-out; }
-        @keyframes bounce { 0%, 100% { height: 40%; } 50% { height: 80%; } }
-
-        /* Predictive Insight (The "LSSBB" Special) */
-        .insight-box {
-            background: rgba(252, 194, 1, 0.1); border: 1px solid var(--gold);
-            padding: 15px; border-radius: 12px; margin-top: 25px;
-        }
-        .insight-text { font-size: 0.85rem; color: #e2e8f0; line-height: 1.4; }
-        .insight-text b { color: var(--gold); }
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono&display=swap');
+        body { background: #020617; color: #fff; font-family: 'JetBrains Mono', monospace; margin: 0; height: 100vh; display: flex; flex-direction: column; }
+        header { padding: 20px; border-bottom: 2px solid #fcc201; display: flex; justify-content: space-between; background: #000; }
+        main { flex: 1; padding: 30px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .card { background: rgba(30, 41, 59, 0.5); border: 1px solid #fcc201; padding: 25px; border-radius: 15px; text-align: center; }
+        .val { font-family: 'Orbitron'; font-size: 2rem; color: #fcc201; margin: 10px 0; }
     </style>
 </head>
 <body>
-
-    <div class="container">
-        <div class="nav-header">
-            <a href="index.html" class="back-btn">◀ RETURN TO HUB</a>
-            <div style="font-size: 0.7rem; color: #475569;">NODE: ASSET_ALPHA_01</div>
-        </div>
-
-        <div class="asset-card">
-            <span class="asset-title">INDUSTRIAL ASSET STREAM</span>
-            
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-label">Cpk (Capability)</div>
-                    <div class="stat-value" id="live-cpk">1.45</div>
-                </div>
-                <div class="stat-item" style="border-color: var(--gold);">
-                    <div class="stat-label">System Yield (RTY)</div>
-                    <div class="stat-value">99.1%</div>
-                </div>
-            </div>
-
-            <div class="chart-box">
-                <div class="bar" style="animation-delay: 0.1s;"></div>
-                <div class="bar" style="animation-delay: 0.3s;"></div>
-                <div class="bar" style="animation-delay: 0.2s;"></div>
-                <div class="bar" style="animation-delay: 0.5s;"></div>
-                <div class="bar" style="animation-delay: 0.4s;"></div>
-                <div class="bar" style="animation-delay: 0.6s;"></div>
-                <div class="bar" style="animation-delay: 0.1s;"></div>
-                <div class="bar" style="animation-delay: 0.8s;"></div>
-            </div>
-        </div>
-
-        <div class="insight-box">
-            <div class="insight-text">
-                <b>GOVERNANCE INSIGHT:</b> Statistical control analysis indicates near-zero rework probability. 
-                Current <b>Sigma Level: 4.85</b>. No corrective action required for this cycle.
-            </div>
-        </div>
-
-        <footer style="text-align: center; margin-top: 40px; font-size: 0.6rem; color: #334155; letter-spacing: 2px;">
-            ENGINEERED BY EDGAR WAMEYO, LSSBB
-        </footer>
-    </div>
-
-    <script>
-        // Real-time data simulation for the Recruiter
-        setInterval(() => {
-            let val = (1.40 + Math.random() * 0.1).toFixed(2);
-            document.getElementById('live-cpk').innerText = val;
-        }, 3000);
-    </script>
+<header><div><b style="color:#fcc201">ASSET GOVERNANCE</b><br><small>PREDICTIVE ANALYTICS</small></div><a href="index.html" style="color:#fcc201; text-decoration:none">BACK</a></header>
+<main>
+    <div class="card"><div>SYSTEM LOAD</div><div id="load" class="val">42%</div></div>
+</main>
+<script>
+    setInterval(() => {
+        document.getElementById('load').innerText = (40 + Math.floor(Math.random()*10)) + "%";
+    }, 2500);
+</script>
 </body>
 </html>
