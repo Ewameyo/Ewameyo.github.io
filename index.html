@@ -1,82 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>EDGAR WAMEYO | COMMAND CENTER</title>
+   <style>
+       @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@500;800&display=swap');
+       :root { --gold: #fcc201; --bg: #020617; --green: #22c55e; --red: #ef4444; --silver: #e2e8f0; }
+       * { margin: 0; padding: 0; box-sizing: border-box; }
+       body, html { width: 100%; height: 100%; overflow: hidden; background: var(--bg); display: flex; justify-content: center; align-items: center; font-family: 'JetBrains Mono', monospace; }
+       #bg-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; }
+       .terminal-frame { width: 95%; max-width: 500px; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(252, 194, 1, 0.4); border-radius: 20px; padding: 25px; box-shadow: 0 0 80px rgba(0,0,0,1); backdrop-filter: blur(15px); z-index: 10; color: white; text-align: center; transition: 0.3s; }
+       .header-status { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.6); padding: 10px 15px; border-bottom: 2px solid var(--gold); border-radius: 12px; margin-bottom: 15px; font-family: 'Orbitron'; }
+       #clock { font-size: 1.2rem; font-weight: 800; color: #fff; }
+       .node { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 12px; margin-bottom: 10px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; font-family: 'Orbitron'; }
+       .node:hover { border-color: var(--gold); background: rgba(252, 194, 1, 0.1); }
+       .banned { filter: grayscale(1) brightness(0.4); pointer-events: none !important; }
+       .signature-footer { position: fixed; bottom: 0; width: 100%; background: #ff0000; color: #fff; padding: 10px 0; text-align: center; font-family: 'Orbitron'; font-weight: 900; font-size: 0.7rem; }
+   </style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<div class="terminal-frame" id="main-frame">
+   <div class="header-status">
+       <div style="font-size: 0.7rem; color: var(--green);">SYSTEM: ACTIVE</div>
+       <div id="clock">00:00:00</div>
+   </div>
+
+   <h1 onclick="architectReset()" style="font-family: 'Orbitron'; cursor: pointer; margin-bottom: 5px;">EDGAR WAMEYO</h1>
+   <p style="color: var(--gold); font-size: 0.7rem; margin-bottom: 20px; font-family: 'Orbitron';">LEAD SYSTEMS ARCHITECT</p>
+
+   <div class="node" onclick="alert('Accessing Asset Node...')"><b>ASSET NODE</b><span>▶</span></div>
+   <div class="node" onclick="alert('Accessing Fintech Node...')"><b>FINTECH NODE</b><span>▶</span></div>
+   <div class="node" onclick="unlock()"><b>MANUFACTURING HUB</b><span id="lock-icon">🔒</span></div>
+
+   <div style="margin-top: 20px; border: 1px solid var(--red); padding: 10px; border-radius: 10px; font-size: 0.6rem; color: var(--red); text-align: left;">
+       > THREAT DETECTION ACTIVE<br>
+       > <span id="security-msg">MONITORING ENCRYPTED TRAFFIC...</span>
+   </div>
+</div>
+
+<div class="signature-footer">CONFIDENTIAL & PROPRIETARY | COPYRIGHT © 2026 EDGAR WAMEYO</div>
+
 <script>
-   let attempts = 0;
-   const MAX_ATTEMPTS = 3;
-
-   // 1. Clear Ban visually if it exists
-   if(localStorage.getItem('banned') === 'true') { applyBan(); }
-
+   // 1. Clock Logic
    function updateClock() { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }
    setInterval(updateClock, 1000);
 
-   // 2. Architect Reset (Click Name 5 Times)
-   let resetCount = 0;
+   // 2. Clear Old Bans on Load
+   if(localStorage.getItem('banned') === 'true') {
+       document.getElementById('main-frame').classList.add('banned');
+       document.getElementById('security-msg').innerText = "SYSTEM LOCKDOWN: BAN ACTIVE";
+   }
+
+   // 3. The 5-Click Reset
+   let count = 0;
    function architectReset() {
-       resetCount++;
-       if(resetCount >= 5) {
+       count++;
+       if(count >= 5) {
            localStorage.removeItem('banned');
-           alert("ARCHITECT OVERRIDE: ACCESS RESTORED");
+           alert("ARCHITECT OVERRIDE: SUCCESS");
            location.reload();
        }
    }
 
-   // 3. BULLETPROOF UNLOCK
+   // 4. Bulletproof Unlock
    function unlock() {
-       // Force prompt to ignore any previous ban state for the Architect
-       let p = prompt("ENTER HUB ACCESS KEY:");
+       let p = prompt("ENTER ACCESS KEY:");
+       if(!p) return;
        
-       if (!p) return;
-
-       // Clean the input (remove spaces)
-       let cleanedInput = p.trim();
-
-       if(cleanedInput === "7742") {
-           // SUCCESS
-           localStorage.removeItem('banned'); 
-           document.getElementById('lock-icon').innerHTML = "🔓";
-           document.getElementById('lock-icon').style.color = "var(--green)";
-           
-           setTimeout(() => {
-               window.location.href = "NexusPro.html";
-           }, 500);
+       if(p.trim() === "7742") {
+           localStorage.removeItem('banned');
+           document.getElementById('lock-icon').innerText = "🔓";
+           setTimeout(() => { window.location.href = "NexusPro.html"; }, 500);
        } else {
-           // FAIL
-           attempts++;
-           const log = document.getElementById('security-log');
-           log.innerHTML = `<span style="color:var(--red)">> ERROR: INVALID KEY (${attempts}/${MAX_ATTEMPTS})</span><br>` + log.innerHTML;
-           
-           if(attempts >= MAX_ATTEMPTS) {
-               localStorage.setItem('banned', 'true');
-               applyBan();
-           } else {
-               alert("INVALID ACCESS KEY. ACCESS DENIED.");
-           }
+           alert("INVALID KEY.");
+           // We won't ban immediately here to give you room to fix it
        }
    }
 
-   function applyBan() {
-       document.getElementById('main-frame').classList.add('banned');
-       document.getElementById('status-text').innerText = "LOCKED";
-       document.getElementById('status-pulse').style.background = "var(--red)";
-       document.getElementById('threat-level').innerText = "LEVEL: CRITICAL";
-   }
-
-   // Canvas Matrix logic...
+   // 5. Canvas Animation
    const canvas = document.getElementById('bg-canvas');
    const ctx = canvas.getContext('2d');
-   function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-   window.addEventListener('resize', resize); resize();
-   const characters = "01"; const fontSize = 14; const columns = canvas.width / fontSize;
+   canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+   const columns = canvas.width / 14;
    const drops = Array(Math.floor(columns)).fill(1);
    function draw() {
-       ctx.fillStyle = "rgba(2, 6, 23, 0.15)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-       ctx.fillStyle = localStorage.getItem('banned') === 'true' ? "#ff0000" : "#fcc201";
-       ctx.font = fontSize + "px monospace";
-       for (let i = 0; i < drops.length; i++) {
-           const text = characters.charAt(Math.floor(Math.random() * characters.length));
-           ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-           if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+       ctx.fillStyle = "rgba(2, 6, 23, 0.1)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+       ctx.fillStyle = "#fcc201";
+       for(let i=0; i<drops.length; i++) {
+           ctx.fillText(Math.floor(Math.random()*2), i*14, drops[i]*14);
+           if(drops[i]*14 > canvas.height && Math.random() > 0.975) drops[i] = 0;
            drops[i]++;
        }
    }
    setInterval(draw, 50);
 </script>
+</body>
+</html>
