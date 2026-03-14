@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="author" content="Edgar Wameyo">
+    <meta name="copyright" content="Edgar Wameyo 2026">
+    <meta name="version" content="DTO-Nexus-360-Proprietary">
+    <meta name="description" content="Nexus 360 IoT Security Governance Node">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NEXUS 360 | PRO TERMINAL</title>
@@ -30,6 +35,9 @@
         .top-row { display: flex; justify-content: space-between; font-size: 12px; color: #94a3b8; margin-bottom: 15px; font-family: monospace; }
         .btn { padding: 18px; border-radius: 12px; cursor: pointer; color: white; font-weight: bold; width: 100%; margin: 8px 0; border: none; font-size: 16px; text-transform: uppercase; }
         .log-box { background: #0f172a; border-radius: 10px; padding: 10px; margin-top: 20px; height: 60px; font-size: 11px; color: #64748b; overflow-y: auto; text-align: left; border-left: 3px solid var(--gold); }
+        
+        /* PROPRIETARY FOOTER */
+        .footer-shield { font-size: 9px; color: #475569; margin-top: 20px; text-transform: uppercase; letter-spacing: 1px; }
     </style>
 </head>
 <body>
@@ -39,6 +47,7 @@
         <h2 style="color: var(--gold); margin: 0;">NEXUS SECURE</h2>
         <input type="password" id="pinInput" maxlength="4" placeholder="••••">
         <button class="btn" style="background: var(--gold); color: black;" onclick="verifyAccess()">AUTHORIZE</button>
+        <div class="footer-shield">IP of Edgar Wameyo © 2026</div>
     </div>
 
     <div id="main-dashboard" class="hidden">
@@ -56,13 +65,13 @@
         <button class="btn" style="background: #15803d;" onclick="publish('DISARM')">DISARM HUB</button>
         
         <div class="log-box" id="event-log"></div>
+        <div class="footer-shield" style="margin-top:15px;">Proprietary DTO Node | Federal Protection Active</div>
     </div>
 
     <script>
         const SECRET_PIN = "1187";
         let client;
 
-        // THE CLOCK LOGIC
         function updateClock() {
             const now = new Date();
             document.getElementById('digital-clock').innerText = now.toLocaleTimeString();
