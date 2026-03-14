@@ -2,56 +2,225 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>FINTECH GOVERNANCE | EDGAR WAMEYO</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono&display=swap');
-        :root { --blue: #3b82f6; --gold: #fcc201; --bg: #020617; }
-        body { background: var(--bg); color: #fff; font-family: 'JetBrains Mono', monospace; margin: 0; overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
-        header { padding: 20px; border-bottom: 2px solid var(--blue); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.8); }
-        .dashboard { flex: 1; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; padding: 40px; align-items: center; }
-        .card { background: rgba(30, 41, 59, 0.4); border: 1px solid var(--blue); border-radius: 20px; padding: 30px; text-align: center; box-shadow: 0 0 30px rgba(59, 130, 246, 0.1); }
-        .val { font-family: 'Orbitron'; font-size: 2.8rem; color: var(--gold); margin: 15px 0; }
-        .chart-engine { display: flex; align-items: flex-end; justify-content: center; height: 100px; gap: 8px; margin-top: 20px; }
-        .chart-bar { width: 15px; background: var(--blue); transition: height 0.6s ease; border-radius: 3px 3px 0 0; }
-        .back-btn { color: var(--gold); text-decoration: none; border: 1px solid var(--gold); padding: 10px 20px; border-radius: 5px; font-family: 'Orbitron'; font-size: 0.75rem; }
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        :root { 
+            --blue: #00d2ff; 
+            --gold: #fcc201; 
+            --bg: #010409; 
+            --neon-green: #39ff14;
+            --glass: rgba(15, 23, 42, 0.8);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
+
+        body { 
+            background: var(--bg); 
+            color: #fff; 
+            font-family: 'JetBrains Mono', monospace; 
+            height: 100vh; 
+            overflow: hidden; 
+            display: flex; 
+            flex-direction: column;
+            background-image: 
+                linear-gradient(rgba(0, 210, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 210, 255, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        /* --- Global Tickers --- */
+        .ticker-container {
+            background: rgba(0,0,0,0.9);
+            border-bottom: 1px solid var(--blue);
+            padding: 5px 0;
+            font-size: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            z-index: 100;
+        }
+
+        .ticker-content {
+            display: inline-block;
+            animation: tickerScroll 40s linear infinite;
+            color: var(--blue);
+        }
+
+        @keyframes tickerScroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* --- Header --- */
+        header { 
+            padding: 15px 25px; 
+            border-bottom: 1px solid rgba(0, 210, 255, 0.3); 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            backdrop-filter: blur(10px);
+        }
+
+        .header-left h2 { font-family: 'Orbitron'; letter-spacing: 3px; font-weight: 900; }
+        .live-data { font-size: 10px; color: var(--gold); text-transform: uppercase; }
+
+        /* --- Main Dashboard --- */
+        .dashboard { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column;
+            padding: 20px; 
+            gap: 20px;
+            overflow-y: auto;
+        }
+
+        .hero-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card { 
+            background: var(--glass); 
+            border: 1px solid rgba(0, 210, 255, 0.2); 
+            border-radius: 4px; 
+            padding: 20px; 
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: ""; position: absolute; top:0; left:0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--blue), transparent);
+        }
+
+        .val { font-family: 'Orbitron'; font-size: 2.2rem; color: var(--gold); margin: 10px 0; font-weight: 900; text-shadow: 0 0 15px rgba(252, 194, 1, 0.3); }
+
+        /* --- Live Process Flow --- */
+        .process-flow-container {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(0, 210, 255, 0.1);
+            height: 200px;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        /* --- Buttons --- */
+        .back-btn { 
+            color: #fff; text-decoration: none; border: 1px solid #fff; 
+            padding: 8px 15px; font-family: 'Orbitron'; font-size: 10px; 
+            transition: 0.3s;
+        }
+        .back-btn:hover { background: #fff; color: #000; }
+
+        /* Mobile Optimization */
+        @media (max-width: 600px) {
+            .val { font-size: 1.8rem; }
+            .dashboard { padding: 10px; }
+            header { padding: 10px; }
+        }
     </style>
 </head>
 <body>
-    <header>
-        <div><h2 style="font-family:'Orbitron'; color:var(--blue); margin:0;">FINTECH NODE</h2><small>VELOCITY & LIQUIDITY</small></div>
-        <a href="index.html" class="back-btn">RETURN TO HUB</a>
-    </header>
-    <main class="dashboard">
-        <div class="card">
-            <div style="color:var(--blue); font-weight:bold;">TRANSACTION VELOCITY</div>
-            <div id="tps-val" class="val">1,240 TPS</div>
-            <div class="chart-engine" id="tps-chart"></div>
+
+    <div class="ticker-container">
+        <div class="ticker-content" id="market-ticker">
+            BTC/USD: $94,231.40 (+1.2%) | ETH/USD: $2,451.10 (-0.4%) | XAU/USD: $2,654.20 | GLOBAL LIQUIDITY: STABLE | VELOCITY INDEX: 0.984 | LATENCY: 8ms
         </div>
-        <div class="card">
-            <div style="color:var(--blue); font-weight:bold;">LIQUIDITY RATIO</div>
-            <div id="liq-val" class="val">1.84</div>
-            <div class="chart-engine" id="liq-chart"></div>
+    </div>
+
+    <header>
+        <div class="header-left">
+            <h2 style="color:var(--blue);">FINTECH NODE</h2>
+            <div class="live-data">Coord: 1.28°N, 36.82°E | System: v1.0.4-PRO</div>
+        </div>
+        <div style="text-align: right;">
+            <div id="live-clock" style="font-family:'Orbitron'; font-size: 1.2rem; color: #fff;">00:00:00</div>
+            <a href="index.html" class="back-btn">RETURN TO HUB</a>
+        </div>
+    </header>
+
+    <main class="dashboard">
+        <div class="card" style="flex: 0 0 auto;">
+            <div style="font-size: 10px; color: var(--blue); margin-bottom: 10px;">LIVE TRANSACTION FLOW (NEURAL NETWORK)</div>
+            <div class="process-flow-container" id="flow-box">
+                <svg width="100%" height="100%" id="flow-svg">
+                    </svg>
+            </div>
+        </div>
+
+        <div class="hero-row">
+            <div class="card">
+                <div style="color:var(--blue); font-size: 11px;">TRANSACTION VELOCITY</div>
+                <div id="tps-val" class="val">1,240 TPS</div>
+                <div id="velocity-status" style="font-size: 10px; color: var(--neon-green);">● SYSTEM NOMINAL</div>
+            </div>
+
+            <div class="card">
+                <div style="color:var(--blue); font-size: 11px;">LIQUIDITY RATIO (USD/KES)</div>
+                <div id="liq-val" class="val">1.84</div>
+                <div style="font-size: 10px; color: var(--gold);">ASSET UTILIZATION: 94.2%</div>
+            </div>
         </div>
     </main>
+
+    <div class="ticker-container" style="border-top: 1px solid var(--blue); border-bottom: none;">
+        <div class="ticker-content" style="animation-direction: reverse;">
+            LSSBB PROTOCOLS ACTIVE... SECURE DATA FLOW VERIFIED... EDGAR WAMEYO PROPRIETARY SYSTEMS... GLOBAL GOVERNANCE MODE ON...
+        </div>
+    </div>
+
     <script>
-        function createBars(id) {
-            const container = document.getElementById(id);
-            for(let i=0; i<10; i++) {
-                let bar = document.createElement('div');
-                bar.className = 'chart-bar';
-                container.appendChild(bar);
-            }
+        // --- Live Clock ---
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('live-clock').innerText = now.toLocaleTimeString();
         }
-        createBars('tps-chart'); createBars('liq-chart');
-        function update() {
-            let tps = (1200 + Math.floor(Math.random() * 400));
-            let liq = (1.80 + Math.random() * 0.15).toFixed(2);
+        setInterval(updateClock, 1000);
+
+        // --- Live Stats ---
+        function updateStats() {
+            let tps = (1400 + Math.floor(Math.random() * 200));
+            let liq = (1.82 + Math.random() * 0.08).toFixed(4);
             document.getElementById('tps-val').innerText = tps.toLocaleString() + " TPS";
             document.getElementById('liq-val').innerText = liq;
-            document.querySelectorAll('.chart-bar').forEach(b => b.style.height = (20 + Math.random()*80) + "%");
         }
-        setInterval(update, 1800); update();
+        setInterval(updateStats, 2000);
+
+        // --- Live Process Flow Animation ---
+        const svg = document.getElementById('flow-svg');
+        function createPacket() {
+            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            const startY = Math.random() * 200;
+            const endY = Math.random() * 200;
+            
+            circle.setAttribute("cx", "0%");
+            circle.setAttribute("cy", startY);
+            circle.setAttribute("r", "2");
+            circle.setAttribute("fill", "#00d2ff");
+            svg.appendChild(circle);
+
+            let pos = 0;
+            const interval = setInterval(() => {
+                pos += 1;
+                circle.setAttribute("cx", pos + "%");
+                // slight curve
+                circle.setAttribute("cy", startY + (endY - startY) * (pos/100));
+                
+                if (pos >= 100) {
+                    clearInterval(interval);
+                    svg.removeChild(circle);
+                }
+            }, 30);
+        }
+        setInterval(createPacket, 400);
+
+        // Ensure resizing works
+        window.addEventListener('resize', () => {
+            // SVG handles percentage well, no extra JS needed.
+        });
     </script>
 </body>
 </html>
