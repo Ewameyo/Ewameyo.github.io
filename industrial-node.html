@@ -1,49 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="author" content="Edgar Wameyo">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASSET NODE | EDGAR WAMEYO</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ASSET GOVERNANCE | EDGAR WAMEYO</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=JetBrains+Mono&display=swap');
-        :root { --gold: #fcc201; --bg: #020617; }
-        body { background: var(--bg); color: #fff; font-family: 'JetBrains Mono', monospace; margin: 0; overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
-        header { padding: 20px; border-bottom: 2px solid var(--gold); display: flex; justify-content: space-between; align-items: center; }
-        main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px; }
-        .card { width: 100%; max-width: 500px; background: rgba(30, 41, 59, 0.4); border: 1px solid var(--gold); border-radius: 20px; padding: 40px; text-align: center; }
-        .val { font-family: 'Orbitron'; font-size: 4rem; color: var(--gold); margin: 20px 0; }
-        .bar-container { display: flex; align-items: flex-end; justify-content: space-between; height: 120px; margin-top: 30px; }
-        .bar { width: 18%; background: var(--gold); transition: height 0.5s ease; }
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        :root { 
+            --gold: #fcc201; 
+            --bg: #010409; 
+            --dim-gold: rgba(252, 194, 1, 0.1);
+            --border: rgba(252, 194, 1, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body { 
+            background: var(--bg); 
+            color: #fff; 
+            font-family: 'JetBrains Mono', monospace; 
+            height: 100vh; 
+            width: 100vw;
+            overflow: hidden; 
+            display: flex; 
+            flex-direction: column;
+            background-image: radial-gradient(circle at 50% 50%, #0c1117 0%, #010409 100%);
+        }
+
+        /* --- High Frequency Ticker --- */
+        .telemetry-ticker {
+            background: rgba(0,0,0,0.9);
+            border-bottom: 1px solid var(--gold);
+            color: var(--gold);
+            font-size: 10px;
+            padding: 8px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            font-family: 'Orbitron';
+        }
+
+        .ticker-inner {
+            display: inline-block;
+            animation: slide 30s linear infinite;
+        }
+
+        @keyframes slide {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* --- Header Section --- */
+        header { 
+            padding: 20px 30px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+        }
+
+        .node-title h2 { font-family: 'Orbitron'; font-weight: 900; letter-spacing: 4px; color: var(--gold); }
+        
+        /* --- Live Process Canvas --- */
+        .main-frame {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .telemetry-card {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(13, 17, 23, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 30px;
+            position: relative;
+        }
+
+        .load-display {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .val { 
+            font-family: 'Orbitron'; 
+            font-size: 4rem; 
+            color: var(--gold); 
+            font-weight: 900;
+            text-shadow: 0 0 20px rgba(252, 194, 1, 0.4);
+        }
+
+        #process-wave {
+            width: 100%;
+            height: 150px;
+            border-top: 1px solid var(--dim-gold);
+            border-bottom: 1px solid var(--dim-gold);
+        }
+
+        .btn-hub {
+            color: var(--gold);
+            text-decoration: none;
+            border: 1px solid var(--gold);
+            padding: 10px 20px;
+            font-family: 'Orbitron';
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .btn-hub:hover { background: var(--gold); color: #000; }
+
+        /* Mobile Optimization */
+        @media (max-width: 600px) {
+            .val { font-size: 2.5rem; }
+            header { padding: 15px; flex-direction: column; gap: 10px; }
+            .telemetry-card { padding: 15px; }
+        }
     </style>
 </head>
 <body>
+
+    <div class="telemetry-ticker">
+        <div class="ticker-inner">
+            ASSET_UTILIZATION: STABLE | PREDICTIVE_LOAD: 94.2% | NODE_ID: EDGAR-WAMEYO-PREDICTIVE-01 | THERMAL: 34°C | LATENCY: 0.002ms | SYSTEM_STATUS: NOMINAL
+        </div>
+    </div>
+
     <header>
-        <h2 style="font-family:'Orbitron'; color:var(--gold); margin:0;">ASSET GOVERNANCE</h2>
-        <a href="index.html" style="color:var(--gold); text-decoration:none; border:1px solid var(--gold); padding:8px 15px; border-radius:5px;">HUB</a>
+        <div class="node-title">
+            <h2>ASSET GOVERNANCE</h2>
+            <div style="font-size: 9px; color: #888; letter-spacing: 2px;">PREDICTIVE ANALYTICS ENGINE</div>
+        </div>
+        <div style="text-align: right;">
+            <div id="live-clock" style="font-family:'Orbitron'; font-size: 1.4rem; color: #fff; margin-bottom: 5px;">00:00:00</div>
+            <a href="index.html" class="btn-hub">RETURN TO HUB</a>
+        </div>
     </header>
-    <main>
-        <div class="card">
-            <div style="letter-spacing:2px;">UTILIZATION LOAD</div>
-            <div id="load-num" class="val">42%</div>
-            <div class="bar-container">
-                <div class="bar" style="height: 40%"></div>
-                <div class="bar" style="height: 60%"></div>
-                <div class="bar" style="height: 30%"></div>
-                <div class="bar" style="height: 80%"></div>
-                <div class="bar" style="height: 50%"></div>
+
+    <main class="main-frame">
+        <div class="telemetry-card">
+            <div class="load-display">
+                <div style="font-size: 12px; color: var(--gold); letter-spacing: 3px;">UTILIZATION LOAD</div>
+                <div style="font-size: 10px; color: #555;">REAL-TIME FLOW</div>
+            </div>
+            
+            <div id="load-num" class="val">00%</div>
+
+            <canvas id="process-wave"></canvas>
+
+            <div style="display: flex; justify-content: space-between; margin-top: 20px; font-size: 9px; color: var(--gold);">
+                <span>FRAME_SECURE: YES</span>
+                <span>UPLINK: ACTIVE</span>
+                <span>ENCRYPTION: AES-256</span>
             </div>
         </div>
     </main>
+
     <script>
-        setInterval(() => {
-            let lastVal = 0;
-            document.querySelectorAll('.bar').forEach(bar => {
-                let h = 20 + Math.floor(Math.random() * 75);
-                bar.style.height = h + "%";
-                lastVal = h;
-            });
-            document.getElementById('load-num').innerText = lastVal + "%";
-        }, 2000);
+        // --- Live High-Precision Clock ---
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('live-clock').innerText = now.toLocaleTimeString();
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // --- Live Waveform Animation ---
+        const canvas = document.getElementById('process-wave');
+        const ctx = canvas.getContext('2d');
+        let offset = 0;
+
+        function resize() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        function drawWave() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.strokeStyle = '#fcc201';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+
+            for (let x = 0; x < canvas.width; x++) {
+                // Wave logic for Starlink style telemetry
+                const y = (canvas.height / 2) + 
+                          Math.sin(x * 0.02 + offset) * 20 + 
+                          Math.sin(x * 0.01 + offset * 0.5) * 10;
+                if (x === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+            
+            // Percentage update logic
+            const currentLoad = Math.floor(60 + Math.sin(offset) * 20);
+            document.getElementById('load-num').innerText = currentLoad + "%";
+
+            offset += 0.05;
+            requestAnimationFrame(drawWave);
+        }
+        drawWave();
     </script>
 </body>
 </html>
