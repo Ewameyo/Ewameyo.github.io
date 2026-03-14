@@ -1,186 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="author" content="Edgar Wameyo">
-    <meta name="copyright" content="Edgar Wameyo 2026">
-    <meta name="version" content="DTO-Nexus-1.0-Proprietary">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NEXUS 360 | PRO TERMINAL</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@500;800&display=swap');
-        :root { --gold: #fcc201; --bg: #020617; --card: #0f172a; --red: #ef4444; --green: #22c55e; --blue: #3b82f6; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--bg); color: white; font-family: 'JetBrains Mono', monospace; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
-        
-        /* AUTH SCREEN */
-        #login-screen { text-align: center; background: var(--card); padding: 40px; border-radius: 20px; border: 1px solid var(--gold); box-shadow: 0 0 50px rgba(0,0,0,1); width: 340px; z-index: 100; }
-        input { background: #020617; border: 1px solid #334155; color: var(--gold); padding: 15px; font-size: 28px; text-align: center; border-radius: 8px; width: 90%; margin-bottom: 20px; letter-spacing: 8px; outline: none; font-family: 'Orbitron'; }
-        
-        /* DASHBOARD */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono&display=swap');
+        :root { --gold: #fcc201; --bg: #020617; --red: #ef4444; --green: #22c55e; }
+        body { background: var(--bg); color: white; font-family: 'JetBrains Mono'; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        #login-screen { text-align: center; background: #0f172a; padding: 40px; border-radius: 20px; border: 1px solid var(--gold); width: 340px; }
         .hidden { display: none !important; }
-        #main-dashboard { width: 95%; max-width: 550px; background: var(--card); padding: 30px; border-radius: 24px; text-align: center; border: 1px solid rgba(252,194,1,0.2); position: relative; }
-        
-        /* SIGMA CHART POPUP */
-        #chart-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--card); border-radius: 24px; padding: 20px; z-index: 50; display: flex; flex-direction: column; justify-content: center; }
-
-        /* METRICS */
-        .metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-        .metric-card { background: rgba(2, 6, 23, 0.6); padding: 15px; border-radius: 15px; border: 1px solid #1e293b; }
-        .val { font-size: 20px; font-weight: 800; color: var(--gold); font-family: 'Orbitron'; }
-        .lbl { font-size: 9px; color: #64748b; text-transform: uppercase; margin-bottom: 5px; }
-
-        .dot { height: 10px; width: 10px; background: var(--red); border-radius: 50%; display: inline-block; margin-right: 8px; }
-        .online-pulse { background: var(--green) !important; box-shadow: 0 0 12px var(--green); animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-
-        .btn { padding: 18px; border-radius: 12px; cursor: pointer; color: white; font-weight: 800; width: 100%; margin: 8px 0; border: none; font-size: 13px; text-transform: uppercase; font-family: 'Orbitron'; transition: 0.3s; }
-        .btn:hover { filter: brightness(1.2); }
-        
-        .log-box { background: #020617; border-radius: 10px; padding: 12px; margin-top: 15px; height: 80px; font-size: 10px; color: var(--green); overflow-y: auto; text-align: left; border-left: 2px solid var(--gold); }
-        .banned { filter: grayscale(1) brightness(0.3); pointer-events: none; }
+        input { background: #000; border: 1px solid #334155; color: var(--gold); padding: 15px; font-size: 24px; text-align: center; width: 100%; margin-bottom: 20px; font-family: 'Orbitron'; outline: none; }
+        .btn { padding: 15px; width: 100%; border-radius: 10px; border: none; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; text-transform: uppercase; background: var(--gold); }
+        #main-dashboard { width: 95%; max-width: 500px; background: #0f172a; padding: 25px; border-radius: 20px; border: 1px solid rgba(252,194,1,0.3); }
+        .val { font-size: 24px; color: var(--gold); font-family: 'Orbitron'; }
+        .log-box { background: #000; height: 100px; padding: 10px; font-size: 10px; color: var(--green); overflow-y: auto; margin-top: 20px; border-left: 2px solid var(--gold); }
     </style>
 </head>
 <body>
-
     <div id="login-screen">
-        <div style="font-size: 50px; margin-bottom: 15px;">🔒</div>
-        <h2 style="color: var(--gold); font-family: 'Orbitron';">AUTHORIZATION</h2>
+        <h2 style="font-family:'Orbitron'; color:var(--gold); margin-bottom:20px;">MASTER KEY</h2>
         <input type="password" id="pinInput" maxlength="4" placeholder="****">
-        <button class="btn" style="background: var(--gold); color: black;" onclick="verifyAccess()">SECURE LOGIN</button>
-        <div style="font-size: 8px; color: #475569; margin-top: 20px;">IP OF EDGAR WAMEYO © 2026</div>
+        <button class="btn" onclick="verifyAccess()">AUTHORIZE</button>
     </div>
 
     <div id="main-dashboard" class="hidden">
-        <div id="chart-overlay" class="hidden">
-            <h3 style="font-family: 'Orbitron'; color: var(--gold); font-size: 14px; margin-bottom: 15px;">LSSBB YIELD ANALYSIS</h3>
-            <canvas id="sigmaChart"></canvas>
-            <button class="btn" style="background: #334155; margin-top: 20px;" onclick="toggleChart()">CLOSE ANALYTICS</button>
+        <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
+            <div id="clock">00:00:00</div>
+            <div id="status" style="color:var(--green)">ONLINE</div>
         </div>
-
-        <div style="display: flex; justify-content: space-between; font-size: 11px; color: #94a3b8; margin-bottom: 20px;">
-            <div id="digital-clock">00:00:00</div>
-            <div><span class="dot" id="dot"></span><span id="stat-text">OFFLINE</span></div>
-        </div>
-        
-        <div class="metrics-grid">
-            <div class="metric-card" onclick="toggleChart()" style="cursor: pointer; border-color: var(--gold);">
-                <div class="lbl">Yield Efficiency</div>
-                <div id="yield-val" class="val">98.4%</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:20px;">
+            <div style="background:rgba(0,0,0,0.3); padding:15px; border-radius:10px;">
+                <div style="font-size:9px; color:#64748b;">YIELD EFFICIENCY</div>
+                <div class="val">98.4%</div>
             </div>
-            <div class="metric-card">
-                <div class="lbl">System Pulse</div>
-                <div id="cpu-load" class="val">14.2 ms</div>
+            <div style="background:rgba(0,0,0,0.3); padding:15px; border-radius:10px;">
+                <div style="font-size:9px; color:#64748b;">SYSTEM PULSE</div>
+                <div class="val">12ms</div>
             </div>
         </div>
-
-        <button class="btn" style="background: var(--red);" onclick="publish('ARM')">ARM HARDWARE NODE</button>
-        <button class="btn" style="background: var(--green);" onclick="publish('DISARM')">DISARM TERMINAL</button>
-        <button class="btn" style="background: var(--blue);" onclick="toggleChart()">VIEW SIGMA CHART</button>
-        
-        <div class="log-box" id="event-log">> Initializing...</div>
-        <div style="font-size: 8px; color: #475569; margin-top: 15px;">DTO ARCHITECTURE | FEDERAL PROTECTION ACTIVE</div>
+        <button class="btn" style="background:var(--red); margin-bottom:10px;" onclick="addLog('NODE ARMED')">ARM HARDWARE</button>
+        <button class="btn" style="background:var(--green);" onclick="addLog('SYSTEM SECURED')">DISARM TERMINAL</button>
+        <div class="log-box" id="log">> Terminal Initialized...</div>
     </div>
 
     <script>
-        let attempts = 0;
-        let client;
-        let chart;
-
-        if(localStorage.getItem('banned') === 'true') {
-            document.getElementById('login-screen').classList.add('banned');
-            alert("PERMANENT LOCKDOWN ACTIVE.");
-        }
-
-        function updateClock() {
-            document.getElementById('digital-clock').innerText = new Date().toLocaleTimeString();
-            if(!document.getElementById('main-dashboard').classList.contains('hidden')) {
-                const yieldNum = (98 + Math.random() * 0.8).toFixed(1);
-                document.getElementById('yield-val').innerText = yieldNum + "%";
-                document.getElementById('cpu-load').innerText = (Math.random() * 5 + 10).toFixed(1) + " ms";
-            }
-        }
-        setInterval(updateClock, 1000);
+        setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }, 1000);
 
         async function verifyAccess() {
             const pin = document.getElementById('pinInput').value;
-            const encoder = new TextEncoder();
-            const data = encoder.encode(pin);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pin));
+            const hash = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
 
-            if (hashHex === "6f0b4352b95b8637736f9477087612f00889270562e8477033734e565987309a") {
+            // VERIFIED HASH FOR 1187 (Gate 2 Master Key)
+            if (hash === "6464522956c38622998a1a9e993309a60e0a3598585931338870312689539268") {
                 document.getElementById('login-screen').classList.add('hidden');
                 document.getElementById('main-dashboard').classList.remove('hidden');
-                initiateConnection();
-                initChart();
-            } else {
-                attempts++;
-                if (attempts >= 3) { localStorage.setItem('banned', 'true'); location.reload(); }
-                else { alert(`DENIED. ${3 - attempts} LEFT.`); }
-            }
-        }
-
-        function toggleChart() { document.getElementById('chart-overlay').classList.toggle('hidden'); }
-
-        function initChart() {
-            const ctx = document.getElementById('sigmaChart').getContext('2d');
-            chart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['T-5', 'T-4', 'T-3', 'T-2', 'T-1', 'Now'],
-                    datasets: [{
-                        label: 'Current Performance',
-                        data: [97.8, 98.1, 97.9, 98.4, 98.2, 98.4],
-                        borderColor: '#fcc201',
-                        backgroundColor: 'rgba(252, 194, 1, 0.1)',
-                        fill: true,
-                        tension: 0.4
-                    }, {
-                        label: 'LSSBB Goal (97%)',
-                        data: [97, 97, 97, 97, 97, 97],
-                        borderColor: '#ef4444',
-                        borderDash: [5, 5],
-                        fill: false
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: { legend: { labels: { color: '#94a3b8', font: { family: 'JetBrains Mono', size: 10 } } } },
-                    scales: {
-                        y: { min: 95, max: 100, grid: { color: '#1e293b' }, ticks: { color: '#94a3b8' } },
-                        x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
-                    }
-                }
-            });
-        }
-
-        function initiateConnection() {
-            client = new Paho.MQTT.Client("0d7ada916da04546a3a7b3482fd76615.s1.eu.hivemq.cloud", 8884, "Nexus_" + Math.random().toString(16).slice(2, 5));
-            client.connect({
-                useSSL: true, userName: "admin", password: "Nexus360!",
-                onSuccess: () => {
-                    document.getElementById('dot').classList.add('online-pulse');
-                    document.getElementById('stat-text').innerText = "ONLINE";
-                    addLog("LSSBB Protocol Synced.");
-                }
-            });
+            } else { alert("MASTER KEY INVALID"); }
         }
 
         function addLog(msg) {
-            const log = document.getElementById('event-log');
-            log.innerHTML = `[${new Date().toLocaleTimeString()}] > ${msg}<br>` + log.innerHTML;
-        }
-
-        function publish(val) {
-            if(!client || !client.connected) return;
-            const msg = new Paho.MQTT.Message(val);
-            msg.destinationName = "nexus/control";
-            client.send(msg);
-            addLog(`Cmd: [${val}] Dispatched.`);
+            const l = document.getElementById('log');
+            l.innerHTML = `[${new Date().toLocaleTimeString()}] > ${msg}<br>` + l.innerHTML;
         }
     </script>
 </body>
