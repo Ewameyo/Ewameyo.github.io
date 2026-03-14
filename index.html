@@ -1,145 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="author" content="Edgar Wameyo">
-  <meta name="copyright" content="Edgar Wameyo 2026">
-  <meta name="version" content="DTO-Nexus-1.0-Proprietary">
-  <meta name="description" content="Proprietary Digital Twin Organization (DTO) Command Center by Edgar Wameyo.">
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EDGAR WAMEYO | COMMAND CENTER</title>
   <style>
-      @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@500;800&display=swap');
-      :root { --gold: #fcc201; --bg: #020617; --green: #22c55e; --red: #ef4444; --silver: #e2e8f0; }
+      @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono:wght@500&display=swap');
+      :root { --gold: #fcc201; --bg: #020617; --green: #22c55e; --red: #ef4444; }
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      body, html { width: 100%; height: 100%; overflow: hidden; background: var(--bg); display: flex; justify-content: center; align-items: center; }
+      body, html { width: 100%; height: 100%; overflow: hidden; background: var(--bg); display: flex; justify-content: center; align-items: center; font-family: 'Orbitron', sans-serif; }
       #bg-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; }
-      .ticker-wrap { position: fixed; top: 0; width: 100%; background: rgba(0,0,0,0.9); border-bottom: 1px solid var(--gold); overflow: hidden; z-index: 100; }
-      .ticker { display: inline-block; white-space: nowrap; animation: ticker 30s linear infinite; color: var(--gold); font-size: 0.8rem; padding: 12px 0; font-family: 'JetBrains Mono'; }
-      @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-      .terminal-frame { width: 95%; max-width: 500px; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(252, 194, 1, 0.4); border-radius: 20px; padding: 25px; box-shadow: 0 0 80px rgba(0,0,0,1); backdrop-filter: blur(15px); z-index: 10; display: flex; flex-direction: column; }
-      .header-status { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.6); padding: 10px 15px; border-bottom: 2px solid var(--gold); border-radius: 12px; margin-bottom: 15px; }
-      #clock { font-size: 1.4rem; font-weight: 800; color: #fff; text-shadow: 0 0 15px var(--gold); font-family: 'Orbitron'; }
-      .pulse { width: 10px; height: 10px; background: var(--green); border-radius: 50%; display: inline-block; margin-right: 8px; animation: blink 1.2s infinite; box-shadow: 0 0 20px var(--green); }
-      .name-header { font-family: 'Orbitron'; font-size: 1.8rem; margin: 0; color: #ffffff; text-shadow: 0 0 20px rgba(255, 255, 255, 0.4); letter-spacing: 2px; text-align: center; }
-      .node { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 18px; border-radius: 12px; text-decoration: none; color: white; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; transition: 0.3s ease; font-family: 'Orbitron'; cursor: pointer; }
-      .node:hover { border-color: var(--gold); background: rgba(252, 194, 1, 0.1); transform: translateX(5px); }
-      .node-detail { font-size: 0.65rem; color: var(--silver); font-weight: 500; letter-spacing: 0.5px; margin-top: 2px; display: block; }
-      #security-flow-monitor { background: rgba(0,0,0,0.4); border: 1px solid var(--red); border-radius: 12px; padding: 12px; margin-top: 10px; font-family: 'JetBrains Mono'; }
-      .threat-header { display: flex; justify-content: space-between; font-size: 0.6rem; color: var(--red); margin-bottom: 8px; font-weight: 800; }
-      .traffic-bar { display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.5); padding: 8px; border-radius: 5px; }
-      .log-area { font-size: 0.55rem; color: var(--green); margin-top: 8px; height: 35px; overflow: hidden; line-height: 1.2; }
-      .signature-footer { position: fixed; bottom: 0; width: 100%; background: #ff0000; color: #fff; padding: 10px 0; text-align: center; font-family: 'Orbitron'; font-weight: 900; font-size: 0.7rem; z-index: 1000; border-top: 2px solid #fff; }
-      @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+      
+      .terminal-frame { 
+          width: 95%; max-width: 450px; background: rgba(15, 23, 42, 0.95); 
+          border: 2px solid var(--gold); border-radius: 20px; padding: 30px; 
+          box-shadow: 0 0 50px rgba(0,0,0,0.8); z-index: 10; text-align: center;
+      }
+
+      .node { 
+          background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); 
+          padding: 15px; border-radius: 12px; margin: 10px 0; color: white;
+          display: flex; justify-content: space-between; cursor: pointer; transition: 0.3s;
+      }
+      .node:hover { border-color: var(--gold); background: rgba(252, 194, 1, 0.1); }
+
+      #auth-zone { display: none; margin-top: 15px; }
+      input { 
+          background: #000; border: 1px solid var(--gold); color: var(--gold); 
+          padding: 10px; width: 100%; text-align: center; font-family: 'JetBrains Mono';
+          border-radius: 5px; outline: none;
+      }
+      .error-msg { color: var(--red); font-size: 0.7rem; margin-top: 10px; display: none; }
   </style>
 </head>
 <body>
 
-<div class="ticker-wrap">
-  <div class="ticker">THE HOLY GHOST: SUPREME ARCHITECT & DIVINE SYSTEMS FOUNDER | GLOBAL GOVERNANCE ACTIVE | LSSBB PROTOCOLS: VERIFIED | ISO 20022 READY | ASSET OPTIMIZATION: 99.9% | ARCHITECT: EDGAR WAMEYO</div>
-</div>
-
 <canvas id="bg-canvas"></canvas>
 
 <div class="terminal-frame">
-  <div class="header-status">
-      <div style="font-family:'Orbitron'; font-size: 0.7rem; font-weight: 900; color: var(--green);">
-          <span class="pulse"></span> SYSTEM: ACTIVE
-      </div>
-      <div id="clock">00:00:00</div>
+  <h1 style="color:white; margin-bottom: 5px;">EDGAR WAMEYO</h1>
+  <p style="color:var(--gold); font-size: 0.8rem; margin-bottom: 20px;">SYSTEM ARCHITECT | LSSBB</p>
+
+  <div class="node" onclick="alert('Node Active')"><span>ASSET NODE</span><span>▶</span></div>
+  <div class="node" onclick="alert('Node Active')"><span>FINTECH NODE</span><span>▶</span></div>
+  
+  <div class="node" onclick="showAuth()">
+      <span>MANUFACTURING HUB</span><span id="lock-status">🔒</span>
   </div>
 
-  <div style="text-align:center; margin-bottom: 15px;">
-      <h1 class="name-header">EDGAR WAMEYO</h1>
-      <div style="color:var(--gold); font-size: 0.7rem; font-weight:700; margin-top: 4px; font-family:'Orbitron';">LEAD SYSTEMS ARCHITECT | LSSBB</div>
+  <div id="auth-zone">
+      <input type="password" id="pin-input" placeholder="ENTER KEY" maxlength="4" oninput="checkPin(this.value)">
+      <div id="error" class="error-msg">INVALID ARCHITECT KEY</div>
   </div>
-
-  <div class="node-list">
-      <div class="node" onclick="alert('Asset Node: Active')">
-          <div><b style="font-size: 0.9rem;">ASSET NODE</b><br><span class="node-detail">Predictive Analytics</span></div>
-          <span style="color:var(--gold)">▶</span>
-      </div>
-      <div class="node" onclick="alert('Fintech Node: Active')">
-          <div><b style="font-size: 0.9rem;">FINTECH NODE</b><br><span class="node-detail">Velocity & Liquidity Hub</span></div>
-          <span style="color:var(--gold)">▶</span>
-      </div>
-      <div class="node" onclick="alert('Service Node: Active')">
-          <div><b style="font-size: 0.9rem;">SERVICE NODE</b><br><span class="node-detail">360° Operational Governance</span></div>
-          <span style="color:var(--gold)">▶</span>
-      </div>
-      <div class="node" onclick="unlock()">
-          <div><b style="font-size: 0.9rem;">MANUFACTURING HUB</b><br><span class="node-detail">Secured Hardware Node (v2.0)</span></div>
-          <span id="lock-icon">🔒</span>
-      </div>
-  </div>
-
-  <div id="security-flow-monitor">
-       <div class="threat-header">
-           <span>THREAT DETECTION ACTIVE</span>
-           <span id="threat-level">LEVEL: LOW</span>
-       </div>
-       <div class="traffic-bar">
-           <div style="font-size: 0.5rem; color: #e2e8f0;">TRAFFIC</div>
-           <div style="flex-grow: 1; height: 1px; background: #333; margin: 0 10px; position: relative;">
-                <div id="security-pulse" style="width: 6px; height: 6px; background: var(--green); border-radius: 50%; position: absolute; top: -3px; left: 0;"></div>
-           </div>
-           <div id="gate-visual" style="font-size: 0.8rem; color: white;">🔒</div>
-       </div>
-       <div id="security-log" class="log-area">> Initializing Shield...<br>> Architect Identity Verified.</div>
-  </div>
-</div>
-
-<div class="signature-footer">
-  CONFIDENTIAL & PROPRIETARY | © 2026 EDGAR WAMEYO | ALL RIGHTS RESERVED.
 </div>
 
 <script>
-  function updateClock() { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }
-  setInterval(updateClock, 1000); updateClock();
+  // Show the input field when hub is clicked
+  function showAuth() {
+      document.getElementById('auth-zone').style.display = 'block';
+      document.getElementById('pin-input').focus();
+  }
 
-  function unlock() {
-      localStorage.clear(); // Prevents sticky lockouts
-      let p = prompt("ENTER ARCHITECT KEY:");
-      if (!p) return;
-
-      if(p.trim() === "1187") {
-          const log = document.getElementById('security-log');
-          log.innerHTML = `<span style="color:var(--green)">> ACCESS GRANTED. REDIRECTING...</span><br>` + log.innerHTML;
-          document.getElementById('lock-icon').innerText = "🔓";
-          setTimeout(() => { window.location.href = "NexusPro.html"; }, 800);
-      } else {
-          alert("ACCESS DENIED: PIN 1187 REQUIRED");
+  // Automatic check as you type
+  function checkPin(val) {
+      if (val === "1187") {
+          document.getElementById('lock-status').innerText = "🔓";
+          document.getElementById('pin-input').style.borderColor = "var(--green)";
+          setTimeout(() => {
+              window.location.href = "NexusPro.html";
+          }, 500);
+      } else if (val.length === 4) {
+          document.getElementById('error').style.display = 'block';
+          setTimeout(() => { 
+              document.getElementById('pin-input').value = "";
+              document.getElementById('error').style.display = 'none';
+          }, 1000);
       }
   }
 
-  function runSecurityPulse() {
-      const p = document.getElementById('security-pulse');
-      let pos = 0;
-      setInterval(() => {
-          pos += 2;
-          p.style.left = pos + "%";
-          if (pos >= 100) pos = 0;
-      }, 50);
-  }
-  runSecurityPulse();
-
+  // Background Matrix Effect
   const canvas = document.getElementById('bg-canvas');
   const ctx = canvas.getContext('2d');
-  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-  window.addEventListener('resize', resize); resize();
-  const characters = "01"; const fontSize = 14; const columns = canvas.width / fontSize;
-  const drops = Array(Math.floor(columns)).fill(1);
+  canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+  const drops = Array(Math.floor(canvas.width / 14)).fill(1);
   function draw() {
-      ctx.fillStyle = "rgba(2, 6, 23, 0.15)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "#fcc201"; ctx.font = fontSize + "px monospace";
-      for (let i = 0; i < drops.length; i++) {
-          const text = characters.charAt(Math.floor(Math.random() * characters.length));
-          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+      ctx.fillStyle = "rgba(2, 6, 23, 0.1)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#fcc201";
+      drops.forEach((y, i) => {
+          ctx.fillText(Math.floor(Math.random() * 2), i * 14, y * 14);
+          if (y * 14 > canvas.height && Math.random() > 0.975) drops[i] = 0;
           drops[i]++;
-      }
+      });
   }
   setInterval(draw, 50);
 </script>
+
 </body>
 </html>
