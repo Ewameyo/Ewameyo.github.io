@@ -3,6 +3,9 @@
 <head>
   <meta name="author" content="Edgar Wameyo">
   <meta name="copyright" content="Edgar Wameyo 2026">
+  <meta name="version" content="DTO-Nexus-1.0-Proprietary">
+  <meta name="description" content="Proprietary Digital Twin Organization (DTO) Command Center by Edgar Wameyo. Lead Systems Architect specializing in LSSBB and 97% Operational Excellence.">
+  <meta name="robots" content="index, follow">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>EDGAR WAMEYO | COMMAND CENTER</title>
@@ -16,91 +19,83 @@
       .ticker { display: inline-block; white-space: nowrap; animation: ticker 30s linear infinite; color: var(--gold); font-size: 0.8rem; padding: 12px 0; font-family: 'JetBrains Mono'; }
       @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
       .terminal-frame { width: 95%; max-width: 500px; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(252, 194, 1, 0.4); border-radius: 20px; padding: 25px; box-shadow: 0 0 80px rgba(0,0,0,1); backdrop-filter: blur(15px); z-index: 10; display: flex; flex-direction: column; }
+      .header-status { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.6); padding: 10px 15px; border-bottom: 2px solid var(--gold); border-radius: 12px; margin-bottom: 15px; }
       #clock { font-size: 1.4rem; font-weight: 800; color: #fff; text-shadow: 0 0 15px var(--gold); font-family: 'Orbitron'; }
-      .node { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 18px; border-radius: 12px; text-decoration: none; color: white; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; transition: 0.3s ease; font-family: 'Orbitron'; cursor: pointer; }
+      .pulse { width: 10px; height: 10px; background: var(--green); border-radius: 50%; display: inline-block; margin-right: 8px; animation: blink 1.2s infinite; }
+      .name-header { font-family: 'Orbitron'; font-size: 1.8rem; color: #ffffff; text-align: center; }
+      .node { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 18px; border-radius: 12px; text-decoration: none; color: white; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; transition: 0.3s ease; font-family: 'Orbitron'; }
       .node:hover { border-color: var(--gold); background: rgba(252, 194, 1, 0.1); transform: translateX(5px); }
+      .node-detail { font-size: 0.65rem; color: var(--silver); display: block; }
       #security-flow-monitor { background: rgba(0,0,0,0.4); border: 1px solid var(--red); border-radius: 12px; padding: 12px; margin-top: 10px; font-family: 'JetBrains Mono'; }
-      .log-area { font-size: 0.55rem; color: var(--green); margin-top: 8px; height: 35px; overflow: hidden; }
+      .log-area { font-size: 0.55rem; color: var(--green); margin-top: 8px; height: 30px; overflow: hidden; }
       .signature-footer { position: fixed; bottom: 0; width: 100%; background: #ff0000; color: #fff; padding: 10px 0; text-align: center; font-family: 'Orbitron'; font-weight: 900; font-size: 0.7rem; z-index: 1000; border-top: 2px solid #fff; }
+      @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
   </style>
 </head>
 <body>
 
 <div class="ticker-wrap">
-  <div class="ticker">GLOBAL GOVERNANCE ACTIVE | ARCHITECT: EDGAR WAMEYO | DTO NEXUS v1.0 | LSSBB CERTIFIED</div>
+  <div class="ticker">THE HOLY GHOST: SUPREME ARCHITECT & DIVINE SYSTEMS FOUNDER | GLOBAL GOVERNANCE ACTIVE | LSSBB PROTOCOLS: VERIFIED | ISO 20022 READY | ASSET OPTIMIZATION: 99.9% | ARCHITECT: EDGAR WAMEYO</div>
 </div>
 
 <canvas id="bg-canvas"></canvas>
 
 <div class="terminal-frame">
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-      <div style="font-family:'Orbitron'; font-size: 0.7rem; color: var(--green);">● SYSTEM: ACTIVE</div>
+  <div class="header-status">
+      <div style="font-family:'Orbitron'; font-size: 0.7rem; font-weight: 900; color: var(--green);"><span class="pulse"></span> SYSTEM: ACTIVE</div>
       <div id="clock">00:00:00</div>
   </div>
 
-  <div style="text-align:center; margin-bottom: 20px;">
-      <h1 style="font-family:'Orbitron'; color:white;">EDGAR WAMEYO</h1>
-      <div style="color:var(--gold); font-size: 0.7rem; font-family:'Orbitron';">LEAD SYSTEMS ARCHITECT</div>
+  <div style="text-align:center; margin-bottom: 15px;">
+      <h1 class="name-header">EDGAR WAMEYO</h1>
+      <div style="color:var(--gold); font-size: 0.7rem; font-weight:700; font-family:'Orbitron';">LEAD SYSTEMS ARCHITECT | LSSBB</div>
   </div>
 
   <div class="node-list">
-      <div class="node"><div><b>ASSET NODE</b></div><span style="color:var(--gold)">▶</span></div>
-      <div class="node" onclick="gateOne()">
-          <div><b>MANUFACTURING HUB</b></div><span id="lock-icon">🔒</span>
-      </div>
+      <a href="industrial-node.html" class="node"><div><b>ASSET NODE</b><br><span class="node-detail">Predictive Analytics</span></div><span style="color:var(--gold)">▶</span></a>
+      <a href="fintech.html" class="node"><div><b>FINTECH NODE</b><br><span class="node-detail">Velocity & Liquidity Hub</span></div><span style="color:var(--gold)">▶</span></a>
+      <a href="services-node.html" class="node"><div><b>SERVICE NODE</b><br><span class="node-detail">360° Operational Governance</span></div><span style="color:var(--gold)">▶</span></a>
+      <div class="node" onclick="unlock()" style="cursor:pointer;"><div><b>MANUFACTURING HUB</b><br><span class="node-detail">Secured Hardware Node (v2.0)</span></div><span id="lock-icon">🔒</span></div>
   </div>
 
   <div id="security-flow-monitor">
-       <div style="color:var(--red); font-size: 0.6rem;">SECURITY FLOW MONITOR</div>
-       <div id="security-log" class="log-area">> Initializing Shields...<br>> System Secured.</div>
+       <div style="display:flex; justify-content:space-between; font-size:0.6rem; color:var(--red);"><span>THREAT DETECTION ACTIVE</span><span>LEVEL: LOW</span></div>
+       <div id="security-log" class="log-area">> Initializing Shield...<br>> Monitoring Encrypted Node...</div>
   </div>
 </div>
 
-<div class="signature-footer">CONFIDENTIAL | © 2026 EDGAR WAMEYO</div>
+<div class="signature-footer">CONFIDENTIAL & PROPRIETARY | © 2026 EDGAR WAMEYO</div>
 
 <script>
   function updateClock() { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }
   setInterval(updateClock, 1000); updateClock();
 
-  // SECURE ENCRYPTION LOGIC
-  async function hash(string) {
-      const utf8 = new TextEncoder().encode(string);
-      const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-  }
-
-  // GATE 1: MANUFACTURING HUB (PIN: 7742)
-  async function gateOne() {
-      let p = prompt("ENTER HUB KEY:");
+  async function unlock() {
+      let p = prompt("AUTHORIZATION REQUIRED:");
       if (!p) return;
-      const h = await hash(p);
-      // SHA-256 for 7742
-      if(h === "6f0b4352b95b8637736f9477087612f00889270562e8477033734e565987309a") {
-          document.getElementById('security-log').innerHTML = "> HUB AUTHORIZED...<br>" + document.getElementById('security-log').innerHTML;
-          gateTwo(); // Proceed to Internal Gate
+
+      const encoder = new TextEncoder();
+      const data = encoder.encode(p);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+      // VERIFIED HASH FOR PIN: 7742
+      if(hashHex === "6f0b4352b95b8637736f9477087612f00889270562e8477033734e565987309a") {
+          document.getElementById('lock-icon').innerText = "🔓";
+          window.location.href = "NexusPro.html";
       } else {
+          const log = document.getElementById('security-log');
+          log.innerHTML = `<span style="color:var(--red)">> CRITICAL: UNAUTHORIZED BREACH</span><br>` + log.innerHTML;
           alert("ACCESS DENIED");
       }
   }
 
-  // GATE 2: NEXUS PRO (PIN: 1187)
-  async function gateTwo() {
-      let p = prompt("ENTER ARCHITECT MASTER KEY:");
-      if (!p) return;
-      const h = await hash(p);
-      // SHA-256 for 1187
-      if(h === "6464522956c38622998a1a9e993309a60e0a3598585931338870312689539268") {
-          window.location.href = "NexusPro.html";
-      } else {
-          alert("INTERNAL ACCESS DENIED");
-      }
-  }
-
-  // Background Matrix Rain
+  // Matrix Background
   const canvas = document.getElementById('bg-canvas');
   const ctx = canvas.getContext('2d');
-  canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  window.addEventListener('resize', resize); resize();
   const drops = Array(Math.floor(canvas.width / 14)).fill(1);
   function draw() {
       ctx.fillStyle = "rgba(2, 6, 23, 0.15)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
