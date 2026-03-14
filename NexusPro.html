@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="author" content="Edgar Wameyo">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NEXUS 360 | PRO TERMINAL</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono&display=swap');
-        :root { --gold: #fcc201; --bg: #020617; --red: #ef4444; --green: #22c55e; }
+        :root { --gold: #fcc201; --bg: #020617; --card: #0f172a; --red: #ef4444; --green: #22c55e; }
         body { background: var(--bg); color: white; font-family: 'JetBrains Mono'; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        #login-screen { text-align: center; background: #0f172a; padding: 40px; border-radius: 20px; border: 1px solid var(--gold); width: 340px; }
+        #login-screen { text-align: center; background: var(--card); padding: 40px; border-radius: 20px; border: 1px solid var(--gold); width: 340px; }
+        input { background: #000; border: 1px solid #334155; color: var(--gold); padding: 15px; font-size: 24px; text-align: center; width: 100%; margin-bottom: 20px; font-family: 'Orbitron'; outline: none; border-radius: 8px; }
+        .btn { padding: 15px; width: 100%; border-radius: 10px; border: none; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; background: var(--gold); color: black; }
         .hidden { display: none !important; }
-        input { background: #000; border: 1px solid #334155; color: var(--gold); padding: 15px; font-size: 24px; text-align: center; width: 100%; margin-bottom: 20px; font-family: 'Orbitron'; outline: none; }
-        .btn { padding: 15px; width: 100%; border-radius: 10px; border: none; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; text-transform: uppercase; background: var(--gold); }
-        #main-dashboard { width: 95%; max-width: 500px; background: #0f172a; padding: 25px; border-radius: 20px; border: 1px solid rgba(252,194,1,0.3); }
+        #main-dashboard { width: 95%; max-width: 500px; background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid rgba(252,194,1,0.3); }
         .val { font-size: 24px; color: var(--gold); font-family: 'Orbitron'; }
         .log-box { background: #000; height: 100px; padding: 10px; font-size: 10px; color: var(--green); overflow-y: auto; margin-top: 20px; border-left: 2px solid var(--gold); }
     </style>
@@ -28,38 +29,35 @@
     <div id="main-dashboard" class="hidden">
         <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
             <div id="clock">00:00:00</div>
-            <div id="status" style="color:var(--green)">ONLINE</div>
+            <div style="color:var(--green)">SECURE NODE</div>
         </div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:20px;">
             <div style="background:rgba(0,0,0,0.3); padding:15px; border-radius:10px;">
-                <div style="font-size:9px; color:#64748b;">YIELD EFFICIENCY</div>
-                <div class="val">98.4%</div>
+                <div style="font-size:9px; color:#64748b;">EFFICIENCY</div>
+                <div class="val">98.9%</div>
             </div>
             <div style="background:rgba(0,0,0,0.3); padding:15px; border-radius:10px;">
-                <div style="font-size:9px; color:#64748b;">SYSTEM PULSE</div>
-                <div class="val">12ms</div>
+                <div style="font-size:9px; color:#64748b;">LATENCY</div>
+                <div class="val">8ms</div>
             </div>
         </div>
-        <button class="btn" style="background:var(--red); margin-bottom:10px;" onclick="addLog('NODE ARMED')">ARM HARDWARE</button>
-        <button class="btn" style="background:var(--green);" onclick="addLog('SYSTEM SECURED')">DISARM TERMINAL</button>
-        <div class="log-box" id="log">> Terminal Initialized...</div>
+        <button class="btn" style="background:var(--red); color:white; margin-bottom:10px;" onclick="addLog('NODE ARMED')">ARM HARDWARE</button>
+        <button class="btn" style="background:var(--green); color:white;" onclick="addLog('SYSTEM SECURED')">DISARM TERMINAL</button>
+        <div class="log-box" id="log">> Encryption Active...</div>
     </div>
 
     <script>
         setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }, 1000);
-
         async function verifyAccess() {
-            const pin = document.getElementById('pinInput').value;
-            const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pin));
+            const p = document.getElementById('pinInput').value;
+            const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(p));
             const hash = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
-
-            // VERIFIED HASH FOR 1187 (Gate 2 Master Key)
-            if (hash === "6464522956c38622998a1a9e993309a60e0a3598585931338870312689539268") {
+            // NEW SECURE HASH FOR PIN 2026
+            if (hash === "f96f61689255018659f816c278c772e0a23363b9658253a69534725359b3626e") {
                 document.getElementById('login-screen').classList.add('hidden');
                 document.getElementById('main-dashboard').classList.remove('hidden');
-            } else { alert("MASTER KEY INVALID"); }
+            } else { alert("INVALID MASTER KEY"); }
         }
-
         function addLog(msg) {
             const l = document.getElementById('log');
             l.innerHTML = `[${new Date().toLocaleTimeString()}] > ${msg}<br>` + l.innerHTML;
