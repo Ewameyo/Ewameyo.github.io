@@ -127,4 +127,85 @@
             <div style="flex-grow: 1; height: 1px; background: #333; margin: 0 10px; position: relative;">
                 <div id="security-pulse" style="width: 6px; height: 6px; background: var(--green); border-radius: 50%; position: absolute; top: -3px; left: 0;"></div>
             </div>
-            <div id="gate-visual" style="font-size:
+            <div id="gate-visual" style="font-size: 0.8rem; color: white;">🔒</div>
+        </div>
+        <div id="security-log" class="log-area">> Initializing Shield...<br>> Monitoring Encrypted Node...</div>
+   </div>
+</div>
+ 
+<div class="signature-footer">
+   CONFIDENTIAL & PROPRIETARY | COPYRIGHT © 2026 EDGAR WAMEYO | ALL RIGHTS RESERVED. <br>
+   <span style="font-size: 0.55rem; color: #ffcccc; font-family: 'JetBrains Mono';">PROPRIETARY DTO ARCHITECTURE - UNAUTHORIZED REPLICATION IS A FEDERAL OFFENSE.</span>
+</div>
+ 
+<script>
+   function updateClock() { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }
+   setInterval(updateClock, 1000); updateClock();
+ 
+   // SECURED ACCESS PROTOCOL - NEW STEALTH MASK
+   async function unlock() {
+       let p = prompt("AUTHORIZATION REQUIRED:");
+       if (!p) return;
+
+       const encoder = new TextEncoder();
+       const data = encoder.encode(p);
+       const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+       const hashArray = Array.from(new Uint8Array(hashBuffer));
+       const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+       // NEW PRIVATE KEY HASH (Key: 7742)
+       if(hashHex === "6f0b4352b95b8637736f9477087612f00889270562e8477033734e565987309a") {
+           window.location.href = "NexusPro.html";
+       } else {
+           const log = document.getElementById('security-log');
+           log.innerHTML = `<span style="color:var(--red)">> CRITICAL: UNAUTHORIZED BREACH ATTEMPT</span><br>` + log.innerHTML;
+           alert("ACCESS DENIED: BREACH LOGGED");
+       }
+    }
+
+    function runSecurityPulse() {
+        const p = document.getElementById('security-pulse');
+        const log = document.getElementById('security-log');
+        const gate = document.getElementById('gate-visual');
+        let pos = 0;
+        setInterval(() => {
+            pos += 2;
+            p.style.left = pos + "%";
+            if (pos >= 100) {
+                pos = 0;
+                if (Math.random() > 0.8) {
+                    p.style.background = "var(--red)";
+                    log.innerHTML = `<span style="color:var(--red)">> ALERT: Threat Neutralized</span><br>` + log.innerHTML;
+                    gate.style.color = "var(--red)";
+                    setTimeout(() => { gate.style.color = "#fff"; }, 500);
+                } else { p.style.background = "var(--green)"; }
+            }
+        }, 50);
+    }
+    runSecurityPulse();
+ 
+   const canvas = document.getElementById('bg-canvas');
+   const ctx = canvas.getContext('2d');
+   function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+   window.addEventListener('resize', resize); resize();
+ 
+   const characters = "01";
+   const fontSize = 14;
+   const columns = canvas.width / fontSize;
+   const drops = Array(Math.floor(columns)).fill(1);
+   function draw() {
+       ctx.fillStyle = "rgba(2, 6, 23, 0.15)";
+       ctx.fillRect(0, 0, canvas.width, canvas.height);
+       ctx.fillStyle = "#fcc201"; 
+       ctx.font = fontSize + "px monospace";
+       for (let i = 0; i < drops.length; i++) {
+           const text = characters.charAt(Math.floor(Math.random() * characters.length));
+           ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+           if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+           drops[i]++;
+       }
+    }
+   setInterval(draw, 50);
+</script>
+</body>
+</html>
