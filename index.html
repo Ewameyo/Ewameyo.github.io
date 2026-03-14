@@ -60,7 +60,6 @@
        }
        .node:hover { border-color: var(--gold); background: rgba(252, 194, 1, 0.1); transform: translateX(5px); }
  
-       /* COMPACT SECURITY MONITOR */
        #security-flow-monitor {
            background: rgba(0,0,0,0.4); border: 1px solid var(--red); border-radius: 12px;
            padding: 12px; margin-top: 10px; font-family: 'JetBrains Mono';
@@ -128,70 +127,4 @@
             <div style="flex-grow: 1; height: 1px; background: #333; margin: 0 10px; position: relative;">
                 <div id="security-pulse" style="width: 6px; height: 6px; background: var(--green); border-radius: 50%; position: absolute; top: -3px; left: 0;"></div>
             </div>
-            <div id="gate-visual" style="font-size: 0.8rem; color: white;">🔒</div>
-        </div>
-        <div id="security-log" class="log-area">> Initializing Shield...<br>> Monitoring Port 5591...</div>
-   </div>
-</div>
- 
-<div class="signature-footer">
-   CONFIDENTIAL & PROPRIETARY | COPYRIGHT © 2026 EDGAR WAMEYO | ALL RIGHTS RESERVED. <br>
-   <span style="font-size: 0.55rem; color: #ffcccc; font-family: 'JetBrains Mono';">PROPRIETARY DTO ARCHITECTURE - UNAUTHORIZED REPLICATION IS A FEDERAL OFFENSE.</span>
-</div>
- 
-<script>
-   function updateClock() { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }
-   setInterval(updateClock, 1000); updateClock();
- 
-   function unlock() {
-       let p = prompt("AUTHORIZATION PIN REQUIRED:");
-       if(btoa(p) === "NTU5MQ==") { window.location.href = "NexusPro.html"; } 
-       else { alert("ACCESS DENIED"); }
-    }
-
-    function runSecurityPulse() {
-        const p = document.getElementById('security-pulse');
-        const log = document.getElementById('security-log');
-        const gate = document.getElementById('gate-visual');
-        let pos = 0;
-        setInterval(() => {
-            pos += 2;
-            p.style.left = pos + "%";
-            if (pos >= 100) {
-                pos = 0;
-                if (Math.random() > 0.8) {
-                    p.style.background = "var(--red)";
-                    log.innerHTML = `<span style="color:var(--red)">> ALERT: Unauthorized Access Blocked</span><br>` + log.innerHTML;
-                    gate.style.color = "var(--red)";
-                    setTimeout(() => { gate.style.color = "#fff"; }, 500);
-                } else { p.style.background = "var(--green)"; }
-            }
-        }, 50);
-    }
-    runSecurityPulse();
- 
-   const canvas = document.getElementById('bg-canvas');
-   const ctx = canvas.getContext('2d');
-   function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-   window.addEventListener('resize', resize); resize();
- 
-   const characters = "01";
-   const fontSize = 14;
-   const columns = canvas.width / fontSize;
-   const drops = Array(Math.floor(columns)).fill(1);
-   function draw() {
-       ctx.fillStyle = "rgba(2, 6, 23, 0.15)";
-       ctx.fillRect(0, 0, canvas.width, canvas.height);
-       ctx.fillStyle = "#fcc201"; 
-       ctx.font = fontSize + "px monospace";
-       for (let i = 0; i < drops.length; i++) {
-           const text = characters.charAt(Math.floor(Math.random() * characters.length));
-           ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-           if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-           drops[i]++;
-       }
-    }
-   setInterval(draw, 50);
-</script>
-</body>
-</html>
+            <div id="gate-visual" style="font-size:
