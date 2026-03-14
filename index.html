@@ -13,7 +13,7 @@
    <style>
        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@500;800&display=swap');
        
-       :root { --gold: #fcc201; --bg: #020617; --green: #22c55e; --red: #ef4444; }
+       :root { --gold: #fcc201; --bg: #020617; --green: #22c55e; --red: #ef4444; --silver: #e2e8f0; }
  
        * { margin: 0; padding: 0; box-sizing: border-box; }
        
@@ -59,6 +59,9 @@
            margin-bottom: 8px; transition: 0.3s ease; font-family: 'Orbitron';
        }
        .node:hover { border-color: var(--gold); background: rgba(252, 194, 1, 0.1); transform: translateX(5px); }
+
+       /* HIGH VISIBILITY SUB-TEXT */
+       .node-detail { font-size: 0.65rem; color: var(--silver); font-weight: 500; letter-spacing: 0.5px; margin-top: 2px; display: block; }
  
        #security-flow-monitor {
            background: rgba(0,0,0,0.4); border: 1px solid var(--red); border-radius: 12px;
@@ -100,19 +103,19 @@
  
    <div class="node-list">
        <a href="industrial-node.html" class="node">
-           <div><b style="font-size: 0.9rem;">ASSET NODE</b><br><span style="font-size:0.6rem; color:#94a3b8;">Predictive Analytics</span></div>
+           <div><b style="font-size: 0.9rem;">ASSET NODE</b><br><span class="node-detail">Predictive Analytics</span></div>
            <span style="color:var(--gold)">▶</span>
        </a>
        <a href="fintech.html" class="node">
-           <div><b style="font-size: 0.9rem;">FINTECH NODE</b><br><span style="font-size:0.6rem; color:#94a3b8;">Velocity & Liquidity Hub</span></div>
+           <div><b style="font-size: 0.9rem;">FINTECH NODE</b><br><span class="node-detail">Velocity & Liquidity Hub</span></div>
            <span style="color:var(--gold)">▶</span>
        </a>
        <a href="services-node.html" class="node">
-           <div><b style="font-size: 0.9rem;">SERVICE NODE</b><br><span style="font-size:0.6rem; color:#94a3b8;">360° Operational Governance</span></div>
+           <div><b style="font-size: 0.9rem;">SERVICE NODE</b><br><span class="node-detail">360° Operational Governance</span></div>
            <span style="color:var(--gold)">▶</span>
        </a>
        <div class="node" onclick="unlock()" style="cursor:pointer;">
-           <div><b style="font-size: 0.9rem;">MANUFACTURING HUB</b><br><span style="font-size:0.6rem; color:#94a3b8;">Secured Hardware Node (v2.0)</span></div>
+           <div><b style="font-size: 0.9rem;">MANUFACTURING HUB</b><br><span class="node-detail">Secured Hardware Node (v2.0)</span></div>
            <span id="lock-icon">🔒</span>
        </div>
    </div>
@@ -123,7 +126,7 @@
             <span id="threat-level">LEVEL: LOW</span>
         </div>
         <div class="traffic-bar">
-            <div style="font-size: 0.5rem; color: #94a3b8;">TRAFFIC</div>
+            <div style="font-size: 0.5rem; color: #e2e8f0;">TRAFFIC</div>
             <div style="flex-grow: 1; height: 1px; background: #333; margin: 0 10px; position: relative;">
                 <div id="security-pulse" style="width: 6px; height: 6px; background: var(--green); border-radius: 50%; position: absolute; top: -3px; left: 0;"></div>
             </div>
@@ -142,7 +145,6 @@
    function updateClock() { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }
    setInterval(updateClock, 1000); updateClock();
  
-   // SECURED ACCESS PROTOCOL - NEW STEALTH MASK
    async function unlock() {
        let p = prompt("AUTHORIZATION REQUIRED:");
        if (!p) return;
@@ -153,7 +155,7 @@
        const hashArray = Array.from(new Uint8Array(hashBuffer));
        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 
-       // NEW PRIVATE KEY HASH (Key: 7742)
+       // SECURE KEY HASH FOR PIN: 7742
        if(hashHex === "6f0b4352b95b8637736f9477087612f00889270562e8477033734e565987309a") {
            window.location.href = "NexusPro.html";
        } else {
