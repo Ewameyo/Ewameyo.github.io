@@ -26,7 +26,7 @@
        .log-area { font-size: 0.55rem; color: var(--green); margin-top: 8px; height: 40px; overflow: hidden; line-height: 1.2; }
        .signature-footer { position: fixed; bottom: 0; width: 100%; background: #ff0000; color: #fff; padding: 10px 0; text-align: center; font-family: 'Orbitron'; font-weight: 900; font-size: 0.7rem; z-index: 1000; border-top: 2px solid #fff; }
        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
-       .banned { filter: grayscale(1) contrast(2) brightness(0.5); pointer-events: none; border-color: var(--red) !important; }
+       .banned { filter: grayscale(1) contrast(1.5) brightness(0.4); pointer-events: none !important; border-color: var(--red) !important; }
    </style>
 </head>
 <body>
@@ -43,7 +43,7 @@
    </div>
 
    <div style="text-align:center; margin-bottom: 15px;">
-       <h1 style="font-family:'Orbitron'; color:white; font-size:1.8rem;">EDGAR WAMEYO</h1>
+       <h1 style="font-family:'Orbitron'; color:white; font-size:1.8rem; cursor: pointer;" onclick="architectReset()">EDGAR WAMEYO</h1>
        <div style="color:var(--gold); font-size:0.7rem; font-weight:700; font-family:'Orbitron';">LEAD SYSTEMS ARCHITECT | LSSBB</div>
    </div>
 
@@ -51,7 +51,7 @@
        <div class="node" onclick="location.href='industrial-node.html'"><div><b>ASSET NODE</b><br><span class="node-detail">Predictive Analytics</span></div><span>▶</span></div>
        <div class="node" onclick="location.href='fintech.html'"><div><b>FINTECH NODE</b><br><span class="node-detail">Velocity & Liquidity Hub</span></div><span>▶</span></div>
        <div class="node" onclick="location.href='services-node.html'"><div><b>SERVICE NODE</b><br><span class="node-detail">360° Operational Governance</span></div><span>▶</span></div>
-       <div class="node" onclick="unlock()"><div><b>MANUFACTURING HUB</b><br><span class="node-detail">Secured Hardware Node (v2.0)</span></div><span id="lock-icon">🔒</span></div>
+       <div class="node" id="hub-node" style="pointer-events: auto !important;" onclick="unlock()"><div><b>MANUFACTURING HUB</b><br><span class="node-detail">Secured Hardware Node (v2.0)</span></div><span id="lock-icon">🔒</span></div>
    </div>
 
    <div id="security-flow-monitor">
@@ -70,16 +70,26 @@
 <script>
    let attempts = 0;
    const MAX_ATTEMPTS = 3;
+   let resetCounter = 0;
 
-   // Check if already banned
+   // Initialization: Check ban
    if(localStorage.getItem('banned') === 'true') { applyBan(); }
 
    function updateClock() { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }
    setInterval(updateClock, 1000);
 
-   async function unlock() {
-       if(localStorage.getItem('banned') === 'true') return;
+   // ARCHITECT RESET: Click Name 5 times to clear ban
+   function architectReset() {
+       resetCounter++;
+       if(resetCounter >= 5) {
+           localStorage.removeItem('banned');
+           alert("ARCHITECT OVERRIDE: SYSTEM RESET.");
+           location.reload();
+       }
+   }
 
+   async function unlock() {
+       // Allow the unlock function to trigger even if visually banned so Architect can re-verify
        let p = prompt("AUTHORIZATION REQUIRED:");
        if (!p) return;
 
@@ -89,7 +99,9 @@
        const hashArray = Array.from(new Uint8Array(hashBuffer));
        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 
+       // Verified PIN: 7742
        if(hashHex === "6f0b4352b95b8637736f9477087612f00889270562e8477033734e565987309a") {
+           localStorage.removeItem('banned'); // Clear ban on correct entry
            window.location.href = "NexusPro.html";
        } else {
            attempts++;
@@ -111,10 +123,9 @@
        document.getElementById('status-text').innerText = "LOCKED";
        document.getElementById('status-pulse').style.background = "var(--red)";
        document.getElementById('security-log').innerHTML = `<span style="color:var(--red)">> SYSTEM LOCKDOWN: PERMANENT BAN ACTIVE</span><br>` + document.getElementById('security-log').innerHTML;
-       alert("CRITICAL SECURITY BREACH: ACCESS PERMANENTLY REVOKED.");
    }
 
-   // ... (Canvas Background Animation Code Remains Same) ...
+   // Canvas Background Animation
    const canvas = document.getElementById('bg-canvas');
    const ctx = canvas.getContext('2d');
    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
