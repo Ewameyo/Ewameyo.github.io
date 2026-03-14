@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NEXUS 360 | PRO TERMINAL</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono&display=swap');
         :root { --gold: #fcc201; --bg: #020617; --card: #0f172a; --red: #ef4444; --green: #22c55e; }
@@ -41,26 +40,20 @@
                 <div class="val">8ms</div>
             </div>
         </div>
-        <button class="btn" style="background:var(--red); color:white; margin-bottom:10px;" onclick="addLog('NODE ARMED')">ARM HARDWARE</button>
-        <button class="btn" style="background:var(--green); color:white;" onclick="addLog('SYSTEM SECURED')">DISARM TERMINAL</button>
-        <div class="log-box" id="log">> Encryption Active...</div>
+        <div class="log-box" id="log">> System Fully Secured...</div>
     </div>
 
     <script>
         setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }, 1000);
         async function verifyAccess() {
             const p = document.getElementById('pinInput').value;
-            const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(p));
+            const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(p.trim()));
             const hash = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
-            // NEW SECURE HASH FOR PIN 2026
+            // Master hash check for Pro Terminal PIN
             if (hash === "f96f61689255018659f816c278c772e0a23363b9658253a69534725359b3626e") {
                 document.getElementById('login-screen').classList.add('hidden');
                 document.getElementById('main-dashboard').classList.remove('hidden');
             } else { alert("INVALID MASTER KEY"); }
-        }
-        function addLog(msg) {
-            const l = document.getElementById('log');
-            l.innerHTML = `[${new Date().toLocaleTimeString()}] > ${msg}<br>` + l.innerHTML;
         }
     </script>
 </body>
