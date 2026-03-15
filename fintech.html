@@ -1,81 +1,234 @@
-<script>
-    // --- Live Clock ---
-    function updateClock() {
-        const now = new Date();
-        document.getElementById('live-clock').innerText = now.toLocaleTimeString();
-    }
-    setInterval(updateClock, 1000);
-
-    // --- DTO-NEXUS: FINAL LIVE GLOBAL PULSE ---
-    async function pulseFintech() {
-        // Global Endpoints
-        const cryptoUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&include_24hr_change=true&vs_currencies=usd';
-        const fiatUrl = 'https://open.er-api.com/v6/latest/USD';
-
-        try {
-            // Parallel fetch for high-velocity sync
-            const [cryptoRes, fiatRes] = await Promise.all([fetch(cryptoUrl), fetch(fiatUrl)]);
-            const cryptoData = await cryptoRes.json();
-            const fiatData = await fiatRes.json();
-
-            // Data Extraction
-            const btcPrice = cryptoData.bitcoin.usd;
-            const btcChange = cryptoData.bitcoin.usd_24h_change;
-            const kesRate = fiatData.rates.KES;
-
-            // UI Injection: Global Standard Real-Time Data
-            document.getElementById('tps-val').innerText = "$" + btcPrice.toLocaleString();
-            document.getElementById('liq-val').innerText = kesRate.toFixed(2) + " KES";
-
-            // LSSBB Logic: System Health Color Coding based on 24h Volatility
-            const statusEl = document.getElementById('velocity-status');
-            if (btcChange < 0) {
-                statusEl.style.color = "#ff3333"; // Red for Volatility/Defect
-                statusEl.innerText = "● VOLATILITY ALERT: " + btcChange.toFixed(2) + "%";
-            } else {
-                statusEl.style.color = "#39ff14"; // Green for Optimal Flow
-                statusEl.innerText = "● SYSTEM NOMINAL: +" + btcChange.toFixed(2) + "%";
-            }
-
-            console.log(`DTO-NEXUS Sync: KES Rate @ ${kesRate} | BTC @ ${btcPrice}`);
-
-        } catch (e) {
-            console.warn("TELEMETRY BREACH: Reverting to Internal LSSBB Cache.");
-            // Fallback to static numbers if internet fails to keep UI clean
-            document.getElementById('tps-val').innerText = "OFFLINE";
-        }
-    }
-
-    // Refresh Live Data every 30 seconds
-    pulseFintech();
-    setInterval(pulseFintech, 30000);
-
-    // --- Neural Network Packet Animation ---
-    const svg = document.getElementById('flow-svg');
-    function createPacket() {
-        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        const startY = Math.random() * 200;
-        const endY = Math.random() * 200;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FINTECH GOVERNANCE | EDGAR WAMEYO</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
         
-        circle.setAttribute("cx", "0%");
-        circle.setAttribute("cy", startY);
-        circle.setAttribute("r", "2");
-        circle.setAttribute("fill", "#00d2ff");
-        svg.appendChild(circle);
+        :root { 
+            --blue: #00d2ff; 
+            --gold: #fcc201; 
+            --bg: #010409; 
+            --neon-green: #39ff14;
+            --glass: rgba(15, 23, 42, 0.8);
+        }
 
-        let pos = 0;
-        const interval = setInterval(() => {
-            pos += 1;
-            circle.setAttribute("cx", pos + "%");
-            // Parabolic curve for "Neural Flow" effect
-            circle.setAttribute("cy", startY + (endY - startY) * (pos/100));
-            
-            if (pos >= 100) {
-                clearInterval(interval);
-                if (svg.contains(circle)) svg.removeChild(circle);
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
+
+        body { 
+            background: var(--bg); 
+            color: #fff; 
+            font-family: 'JetBrains Mono', monospace; 
+            height: 100vh; 
+            overflow: hidden; 
+            display: flex; 
+            flex-direction: column;
+            background-image: 
+                linear-gradient(rgba(0, 210, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 210, 255, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        .ticker-container {
+            background: rgba(0,0,0,0.9);
+            border-bottom: 1px solid var(--blue);
+            padding: 5px 0;
+            font-size: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            z-index: 100;
+        }
+
+        .ticker-content {
+            display: inline-block;
+            animation: tickerScroll 40s linear infinite;
+            color: var(--blue);
+        }
+
+        @keyframes tickerScroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        header { 
+            padding: 15px 25px; 
+            border-bottom: 1px solid rgba(0, 210, 255, 0.3); 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            backdrop-filter: blur(10px);
+        }
+
+        .header-left h2 { font-family: 'Orbitron'; letter-spacing: 3px; font-weight: 900; }
+        .live-data { font-size: 10px; color: var(--gold); text-transform: uppercase; }
+
+        .dashboard { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column;
+            padding: 20px; 
+            gap: 20px;
+            overflow-y: auto;
+        }
+
+        .hero-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .card { 
+            background: var(--glass); 
+            border: 1px solid rgba(0, 210, 255, 0.2); 
+            border-radius: 4px; 
+            padding: 20px; 
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: ""; position: absolute; top:0; left:0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--blue), transparent);
+        }
+
+        .val { font-family: 'Orbitron'; font-size: 2.2rem; color: var(--gold); margin: 10px 0; font-weight: 900; }
+
+        .process-flow-container {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(0, 210, 255, 0.1);
+            height: 200px;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .back-btn { 
+            color: #fff; text-decoration: none; border: 1px solid #fff; 
+            padding: 8px 15px; font-family: 'Orbitron'; font-size: 10px; 
+            transition: 0.3s;
+        }
+        .back-btn:hover { background: #fff; color: #000; }
+
+        @media (max-width: 600px) {
+            .val { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ticker-container">
+        <div class="ticker-content">
+            DTO-NEXUS LIVE FEED: BTC/USD MONITORING... USD/KES EXCHANGE SYNC... LSSBB GOVERNANCE ACTIVE... EDGAR WAMEYO SYSTEMS...
+        </div>
+    </div>
+
+    <header>
+        <div class="header-left">
+            <h2 style="color:var(--blue);">FINTECH NODE</h2>
+            <div class="live-data">v1.1-LIVE | SECURE TELEMETRY</div>
+        </div>
+        <div style="text-align: right;">
+            <div id="live-clock" style="font-family:'Orbitron'; font-size: 1.2rem; color: #fff;">00:00:00</div>
+            <a href="index.html" class="back-btn">RETURN TO HUB</a>
+        </div>
+    </header>
+
+    <main class="dashboard">
+        <div class="card">
+            <div style="font-size: 10px; color: var(--blue); margin-bottom: 10px;">LIVE TRANSACTION FLOW (NEURAL NETWORK)</div>
+            <div class="process-flow-container">
+                <svg width="100%" height="100%" id="flow-svg"></svg>
+            </div>
+        </div>
+
+        <div class="hero-row">
+            <div class="card">
+                <div style="color:var(--blue); font-size: 11px;">BITCOIN MARKET VAL (USD)</div>
+                <div id="tps-val" class="val">FETCHING...</div>
+                <div id="velocity-status" style="font-size: 10px; color: var(--neon-green);">● CONNECTING TO GLOBAL FEED</div>
+            </div>
+
+            <div class="card">
+                <div style="color:var(--blue); font-size: 11px;">LIQUIDITY RATIO (USD/KES)</div>
+                <div id="liq-val" class="val">FETCHING...</div>
+                <div style="font-size: 10px; color: var(--gold);">ASSET UTILIZATION: 94.2%</div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // --- Live Clock ---
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('live-clock').innerText = now.toLocaleTimeString();
+        }
+        setInterval(updateClock, 1000);
+
+        // --- DTO-NEXUS: FINAL LIVE GLOBAL PULSE ---
+        async function pulseFintech() {
+            const cryptoUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&include_24hr_change=true&vs_currencies=usd';
+            const fiatUrl = 'https://open.er-api.com/v6/latest/USD';
+
+            try {
+                const [cryptoRes, fiatRes] = await Promise.all([fetch(cryptoUrl), fetch(fiatUrl)]);
+                const cryptoData = await cryptoRes.json();
+                const fiatData = await fiatRes.json();
+
+                const btcPrice = cryptoData.bitcoin.usd;
+                const btcChange = cryptoData.bitcoin.usd_24h_change;
+                const kesRate = fiatData.rates.KES;
+
+                document.getElementById('tps-val').innerText = "$" + btcPrice.toLocaleString();
+                document.getElementById('liq-val').innerText = kesRate.toFixed(2) + " KES";
+
+                const statusEl = document.getElementById('velocity-status');
+                if (btcChange < 0) {
+                    statusEl.style.color = "#ff3333";
+                    statusEl.innerText = "● VOLATILITY ALERT: " + btcChange.toFixed(2) + "%";
+                } else {
+                    statusEl.style.color = "#39ff14";
+                    statusEl.innerText = "● SYSTEM NOMINAL: +" + btcChange.toFixed(2) + "%";
+                }
+
+                console.log(`DTO-NEXUS Sync: KES Rate @ ${kesRate} | BTC @ ${btcPrice}`);
+
+            } catch (e) {
+                console.warn("TELEMETRY BREACH: Reverting to Internal LSSBB Cache.");
+                document.getElementById('tps-val').innerText = "OFFLINE";
+                document.getElementById('velocity-status').innerText = "● CONNECTION LOST";
             }
-        }, 30);
-    }
-    // High-density packet flow (every 400ms)
-    setInterval(createPacket, 400);
-</script>
+        }
+
+        pulseFintech();
+        setInterval(pulseFintech, 30000);
+
+        // --- Neural Network Packet Animation ---
+        const svg = document.getElementById('flow-svg');
+        function createPacket() {
+            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            const startY = Math.random() * 200;
+            const endY = Math.random() * 200;
+            
+            circle.setAttribute("cx", "0%");
+            circle.setAttribute("cy", startY);
+            circle.setAttribute("r", "2");
+            circle.setAttribute("fill", "#00d2ff");
+            svg.appendChild(circle);
+
+            let pos = 0;
+            const interval = setInterval(() => {
+                pos += 1;
+                circle.setAttribute("cx", pos + "%");
+                circle.setAttribute("cy", startY + (endY - startY) * (pos/100));
+                
+                if (pos >= 100) {
+                    clearInterval(interval);
+                    if (svg.contains(circle)) svg.removeChild(circle);
+                }
+            }, 30);
+        }
+        setInterval(createPacket, 400);
+    </script>
+</body>
+</html>
