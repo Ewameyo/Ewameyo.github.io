@@ -44,7 +44,6 @@
         </div>
 
         <button id="sync-btn" class="btn" style="background:var(--blue); color:white;" onclick="runCloudSync()">360° ENGINE SYNC</button>
-        
         <button class="btn" style="background:var(--red); color:white;">ARM HARDWARE</button>
         
         <div class="log-box" id="log-console">
@@ -54,17 +53,15 @@
     </div>
 
     <script>
-        // Real-time Clock
         setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }, 1000);
 
-        // Login Logic
         function verifyAccess() {
-            const p = document.getElementById('pinInput').value;
+            const p = document.getElementById('pinInput').value.trim();
             if (p === "2026") {
                 document.getElementById('login-screen').classList.add('hidden');
                 document.getElementById('main-dashboard').classList.remove('hidden');
                 addLog("Master Access Granted.");
-            } else { alert("INVALID MASTER KEY"); }
+            } else { alert("ACCESS DENIED: BREACH LOGGED"); }
         }
 
         function addLog(msg) {
@@ -73,7 +70,6 @@
             log.scrollTop = log.scrollHeight;
         }
 
-        // THE CLOUD ENGINE SYNC
         async function runCloudSync() {
             const btn = document.getElementById('sync-btn');
             btn.innerText = "UPLOADING TO RENDER...";
@@ -81,14 +77,12 @@
             addLog("Initializing Cloud Handshake...");
 
             const manufacturingData = {
-                availability: 96.5,
-                performance: 92.0,
-                quality: 98.5,
+                availability: 96.5, performance: 92.0, quality: 98.5,
                 company_id: "EDGAR_NEXUS_PRIME"
             };
 
             try {
-                // IMPORTANT: Replace the URL below with your actual Render URL
+                // YOUR LIVE RENDER URL FROM SCREENSHOT image_0f2c64.png
                 const RENDER_URL = "https://ewameyo-github-io.onrender.com/api/v1/sync";
                 
                 const response = await fetch(RENDER_URL, {
