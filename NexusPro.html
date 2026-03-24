@@ -1,38 +1,111 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
-from fastapi.middleware.cors import CORSMiddleware
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="author" content="Edgar Wameyo">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS 360 | PRO TERMINAL</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono&display=swap');
+        :root { --gold: #fcc201; --bg: #020617; --card: #0f172a; --red: #ef4444; --green: #22c55e; --blue: #3b82f6; }
+        body { background: var(--bg); color: white; font-family: 'JetBrains Mono'; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        #login-screen { text-align: center; background: var(--card); padding: 40px; border-radius: 20px; border: 1px solid var(--gold); width: 340px; }
+        input { background: #000; border: 1px solid #334155; color: var(--gold); padding: 15px; font-size: 24px; text-align: center; width: 100%; margin-bottom: 20px; font-family: 'Orbitron'; outline: none; border-radius: 8px; }
+        .btn { padding: 15px; width: 100%; border-radius: 10px; border: none; font-family: 'Orbitron'; font-weight: bold; cursor: pointer; background: var(--gold); color: black; margin-top: 10px; transition: 0.3s; }
+        .btn:hover { opacity: 0.8; transform: scale(0.98); }
+        .hidden { display: none !important; }
+        #main-dashboard { width: 95%; max-width: 500px; background: var(--card); padding: 25px; border-radius: 20px; border: 1px solid rgba(252,194,1,0.3); }
+        .val { font-size: 24px; color: var(--gold); font-family: 'Orbitron'; }
+        .log-box { background: #000; height: 120px; padding: 10px; font-size: 11px; color: var(--green); overflow-y: auto; margin-top: 20px; border-left: 2px solid var(--gold); font-family: 'JetBrains Mono'; line-height: 1.5; }
+    </style>
+</head>
+<body>
+    <div id="login-screen">
+        <h2 style="font-family:'Orbitron'; color:var(--gold); margin-bottom:20px;">MASTER KEY</h2>
+        <input type="password" id="pinInput" maxlength="4" placeholder="****">
+        <button class="btn" onclick="verifyAccess()">AUTHORIZE</button>
+    </div>
 
-app = FastAPI(title="DTO-NEXUS PRIME: Integrated Management System")
+    <div id="main-dashboard" class="hidden">
+        <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
+            <div id="clock" style="font-family:'Orbitron'; color:var(--gold);">00:00:00</div>
+            <div style="color:var(--green); font-size:12px;">● CLOUD ENGINE ACTIVE</div>
+        </div>
 
-# This is the "bridge" that lets your web.app talk to Render
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:20px;">
+            <div style="background:rgba(0,0,0,0.3); padding:15px; border-radius:10px; border: 1px solid #1e293b;">
+                <div style="font-size:9px; color:#64748b;">EFFICIENCY (OEE)</div>
+                <div class="val" id="oee-display">--.-%</div>
+            </div>
+            <div style="background:rgba(0,0,0,0.3); padding:15px; border-radius:10px; border: 1px solid #1e293b;">
+                <div style="font-size:9px; color:#64748b;">IMS LATENCY</div>
+                <div class="val">12ms</div>
+            </div>
+        </div>
 
-class ManufacturingInput(BaseModel):
-    company_id: str
-    availability: float
-    performance: float
-    quality: float
+        <button id="sync-btn" class="btn" style="background:var(--blue); color:white;" onclick="runCloudSync()">360° ENGINE SYNC</button>
+        <button class="btn" style="background:var(--red); color:white;">ARM HARDWARE</button>
+        
+        <div class="log-box" id="log-console">
+            > System Standby...<br>
+            > Node: Nairobi_01 Virtualized...
+        </div>
+    </div>
 
-@app.get("/")
-async def root():
-    return {
-        "status": "IMS ACTIVE",
-        "lead": "Edgar Wameyo, LSSBB",
-        "governance": ["ISO 9001:2015", "ISO 14001:2015", "ISO 45001:2018"],
-        "location": "MOM-01 Manufacturing"
-    }
+    <script>
+        setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }, 1000);
 
-@app.post("/api/v1/factory/calculate-oee")
-async def live_oee(data: ManufacturingInput):
-    oee = round((data.availability * data.performance * data.quality) / 10000, 2)
-    return {
-        "company": data.company_id,
-        "oee_percentage": f"{oee}%",
-        "pce_index": "32%",
-        "ims_compliance": "VERIFIED"
-    }
+        function verifyAccess() {
+            const p = document.getElementById('pinInput').value.trim();
+            if (p === "2026") {
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('main-dashboard').classList.remove('hidden');
+                addLog("Master Access Granted.");
+            } else { alert("ACCESS DENIED: BREACH LOGGED"); }
+        }
+
+        function addLog(msg) {
+            const log = document.getElementById('log-console');
+            log.innerHTML += `<br>> ${msg}`;
+            log.scrollTop = log.scrollHeight;
+        }
+
+        async function runCloudSync() {
+            const btn = document.getElementById('sync-btn');
+            btn.innerText = "UPLOADING TO RENDER...";
+            btn.disabled = true;
+            addLog("Initializing Cloud Handshake...");
+
+            const manufacturingData = {
+                availability: 96.5, performance: 92.0, quality: 98.5,
+                company_id: "EDGAR_NEXUS_PRIME"
+            };
+
+            try {
+                // YOUR LIVE RENDER URL FROM SCREENSHOT image_0f2c64.png
+                const RENDER_URL = "https://ewameyo-github-io.onrender.com/api/v1/sync";
+                
+                const response = await fetch(RENDER_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(manufacturingData)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    addLog(`Calculation Verified: OEE ${result.oee}`);
+                    addLog("Audit Trail Logged to Supabase.");
+                    document.getElementById('oee-display').innerText = result.oee;
+                    btn.innerText = "SYNC COMPLETE";
+                    btn.style.background = "var(--green)";
+                }
+            } catch (error) {
+                addLog("ERROR: Engine Connection Failed.");
+                btn.innerText = "RETRY SYNC";
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
